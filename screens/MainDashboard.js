@@ -10,7 +10,7 @@ import { doc,
          onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useNavigation } from '@react-navigation/core'
-import { Ionicons, AntDesign} from "@expo/vector-icons"
+import { Ionicons} from "@expo/vector-icons"
 import { onAuthStateChanged, 
          signOut } from "firebase/auth";
 
