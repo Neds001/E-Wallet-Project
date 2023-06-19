@@ -98,8 +98,13 @@ const Login = ({ navigation }) => {
   return (
       <View style={{flex: 1,
         justifyContent: "center",
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
         }}>
-       <ImageBackground source={require('../assets/background.jpg')} resizeMode="cover" style={styles.image}>
+       <ImageBackground source={require('../assets/background1.jpg')} resizeMode="cover" style={styles.image}>
        <View style={styles.logoContainer}>
        <ImageBackground
         style={styles.logo}
@@ -188,7 +193,7 @@ const styles = StyleSheet.create({
   },
   image:{
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   input: {
     height: 40,

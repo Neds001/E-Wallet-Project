@@ -60,7 +60,8 @@ const Registrationpage = ({ navigation }) => {
       .then(() => {
         createNewUser(e)
           .then(() => {
-            console.log*("acc registered")
+            alert("Registration Successful!");
+            console.log("Registration Successful!")
             navigation.navigate("Login");
           })
           .catch((err) => {
@@ -93,7 +94,7 @@ const Registrationpage = ({ navigation }) => {
     <View style={{flex: 1,
       justifyContent: "center",
       }}>
-      <ImageBackground source={require('../assets/background.jpg')} resizeMode="cover" style={styles.image}>
+      <ImageBackground source={require('../assets/background1.jpg')} resizeMode="cover" style={styles.image}>
       <View style={styles.logoContainer}>
        <ImageBackground
         style={styles.logo}
@@ -136,6 +137,7 @@ const Registrationpage = ({ navigation }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => handleRegister(email, password)}
+        
       >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>

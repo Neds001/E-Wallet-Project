@@ -17,6 +17,7 @@ import { onAuthStateChanged,
 const MainDashboard = () => {
   const [userInfo, setUserInfo] = useState([]);
     const navigation = useNavigation()
+    
  const sendButton = () =>{
     navigation.navigate("Send")
  }
@@ -94,7 +95,7 @@ const historyLogsButton = () => {
     <SafeAreaView style={{flex: 1,
       justifyContent: "center",
       }}>
-      <ImageBackground source={require('../assets/background.jpg')} resizeMode="cover" style={styles.image}>
+      <ImageBackground source={require('../assets/background1.jpg')} resizeMode="cover" style={styles.image}>
      
       {/*balance tab*/}
       <View style={[styles.header, { flexDirection: 'row', justifyContent: 'space-between', padding: 10}]}>

@@ -141,7 +141,7 @@ useEffect(() => {
     <View style={{flex: 1,
       justifyContent: "center",
       }}>
-      <ImageBackground source={require('../assets/background.jpg')} resizeMode="cover" style={styles.image}>
+      <ImageBackground source={require('../assets/background1.jpg')} resizeMode="cover" style={styles.image}>
       {/*<Text style={styles.welcomeText}>Welcome, {email}</Text>*/}
       <View style={styles.balanceContainer}>
         <Text style={styles.balanceText}>Current Balance</Text>
