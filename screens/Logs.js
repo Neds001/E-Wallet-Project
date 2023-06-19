@@ -1,28 +1,33 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import React ,{useState, useEffect} from 'react';
-import { useNavigation } from '@react-navigation/core'
+import React, { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/core';
 import { auth, firebase } from '../firebase';
-import { onSnapshot} from 'firebase/firestore'
-
+import { onSnapshot, orderBy } from 'firebase/firestore';
 
 const Logs = () => {
   const [logInfo, setLogs] = useState([]);
-  //const [loading, setLoading] = useState(true);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const onPress = () => {
-    navigation.navigate("receiveLogs")
-  }
+    navigation.navigate('ReceiveLogs');
+  };
 
   useEffect(() => {
     const user = auth.currentUser.uid;
     if (user) {
       const uid = user;
-      const todoRef = firebase.firestore().collection("users").doc(uid).collection("history").doc("DUgVrFDJhas4wAuX07re").collection("Sent");
+      const todoRef = firebase
+        .firestore()
+        .collection('users')
+        .doc(uid)
+        .collection('history')
+        .doc('DUgVrFDJhas4wAuX07re')
+        .collection('Sent')
+        .orderBy('Timestamp', 'desc'); // Order the documents by timestamp in descending order
       const unsubscribe = onSnapshot(todoRef, (querySnapshot) => {
         const logs = querySnapshot.docs.map((doc) => {
           const { ReceiverUid, Timestamp, transactions, Sender } = doc.data();
-          let formattedTimestamp = "";
+          let formattedTimestamp = '';
           if (Timestamp && Timestamp.toDate) {
             formattedTimestamp = Timestamp.toDate().toLocaleString();
           }
@@ -31,7 +36,6 @@ const Logs = () => {
             ReceiverUid,
             Timestamp: formattedTimestamp,
             transactions,
-            
           };
         });
         setLogs(logs);

@@ -1,20 +1,26 @@
-import { View, Text, FlatList, StyleSheet, Pressable, TouchableOpacity, Button, ImageBackground } from 'react-native';
+import { View, 
+         Text, 
+         StyleSheet, 
+         TouchableOpacity,
+         ImageBackground,
+         SafeAreaView } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { auth, firebase } from '../firebase';
-import { collection, setDoc, doc, getDoc, Firestore, onSnapshot } from 'firebase/firestore'
+import { auth } from '../firebase';
+import { doc,
+         onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useNavigation } from '@react-navigation/core'
-import { Ionicons } from "@expo/vector-icons"
-import { getAuth } from 'firebase/auth';
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { Ionicons, AntDesign} from "@expo/vector-icons"
+import { onAuthStateChanged, 
+         signOut } from "firebase/auth";
 
 const MainDashboard = () => {
   const [userInfo, setUserInfo] = useState([]);
     const navigation = useNavigation()
- const onPress = () =>{
+ const sendButton = () =>{
     navigation.navigate("Send")
  }
- const onPress1 = () =>{
+ const logOutButton = () =>{
   auth
     .signOut()
     .then(() => {
@@ -22,27 +28,21 @@ const MainDashboard = () => {
     })
     .catch(error => alert(error.message))
 }
-const onPress2 = () => {
-  navigation.navigate("Profile")
+const ScanQRButton = () => {
+  navigation.navigate("ScanQR")
 }
-const onPress3 = () => {
-  navigation.navigate("Recieve")
+const editProfileButton = () => {
+  navigation.navigate("EditProfile")
 }
-const onPress4 = () => {
+const currencyButton = () => {
   navigation.navigate("Currency")
 }
-const onPress5 = () => {
+const historyLogsButton = () => {
   navigation.navigate("Logs")
 }
 
-
-
-
-  const [balance, setBalance] = useState(5000); // Initial balance
   const [email, setEmail] = useState();
   const [uids, setUid] = useState();
- 
-
   const [uid2, setUid2] = useState();
   const [amount, setAmount] = useState();
 
@@ -91,7 +91,7 @@ const onPress5 = () => {
   }
 
   return (
-    <View style={{flex: 1,
+    <SafeAreaView style={{flex: 1,
       justifyContent: "center",
       }}>
       <ImageBackground source={require('../assets/background.jpg')} resizeMode="cover" style={styles.image}>
@@ -119,11 +119,8 @@ const onPress5 = () => {
           margin: 20,
         }}></View>
       
-     
-      
-
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.mediumButtonContainer} onPress={onPress}>
+        <TouchableOpacity style={styles.mediumButtonContainer} onPress={sendButton}>
           <View style={styles.circleContainer}>
             <View style={[styles.circle, { width: 100, height: 100, }]}>
               <Ionicons name="send" size={30} color="white" />
@@ -132,50 +129,21 @@ const onPress5 = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.mediumButtonContainer} onPress={onPress3}>
+        <TouchableOpacity style={styles.mediumButtonContainer} onPress={editProfileButton}>
           <View style={styles.circleContainer}>
             <View style={[styles.circle, { width: 100, height: 100, }]}>
-              <Ionicons name="cash-outline" size={30} color="white" />
-              <Text style={[styles.titleText, styles.boldText, { color: 'white', marginTop: 5, textAlign: 'center' }]}>Receive</Text>
+              <Ionicons name="person-outline" size={30} color="white" />
+              <Text style={[styles.titleText, styles.boldText, { color: 'white', marginTop: 5, textAlign: 'center' }]}>Edit Profile</Text>
             </View>
           </View>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.mediumButtonContainer} onPress={onPress5}>
-          <View style={styles.circleContainer}>
-            <View style={[styles.circle, { width: 100, height: 100, }]}>
-              <Ionicons name="cash-outline" size={30} color="white" />
-              <Text style={[styles.titleText, styles.boldText, { color: 'white', marginTop: 5, textAlign: 'center' }]}>Logs</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
       </View>
 
       
 
       <View style={styles.buttonsContainer}>
         <View style={{ marginRight: 10 }}>
-          <TouchableOpacity style={{ alignItems: 'center' }} onPress={onPress2}>
-            <View style={[styles.smallButtonContainer, { width: 100, height: 100 }]}>
-              <Ionicons name="person-outline" size={45} color="white" />
-              <Text style={[styles.titleText, styles.boldText, { color: 'white', marginTop: 5, textAlign: 'center' }]}>Profile</Text>
-            </View>
-            
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ marginRight: 10 }}>
-          <TouchableOpacity style={{ alignItems: 'center' }} onPress={onPress4}>
-            <View style={[styles.smallButtonContainer, { width: 100, height: 100 }]}>
-              <Ionicons name="logo-bitcoin" size={30} color="white" />
-              <Text style={[styles.titleText, styles.boldText, { color: 'white', marginTop: 5, textAlign: 'center' }]}>Crypto Currency</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ marginRight: 10 }}>
-          <TouchableOpacity style={{ alignItems: 'center' }} onPress={onPress1}>
+          <TouchableOpacity style={{ alignItems: 'center' }} onPress={logOutButton}>
             <View style={[styles.smallButtonContainer, { width: 100, height: 100 }]}>
               <Ionicons name="log-out-outline" size={45} color="white" />
               <Text style={[styles.titleText, styles.boldText, { color: 'white', marginTop: 5, textAlign: 'center' }]}>Logout</Text>
@@ -187,24 +155,23 @@ const onPress5 = () => {
       </ImageBackground>
       
 
-        {/*}
+        
       <View style={styles.footbar}>
-        <TouchableOpacity style={styles.iconContainer}>
-        <AntDesign name="message1" size={24} color="black" />
-          <Text style={styles.iconLabel}>Inbox</Text>
+        <TouchableOpacity style={styles.iconContainer} onPress={currencyButton}>
+        <Ionicons name="logo-bitcoin" size={24} color="black" />
+          <Text style={styles.iconLabel}>Currency</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity style={styles.iconContainer} onPress={ScanQRButton}>
           <Ionicons name="md-qr-code" size={24} color="black" />
-          <Text style={styles.iconLabel}>QR Code</Text>
+          <Text style={styles.iconLabel}>Scan QR</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity style={styles.iconContainer} onPress={historyLogsButton}>
           <Ionicons name="md-time" size={24} color="black" />
-          <Text style={styles.iconLabel}>Transaction History</Text>
+          <Text style={styles.iconLabel}>History</Text>
         </TouchableOpacity>
       </View>
-          */}
+    </SafeAreaView>
 
-    </View>
   );
 };
 
@@ -296,14 +263,16 @@ const styles = StyleSheet.create({
   boldText: {
     fontWeight: 'bold',
   },
-  /*footbar: {
+  footbar: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     height: 50,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'lightgray',
     backgroundColor: 'white',
+    padding: 20,
+    marginBottom: 5
   },
   iconContainer: {
     alignItems: 'center',
@@ -311,5 +280,5 @@ const styles = StyleSheet.create({
   iconLabel: {
     fontSize: 12,
     marginTop: 2,
-  },*/
+  },
 });

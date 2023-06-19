@@ -1,8 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, StatusBar, TextInput } from 'react-native';
+import React, { useEffect, 
+                useState } from 'react';
+import { View, 
+         Text, 
+         FlatList, 
+         StyleSheet, 
+         StatusBar, 
+         TextInput } from 'react-native';
 import CoinItem from '../components/CoinItem';
 
 const Currency = () => {
+
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState('');
   const [refreshing, setRefreshing] = useState(false);

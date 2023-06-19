@@ -7,7 +7,7 @@ import { View,
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
-export default function Profile() {
+export default function ScanQR() {
   const handleLogout = () => {
     console.log('Logout button clicked!');
     // Implement logout logic here
@@ -23,10 +23,6 @@ export default function Profile() {
         justifyContent: "center",
         }}>
         <ImageBackground source={require('../assets/background.jpg')} resizeMode="cover" style={styles.image}>
-        <View style={styles.userInfo}>
-          <Text style={styles.userName}>Hum Burglar</Text>
-          <Text style={styles.balance}>Available Balance: $69</Text>
-        </View>
 
         <View style={styles.cardContainer}>
           <TouchableOpacity

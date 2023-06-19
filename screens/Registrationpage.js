@@ -20,15 +20,10 @@ const Registrationpage = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [fullname, setFullname] = useState("");
   const [contact, setContact] = useState("");
-  // useEffect(() => {
-  //   const unsubscribe = auth.onAuthStateChanged(user => {
-  //     if (user) {
-  //       navigation.replace("Main")
-  //     }
-  //   })
 
-  //   return unsubscribe
-  // }, [])
+  const onPress = () => {
+    navigation.navigate("Login")
+  }
 
   const createNewUser = async (email) => {
     onAuthStateChanged(auth, (user) => {
@@ -144,6 +139,13 @@ const Registrationpage = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
+      <Text style={{marginTop: 10, textAlign:'center',}}>Already have an account?</Text>
+      <TouchableOpacity onPress={onPress}>
+          <View style={styles.buttonText}>
+              
+              <Text style={styles.buttonTextLogin}>Login here!</Text>
+          </View>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -211,6 +213,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  buttonTextLogin: {
+    marginTop: 10,
+    color: "black",
+    fontSize: 13,
+    fontWeight: "bold",
+    textAlign: "center",
+    textDecorationLine: 'underline'
   },
 });
 

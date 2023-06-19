@@ -1,29 +1,38 @@
-import { View, Text, FlatList,ActivityIndicator, StyleSheet,Alert, Pressable, TextInput, Button, Touchable, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import React ,{useState, useEffect} from 'react';
-import { auth, firebase } from '../firebase';
+import { View, 
+         Text, 
+         FlatList, 
+         StyleSheet, 
+         TouchableOpacity } from 'react-native';
+import React ,{useState, 
+               useEffect } from 'react';
+import { auth, 
+         firebase } from '../firebase';
 import { useNavigation } from '@react-navigation/core'
-import {collection,query, setDoc, doc, getDoc, querySnapshot, documentSnapshot, getDocs, snapshotEqual, onSnapshot} from 'firebase/firestore'
-import { db } from '../firebase'
-import { getAuth } from 'firebase/auth';
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { Ionicons } from "@expo/vector-icons"
+import { onSnapshot } from 'firebase/firestore'
 
-const receiveLogs = () => {
+const ReceiveLogs = () => {
   const [logInfo, setLogs] = useState([]);
   const navigation = useNavigation()
   const onPress = () => {
-    navigation.navigate("receiveLogs")
+    navigation.navigate("Main")
   }
   useEffect(() => {
     const user = auth.currentUser.uid;
     if (user) {
       const uid = user;
-      const todoRef = firebase.firestore().collection("users").doc(uid).collection("history").doc("DUgVrFDJhas4wAuX07re").collection("Recieved");
+      const todoRef = firebase
+        .firestore()
+        .collection('users')
+        .doc(uid)
+        .collection('history')
+        .doc('DUgVrFDJhas4wAuX07re')
+        .collection('Recieved')
+        .orderBy('Timestamp', 'desc'); // Order the documents by timestamp in descending order
 
       const unsubscribe = onSnapshot(todoRef, (querySnapshot) => {
         const logs = querySnapshot.docs.map((doc) => {
           const { ReceiverUid, Timestamp, transactions, Sender } = doc.data();
-          let formattedTimestamp = "";
+          let formattedTimestamp = '';
           if (Timestamp && Timestamp.toDate) {
             formattedTimestamp = Timestamp.toDate().toLocaleString();
           }
@@ -33,7 +42,6 @@ const receiveLogs = () => {
             Timestamp: formattedTimestamp,
             transactions,
             Sender
-            
           };
         });
         setLogs(logs);
@@ -43,94 +51,85 @@ const receiveLogs = () => {
       return () => unsubscribe();
     }
   }, []);
-
   return (
-    <View>
-     
-      {logInfo.map((item, index) => (
-        <Text key={index}>
-          received ${item.transactions} from {item.Sender} in {item.Timestamp}
-        </Text>
-      ))}
-      <TouchableOpacity style={styles.mediumButtonContainer} onPress={onPress}>
-          <View style={styles.circleContainer}>
-            <View style={styles.circle}>
-              <Ionicons name="send" size={20} color="white" />
-            </View>
+    <View style={styles.container}>
+      <FlatList
+        data={logInfo}
+        renderItem={({ item, index }) => (
+          <View style={[styles.logItem, index === 0 && styles.highlightedLog]}>
+
+            <Text key={index}>
+          You just received ${item.transactions} from {item.Sender}
+            </Text>
+
+            <Text style={styles.timestampText}>{item.Timestamp}</Text>
           </View>
-          <Text style={[styles.titleText, { color: 'black' }]}>Recieved history</Text>
-        </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.listContainer}
+      />
+        <View style={styles.receivedButton}>
+          <TouchableOpacity style={styles.ButtonContainer} onPress={onPress}>
+            <Text style={styles.buttonText}>Go Back Home</Text>
+          </TouchableOpacity>
+        </View>
     </View>
-    
-    
   );
-  
 };
 
-export default receiveLogs;
+export default ReceiveLogs;
+
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 16,
-      backgroundColor: 'white',
-    },
-    header: {
-      height: 120,
-      padding: 20,
-      borderRadius: 25,
-      alignItems: 'center',
-      backgroundColor: 'royalblue',
-    },
-    titleText: {
-      fontSize: 12,
-      color: 'white',
-    },
-    HeadlineText: {
-      fontSize: 12,
-      marginBottom: 10,
-      color: 'gray'
-    },
-    regularText: {
-      fontSize: 30,
-      color: "white",
-    },
-    buttonsContainer: {
-      flexDirection: 'row',
-      marginBottom: 20,
-      justifyContent: 'space-evenly',
-    },
-    mediumButtonContainer: {
-      height: 90,
-      width: 90,
-      padding: 20,
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'row',
-      borderRadius: 20,
-      alignContent: 'center',
-      flexWrap: 'wrap',
-      backgroundColor: 'white'
-    },
-    circle: {
-      width: 40,
-      height: 40,
-      borderRadius: 100,
-      backgroundColor: 'black',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginBottom: 5,
-    },
-    smallButtonContainer: {
-      height: 50,
-      width: 50,
-      padding: 10,
-      marginBottom10: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'row',
-      borderRadius: 10,
-      alignContent: 'center',
-      flexWrap: 'wrap',
-      backgroundColor: 'black'
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: '#F5F5F5',
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+  ButtonContainer:{
+    marginHorizontal: 80,
+    backgroundColor: "black",
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 15,
+  },
+  buttonText:{
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  receivedButton:{
+    padding: 10,
+    marginBottom: 10
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  listContainer: {
+    paddingBottom: 16,
+  },
+  logItem: {
+    backgroundColor: '#FFFFFF',
+    padding: 16,
+    marginBottom: 8,
+    borderRadius: 8,
+    elevation: 2,
+  },
+  highlightedLog: {
+    backgroundColor: '#FFD700',
+    borderWidth: 2,
+    borderColor: '#FFA500',
+  },
+  logText: {
+    fontSize: 16,
+    marginBottom: 8,
+    fontWeight: 'bold',
+  },
+  timestampText: {
+    fontSize: 12,
+    color: '#888888',
+  },
+});
