@@ -46,6 +46,7 @@ const historyLogsButton = () => {
   const [uids, setUid] = useState();
   const [uid2, setUid2] = useState();
   const [amount, setAmount] = useState();
+  const [fullname, setName] = useState();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -55,6 +56,7 @@ const historyLogsButton = () => {
         const uid = user.uid;
         setUid(uid);
         setEmail(user.email);
+        setName(user.fullname)
 
         const getWallet = async() => {
           const docRef = doc(db, "users", uid);
@@ -111,7 +113,7 @@ const historyLogsButton = () => {
       </View>
       {/*balance tab*/}
       <View style={styles.welcomeContainer}>
-        <Text style={styles.welcomeText}>Welcome, {email}</Text>
+        <Text style={styles.welcomeText}>Welcome, {userInfo.fullname}</Text>
       </View>
       <View
         style={{
