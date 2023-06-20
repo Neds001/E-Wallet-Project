@@ -2,7 +2,8 @@ import { View,
   Text, 
   FlatList, 
   StyleSheet, 
-  TouchableOpacity } from 'react-native';
+  TouchableOpacity,
+  ImageBackground } from 'react-native';
 import React ,{useState, 
         useEffect } from 'react';
 import { auth, 
@@ -53,14 +54,25 @@ return () => unsubscribe();
 }
 }, []);
 return (
-<View style={styles.container}>
+<View style={{flex: 1,
+      justifyContent: "center",
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0
+      }}>
+<ImageBackground source={require('../assets/background1.jpg')} 
+                       resizeMode="cover" 
+                       style={styles.image}>
 <FlatList
+ style={styles.flatlistContainer}
  data={logInfo}
  renderItem={({ item, index }) => (
    <View style={[styles.logItem, index === 0 && styles.highlightedLog]}>
 
      <Text key={index}>
-   You just received ${item.transactions} from {item.SenderEmail}
+   You just received ₱{item.transactions} from {item.SenderEmail}
      </Text>
 
      <Text style={styles.timestampText}>{item.Timestamp}</Text>
@@ -74,6 +86,7 @@ return (
      <Text style={styles.buttonText}>Go Back Home</Text>
    </TouchableOpacity>
  </View>
+ </ImageBackground>
 </View>
 );
 };
@@ -93,6 +106,9 @@ backgroundColor: "black",
 paddingVertical: 10,
 borderRadius: 5,
 marginTop: 15,
+},
+flatlistContainer:{
+  padding: 20,
 },
 buttonText:{
 color: "white",
@@ -123,6 +139,10 @@ highlightedLog: {
 backgroundColor: '#FFD700',
 borderWidth: 2,
 borderColor: '#FFA500',
+},
+image:{
+  flex: 1,
+  justifyContent: 'center',
 },
 logText: {
 fontSize: 16,

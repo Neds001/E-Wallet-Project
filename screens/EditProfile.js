@@ -88,7 +88,7 @@ const EditProfile = () => {
           </View>
 
           <Text style={styles.balance}>
-            Current Balance: <Text style={{fontWeight: 'bold',}}>${userInfo.wallet}</Text>
+            Current Balance: <Text style={{fontWeight: 'bold',}}>₱{userInfo.wallet}</Text>
           </Text>
           <Text style={styles.balance}>
             Full Name: <Text style={{fontWeight: 'bold',}}>{userInfo.fullname}</Text>

@@ -192,7 +192,7 @@ const Dashboard = ({ route, navigation }) => {
         <View style={styles.balanceContainer}>
           <Text style={styles.balanceText}>Current Balance</Text>
           <View style={styles.currentBalanceContainer}>
-            <Text style={styles.amountText}>$ {userInfo.wallet}</Text>
+            <Text style={styles.amountText}>₱ {userInfo.wallet}</Text>
           </View>
           <View style={styles.recentContactsContainer}>
             <Text style={styles.recentContactsText}>Recent Contacts:</Text>

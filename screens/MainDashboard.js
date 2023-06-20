@@ -102,18 +102,20 @@ const historyLogsButton = () => {
                        style={styles.image}>
      
       {/*balance tab*/}
-      <View style={[styles.header, { flexDirection: 'row', justifyContent: 'space-between', padding: 10}]}>
-        <View>
-          <Text style={{ fontWeight: 'bold', color: 'white', }}>
-            Balance
-          </Text>
-          <Text style={[styles.regularText, { color: "white" }]}>{userInfo.wallet}</Text>
+      <View style={{padding: 20}}>
+        <View style={styles.header}>
+          <View>
+            <Text style={{ fontWeight: 'bold', color: 'white', }}>
+              Balance
+            </Text>
+            <View style={{ alignItems: 'center' }}>
+            <Text style={[styles.regularText, { color: "white", }]}>₱ {userInfo.wallet}</Text>
+            </View>
+          </View>
         </View>
-        <TouchableOpacity >
-          <Ionicons name="reload-outline" size={15} color="white" />
-        </TouchableOpacity>
       </View>
       {/*balance tab*/}
+
       <View style={styles.welcomeContainer}>
         <Text style={styles.welcomeText}>Welcome, {userInfo.fullname}</Text>
       </View>
@@ -192,7 +194,6 @@ const styles = StyleSheet.create({
     height: 120,
     padding: 20,
     borderRadius: 25,
-    alignItems: 'center',
     backgroundColor: 'black',
   },
   welcomeText:{

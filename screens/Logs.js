@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity,ImageBackground } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { auth, firebase } from '../firebase';
@@ -49,14 +49,27 @@ const Logs = () => {
 
 
   return (
-    <View style={styles.container}>
+    <View style={{flex: 1,
+      justifyContent: "center",
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0
+      }}>
+      <ImageBackground source={require('../assets/background1.jpg')} 
+                       resizeMode="cover" 
+                       style={styles.image}>
       <FlatList
+        style={styles.flatlistContainer}
         data={logInfo}
         renderItem={({ item, index }) => (
           <View style={[styles.logItem, index === 0 && styles.highlightedLog]}>
 
-            <Text key={index}>
-          You have just sent ${item.transactions} to {item.ReceiverEmail}
+            <Text
+                 key={index}
+                 >
+          You have just sent ₱{item.transactions} to {item.ReceiverEmail}
             </Text>
 
             <Text style={styles.timestampText}>{item.Timestamp}</Text>
@@ -67,9 +80,10 @@ const Logs = () => {
       />
         <View style={styles.receivedButton}>
           <TouchableOpacity style={styles.ButtonContainer} onPress={onPress}>
-            <Text style={styles.buttonText}>Recieved History</Text>
+            <Text style={styles.buttonText}>Received History</Text>
           </TouchableOpacity>
         </View>
+        </ImageBackground>
     </View>
   );
 };
@@ -105,6 +119,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  flatlistContainer:{
+    padding: 20,
+  },
   listContainer: {
     paddingBottom: 16,
   },
@@ -119,6 +136,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFD700',
     borderWidth: 2,
     borderColor: '#FFA500',
+  },
+  image:{
+    flex: 1,
+    justifyContent: 'center',
   },
   logText: {
     fontSize: 16,
