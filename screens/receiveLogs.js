@@ -31,7 +31,7 @@ const ReceiveLogs = () => {
 
       const unsubscribe = onSnapshot(todoRef, (querySnapshot) => {
         const logs = querySnapshot.docs.map((doc) => {
-          const { ReceiverUid, Timestamp, transactions, Sender } = doc.data();
+          const { ReceiverUid, Timestamp, transactions, Sender, SenderEmail } = doc.data();
           let formattedTimestamp = '';
           if (Timestamp && Timestamp.toDate) {
             formattedTimestamp = Timestamp.toDate().toLocaleString();
@@ -41,7 +41,8 @@ const ReceiveLogs = () => {
             ReceiverUid,
             Timestamp: formattedTimestamp,
             transactions,
-            Sender
+            Sender,
+            SenderEmail
           };
         });
         setLogs(logs);
@@ -59,7 +60,7 @@ const ReceiveLogs = () => {
           <View style={[styles.logItem, index === 0 && styles.highlightedLog]}>
 
             <Text key={index}>
-          You just received ${item.transactions} from {item.Sender}
+          You just received ${item.transactions} from {item.SenderEmail}
             </Text>
 
             <Text style={styles.timestampText}>{item.Timestamp}</Text>

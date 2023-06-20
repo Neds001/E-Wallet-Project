@@ -26,7 +26,7 @@ const Logs = () => {
         .orderBy('Timestamp', 'desc'); // Order the documents by timestamp in descending order
       const unsubscribe = onSnapshot(todoRef, (querySnapshot) => {
         const logs = querySnapshot.docs.map((doc) => {
-          const { ReceiverUid, Timestamp, transactions, Sender } = doc.data();
+          const { ReceiverUid, Timestamp, transactions, Sender, ReceiverEmail } = doc.data();
           let formattedTimestamp = '';
           if (Timestamp && Timestamp.toDate) {
             formattedTimestamp = Timestamp.toDate().toLocaleString();
@@ -36,6 +36,7 @@ const Logs = () => {
             ReceiverUid,
             Timestamp: formattedTimestamp,
             transactions,
+            ReceiverEmail
           };
         });
         setLogs(logs);
@@ -55,7 +56,7 @@ const Logs = () => {
           <View style={[styles.logItem, index === 0 && styles.highlightedLog]}>
 
             <Text key={index}>
-          You have just sent ${item.transactions} to {item.ReceiverUid}
+          You have just sent ${item.transactions} to {item.ReceiverEmail}
             </Text>
 
             <Text style={styles.timestampText}>{item.Timestamp}</Text>

@@ -10,7 +10,7 @@ import { View,
 import { auth, 
          firebase } from '../firebase';
 import { doc, 
-         getDoc } from 'firebase/firestore';
+         getDoc,onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -29,17 +29,17 @@ const EditProfile = () => {
         setUid(uid);
         setEmail(user.email);
 
-        const getWallet = async () => {
-          const docRef = doc(db, "users", uid);
-          const docSnap = await getDoc(docRef);
+        const userRef = doc(db, "users", uid);
+        const unsubscribe = onSnapshot(userRef, (docSnap) => {
           if (docSnap.exists()) {
             const data = docSnap.data();
             setUserInfo(data);
           } else {
             console.log("No such document!");
           }
-        }
-        getWallet();
+        });
+
+        return () => unsubscribe();
       } else {
         navigation.navigate("Login");
       }
@@ -57,14 +57,14 @@ const EditProfile = () => {
         };
 
         const userRef = firebase.firestore().collection('users').doc(uid);
-        await userRef.update(updatedData);
+        await updateDoc(userRef, updatedData);
         alert('Profile updated successfully');
         console.log('Profile updated successfully');
       } catch (error) {
         alert('Error updating profile:', error);
         console.error('Error updating profile:', error);
       }
-    };
+    }
   }
 
   return (
