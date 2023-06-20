@@ -1,11 +1,10 @@
-import React from 'react';
-import { View, 
-         TouchableOpacity, 
-         Text, 
-         StyleSheet, 
-         ImageBackground, } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+
+
+import React, { Component } from "react";
+import { StyleSheet, View, TextInput } from "react-native";
+import MaterialRightIconTextbox from "../components/MaterialRightIconTextbox";
+import MaterialUnderlineTextbox from "../components/MaterialUnderlineTextbox";
+import MaterialButtonGrey from "../components/MaterialButtonGrey";
 
 export default function ScanQR() {
   const handleLogout = () => {
@@ -19,131 +18,55 @@ export default function ScanQR() {
   };
 
   return (
-      <View style={{flex: 1,
-        justifyContent: "center",
-        }}>
-        <ImageBackground source={require('../assets/background.jpg')} resizeMode="cover" style={styles.image}>
-
-        <View style={styles.cardContainer}>
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => handleCardPress('Card 1')}
-          >
-            <AntDesign name="profile" size={60} color="white" />
-            <Text style={styles.cardText}>Edit Profile</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => handleCardPress('Card 2')}
-          >
-            <Ionicons name="qr-code" size={60} color="white" />
-            <Text style={styles.cardText}>My QR Codes</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => handleCardPress('Card 3')}
-          >
-            <Ionicons name="ios-settings-outline" size={60} color="white" />
-            <Text style={styles.cardText}>Settings</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => handleCardPress('Card 4')}
-          >
-            <Ionicons name="notifications-circle-outline" size={60} color="white" />
-            <Text style={styles.cardText}>Notifications</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => handleCardPress('Card 5')}
-          >
-            <Ionicons name="ios-chatbubbles" size={60} color="white" />
-            <Text style={styles.cardText}>Customer Service</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => handleCardPress('Card 6')}
-          >
-            <Ionicons name="md-log-out-sharp" size={60} color="white" />
-            <Text style={styles.cardText}>Log Out</Text>
-          </TouchableOpacity>
-        </View>
-        </ImageBackground>
-      </View>
-    
+    <View style={styles.container}>
+      <TextInput placeholder="Log In" style={styles.textInput}></TextInput>
+      <MaterialRightIconTextbox
+        style={styles.materialRightIconTextbox}
+      ></MaterialRightIconTextbox>
+      <MaterialUnderlineTextbox
+        style={styles.materialUnderlineTextbox}
+      ></MaterialUnderlineTextbox>
+      <MaterialButtonGrey
+        style={styles.materialButtonGrey}
+      ></MaterialButtonGrey>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollViewContainer: {
-    flexGrow: 1,
-  },
   container: {
     flex: 1,
+    backgroundColor: "rgba(31,31,31,1)",
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F1F3F6',
+    alignItems: 'center'
   },
-  logoutButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    padding: 10,
+  textInput: {
+    fontFamily: "Arial",
+    color: "#121212",
+    width: 121,
+    height: 53,
+    lineHeight: 40,
+    fontSize: 40,
+    marginTop: 226,
+    marginLeft: 51
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    position: 'absolute',
-    top: 10,
-    left: 10,
+  materialRightIconTextbox: {
+    height: 43,
+    width: 298,
+    marginTop: 166,
+    marginLeft: 33
   },
-  userInfo: {
-    marginBottom: 20,
+  materialUnderlineTextbox: {
+    height: 43,
+    width: 298,
+    marginTop: -108,
+    marginLeft: 33
   },
-  userName: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-    color: '#333',
-  },
-  balance: {
-    fontSize: 18,
-    textAlign: 'center',
-    color: '#555',
-  },
-  cardContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 10,
-  },
-  image:{
-    flex: 1,
-    justifyContent: 'center'
-  },
-  card: {
-    width: 150,
-    height: 150,
-    backgroundColor: 'black',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 10,
-    shadowColor: 'rgba(0, 0, 0, 0.3)',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  cardText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-    marginTop: 10,
-  },
+  materialButtonGrey: {
+    height: 36,
+    width: 100,
+    borderRadius: 15,
+    marginTop: 120,
+    marginLeft: 130
+  }
 });

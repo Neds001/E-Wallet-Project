@@ -4,7 +4,9 @@ import { View,
          Text, 
          StyleSheet, 
          TextInput, 
-         Button } from 'react-native';
+         ImageBackground,
+         SafeAreaView,
+         TouchableOpacity } from 'react-native';
 import { auth, 
          firebase } from '../firebase';
 import { doc, 
@@ -66,49 +68,73 @@ const EditProfile = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.userInfo}>
-        <Text style={styles.userId}>
-          Here is your Unique ID: {uids}
-        </Text>
-        <Text style={styles.balance}>
-          Current Balance: {userInfo.wallet}
-        </Text>
-        <Text style={styles.balance}>
-          Full Name: {userInfo.fullname}
-        </Text>
-        <Text style={styles.balance}>
-          Contact number: {userInfo.contact}
-        </Text>
-      </View>
+    <SafeAreaView style={{
+      flex: 1,
+      justifyContent: 'center',
+      flexDirection: 'column'
+    }}>
+      <ImageBackground
+        source={require('../assets/background1.jpg')}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <View style={styles.contentContainer}>
+          <View style={styles.idContainer}>
+            <View style={styles.userInfo}>
+              <Text style={styles.userId}>
+                Here is your Unique ID: {uids}
+              </Text>
+            </View>
+          </View>
 
-      <View style={styles.formContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Juan DelaCruz"
-          value={fullname}
-          onChangeText={setName}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="09xxxxxxxxx"
-          value={contact}
-          onChangeText={setContact}
-        />
-        <Button title="Save" onPress={editProfile} />
-      </View>
-    </View>
+          <Text style={styles.balance}>
+            Current Balance: <Text style={{fontWeight: 'bold',}}>${userInfo.wallet}</Text>
+          </Text>
+          <Text style={styles.balance}>
+            Full Name: <Text style={{fontWeight: 'bold',}}>{userInfo.fullname}</Text>
+          </Text>
+          <Text style={styles.balance}>
+            Contact number: <Text style={{fontWeight: 'bold',}}>{userInfo.contact}</Text>
+          </Text>
+
+          <View style={styles.formContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Juan DelaCruz"
+              placeholderTextColor="rgba(0, 0, 0, 0.5)"
+              value={fullname}
+              onChangeText={text => setName(text.replace(/[^a-zA-Z ]/g, ''))}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="09xxxxxxxxx"
+              placeholderTextColor="rgba(0, 0, 0, 0.5)"
+              value={contact}
+              maxLength={11}
+              keyboardType="numeric"
+               onChangeText={text => setContact(text.replace(/[^0-9]/g, ''))}
+            />
+            <TouchableOpacity
+          style={styles.button}
+          onPress={editProfile}
+          >
+            <Text style={styles.buttonText}>Save</Text>
+          </TouchableOpacity>
+          </View>
+          
+        </View>
+      </ImageBackground>
+    </SafeAreaView>
   );
-}
+};
 
 export default EditProfile;
 
 const styles = StyleSheet.create({
-  container: {
+  contentContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F1F3F6',
   },
   userInfo: {
     marginBottom: 20,
@@ -120,20 +146,44 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#333',
   },
+  idContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  image: {
+    flex: 1,
+  },
+  button:{
+    marginHorizontal: 80,
+    backgroundColor: "black",
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 15,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
   balance: {
     fontSize: 18,
     textAlign: 'center',
-    color: "black",
+    color: 'black',
   },
   formContainer: {
     marginTop: 20,
     width: '80%',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 10,
+    height: 40,
+    borderColor: "black",
+    borderWidth: 2,
     borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 15,
+    margin: 10,
+    fontFamily: 'Arial',
   },
 });

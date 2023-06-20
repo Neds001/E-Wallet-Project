@@ -108,7 +108,7 @@ const Login = ({ navigation }) => {
        <View style={styles.logoContainer}>
        <ImageBackground
         style={styles.logo}
-        source={require('../assets/blinc.png')}
+        source={require('../assets/logo.png')}
        />
        </View>
        <View style={styles.logoName}>
