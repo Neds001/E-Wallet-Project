@@ -98,13 +98,13 @@ const Registrationpage = ({ navigation }) => {
       <View style={styles.logoContainer}>
        <ImageBackground
         style={styles.logo}
-        source={require('../assets/blinc.png')}
+        source={require('../assets/logo.png')}
        />
        </View>
-       <View style={styles.logoName}>
+       {/*<View style={styles.logoName}>
        <Text style={styles.logoText}>Bitshares Labs Inc</Text>
-       </View>
-      <Text style={styles.title}>Register</Text>
+       </View>*/}
+      <Text style={styles.title}>Register Your Account Here!</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 250, 
     height: 250, 
-    flexDirection: 'column',
+    //flexDirection: 'column',
   },
   logoName: {
     flexDirection: 'row',

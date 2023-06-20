@@ -111,11 +111,11 @@ const Login = ({ navigation }) => {
         source={require('../assets/logo.png')}
        />
        </View>
-       <View style={styles.logoName}>
+       {/*<View style={styles.logoName}>
        <Text style={styles.logoText}>Bitshares Labs Inc</Text>
-       </View>
+       </View>*/}
        
-       <Text style={styles.title}>Welcome to C D J N</Text>
+       <Text style={styles.title}>LATO-LATO INC.</Text>
     
       <TextInput
         style={styles.input}
@@ -163,13 +163,12 @@ const styles = StyleSheet.create({
   logoContainer:{
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    paddingBottom:0,
+    //alignItems: 'flex-start',
+    //paddingBottom:0,
   },  
   logo: {
-    width: 250, 
-    height: 250, 
-    flexDirection: 'column',
+    width: 330, 
+    height: 330, 
   },
   logoName: {
     flexDirection: 'row',
@@ -187,6 +186,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: "bold",
+    paddingTop: 0,
     padding: 20,
     textAlign: "center",
     fontFamily: 'Roboto'
