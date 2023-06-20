@@ -128,7 +128,7 @@ const Dashboard = ({ route, navigation }) => {
         newTransactions();
 
         const recievedHis = async () => {
-          await addDoc(collection(db, "users", recipientUid, "history", "DUgVrFDJhas4wAuX07re", "Received"), {
+          await addDoc(collection(db, "users", recipientUid, "history", "DUgVrFDJhas4wAuX07re", "Recieved"), {
             transactions: amount,
             Timestamp: new Date(),
             Sender: uid,  
