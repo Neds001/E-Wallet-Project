@@ -5,7 +5,7 @@ import LoginScreen from './screens/LoginScreen';
 import MainDashboard from './screens/MainDashboard';
 import SendCash from './screens/SendCash';
 import ScanQR from './screens/ScanQR';
-import EditProfile from './screens/EditProfile';
+import EditProfile from './screens/EditProfile';  
 import Currency from './screens/Currency';
 import Registrationpage from './screens/Registrationpage';
 import Logs from './screens/Logs';

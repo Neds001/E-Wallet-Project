@@ -3,15 +3,16 @@ import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import { auth, firebase } from '../firebase';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from 'firebase/auth';
+import QRCode from 'react-native-qrcode-svg';
 
 const EditProfile = () => {
-
   const [userInfo, setUserInfo] = useState([]);
   const [email, setEmail] = useState();
   const [uids, setUid] = useState();
   const [fullname, setName] = useState();
   const [contact, setContact] = useState("");
+  const [qrCodeValue, setQrCodeValue] = useState('');
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -19,6 +20,7 @@ const EditProfile = () => {
         const uid = user.uid;
         setUid(uid);
         setEmail(user.email);
+        setQrCodeValue(user.email);
 
         const userRef = doc(db, "users", uid);
         const unsubscribe = onSnapshot(userRef, (docSnap) => {
@@ -75,6 +77,12 @@ const EditProfile = () => {
         </Text>
       </View>
 
+      <View style={styles.qrCodeContainer}>
+        {qrCodeValue ? (
+          <QRCode value={qrCodeValue} size={200} />
+        ) : null}
+      </View>
+
       <View style={styles.formContainer}>
         <TextInput
           style={styles.input}
@@ -116,7 +124,11 @@ const styles = StyleSheet.create({
   balance: {
     fontSize: 18,
     textAlign: 'center',
-    color: "black",
+    color: 'black',
+  },
+  qrCodeContainer: {
+    marginTop: 20,
+    alignItems: 'center',
   },
   formContainer: {
     marginTop: 20,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground, Alert } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   collection,
@@ -18,7 +18,7 @@ import {
 import { auth, db, firebase } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
-const Dashboard = ({ route, navigation }) => {
+const Dashboard = ({ route }) => {
 
   const [balance, setBalance] = useState(5000); // Initial balance
   const [email, setEmail] = useState();
@@ -77,6 +77,12 @@ const Dashboard = ({ route, navigation }) => {
   const transferFunds = async () => {
     try {
       const recipientUid = await getRecipientUid(recipientEmail);
+
+      // Validate amount
+      if (!amount || isNaN(amount)) {
+        Alert.alert("Error", "Please enter a valid amount");
+        return;
+      }
 
       const sfDocRef = doc(db, "users", recipientUid);
       await runTransaction(db, async (transaction) => {
@@ -177,13 +183,13 @@ const Dashboard = ({ route, navigation }) => {
           unsubscribe();
         };
       } else {
-        navigation.navigate("Login");
+        route.navigation.navigate("Login");
       }
     });
   }, []);
 
-  const handleTransferFunds = () => {
-    setBalance(balance - 100);
+  const handleContactPress = (contact) => {
+    setRecipientEmail(contact);
   };
 
   return (
@@ -197,7 +203,12 @@ const Dashboard = ({ route, navigation }) => {
           <View style={styles.recentContactsContainer}>
             <Text style={styles.recentContactsText}>Recent Contacts:</Text>
             {recentContacts.map((contact, index) => (
-              <Text key={index} style={styles.recentContactText}>{contact}</Text>
+              <TouchableOpacity
+                key={index}
+                onPress={() => handleContactPress(contact)}
+              >
+                <Text style={styles.recentContactText}>{contact}</Text>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
@@ -212,13 +223,18 @@ const Dashboard = ({ route, navigation }) => {
           placeholder="Input Amount: "
           value={amount}
           onChangeText={setAmount}
+          keyboardType="numeric"
         />
+       
+
+        
         <TouchableOpacity
-          style={styles.transferButton}
+          style={styles.button}
           onPress={transferFunds}
         >
-          <Text style={styles.transferButtonText}>Send Funds</Text>
+          <Text style={styles.buttonText}>Transfer</Text>
         </TouchableOpacity>
+
       </ImageBackground>
     </View>
   );
@@ -228,57 +244,61 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
+    opacity: 0.9
   },
   balanceContainer: {
     alignItems: "center",
-    marginBottom: 30,
+    marginBottom: 20
   },
   balanceText: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
-    color: "#fff",
+    color: "#fff"
   },
   currentBalanceContainer: {
     backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20
   },
   amountText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   recentContactsContainer: {
-    alignItems: "center",
+    marginTop: 20
   },
   recentContactsText: {
     fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 5,
-    color: "#fff",
+    marginBottom: 10,
+    color: "#fff"
   },
   recentContactText: {
     fontSize: 14,
-    color: "#fff",
+    color: "#fff"
   },
   input: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff",
+    borderRadius: 5,
     padding: 10,
-    marginBottom: 10,
+    marginVertical: 10,
+    width: "80%",
+    backgroundColor: "#fff"
   },
-  transferButton: {
-    backgroundColor: "#000",
-    borderRadius: 10,
-    padding: 10,
-    alignItems: "center",
+  button: {
+    backgroundColor: "#3dccc7",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5
   },
-  transferButtonText: {
-    fontSize: 18,
-    fontWeight: "bold",
+  buttonText: {
     color: "#fff",
-  },
+    fontWeight: "bold",
+    textAlign: "center"
+  }
 });
 
 export default Dashboard;
