@@ -81,18 +81,14 @@ const EditProfile = () => {
         style={styles.image}
       >
         <View style={styles.contentContainer}>
-          {/*<View style={styles.idContainer}>
-            <View style={styles.userInfo}>
-              <Text style={styles.userId}>
-                Here is your Unique ID: {uids}
-              </Text>
+         
+          <View style={styles.qrCodeContainer}>
+            <View style={styles.qrCode}>
+              {qrCodeValue ? (
+                <QRCode value={qrCodeValue} size={180} />
+              ) : null}
             </View>
-            </View>*/}
-            <View style={styles.qrCodeContainer}>
-        {qrCodeValue ? (
-          <QRCode value={qrCodeValue} size={200} />
-        ) : null}
-        </View>
+          </View>
 
           <Text style={styles.balance}>
             Current Balance: 
@@ -166,9 +162,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 5,
   },
-  qrCodeContainer: {
-    marginTop: 20,
+  qrCode: {
     alignItems: 'center',
+    margin: 10
+  },
+  qrCodeContainer:{
+    marginBottom: 20,
+    borderWidth: 5,
+    borderColor: '#e5e5e5',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   userId: {
     fontSize: 28,
