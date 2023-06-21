@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
-
-import { auth, db } from "../firebase";
+         View,
+         Text,
+         TextInput,
+         StyleSheet,
+         TouchableOpacity,
+         ImageBackground, } from "react-native";
+import { auth, 
+         db } from "../firebase";
 import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,onAuthStateChanged 
-} from "firebase/auth";
-import { collection, setDoc, doc, addDoc } from "firebase/firestore";
+         signInWithEmailAndPassword,
+         createUserWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
+import { setDoc, 
+         doc } from "firebase/firestore";
 
 const Registrationpage = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -92,63 +91,72 @@ const Registrationpage = ({ navigation }) => {
   };
   return (
     <View style={{flex: 1,
-      justifyContent: "center",
-      }}>
-      <ImageBackground source={require('../assets/background1.jpg')} resizeMode="cover" style={styles.image}>
+                  justifyContent: "center",
+                  flexDirection: 'column' }}>
+      <ImageBackground 
+        source={require('../assets/background1.jpg')} 
+        resizeMode="cover" 
+        style={styles.image}>
+      
+      {/* logo cointainer */}
       <View style={styles.logoContainer}>
        <ImageBackground
-        style={styles.logo}
-        source={require('../assets/logo.png')}
-       />
+          style={styles.logo}
+          source={require('../assets/logoReg.png')}/>
        </View>
-       {/*<View style={styles.logoName}>
-       <Text style={styles.logoText}>Bitshares Labs Inc</Text>
-       </View>*/}
-      <Text style={styles.title}>Register Your Account Here!</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-       <TextInput
-        style={styles.input}
-        placeholder="Fullname"
-        value={fullname}
-        onChangeText={setFullname}
-        
-      />
-       <TextInput
-        style={styles.input}
-        placeholder="Phone number"
-        value={contact}
-        onChangeText={setContact}
-        
-      />
+
+      <Text style={styles.title}>Register Your Account Here</Text>
+      
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor="rgba(0, 0, 0, 0.5)"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="rgba(0, 0, 0, 0.5)"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Fullname"
+          placeholderTextColor="rgba(0, 0, 0, 0.5)"
+          value={fullname}
+          onChangeText={setFullname}
+          
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Phone number"
+          placeholderTextColor="rgba(0, 0, 0, 0.5)"
+          value={contact}
+          onChangeText={setContact}
+          
+        />
+      </View>
+
       <TouchableOpacity
         style={styles.button}
-        onPress={() => handleRegister(email, password)}
-        
-      >
-        <Text style={styles.buttonText}>Register</Text>
+        onPress={() => handleRegister(email, password)}>
+          <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
+
       <View style={{paddingBottom: 10}}>
-      <Text style={{marginTop: 10, textAlign:'center',}}>Already have an account?</Text>
-      <TouchableOpacity onPress={onPress}>
-          <View style={styles.buttonText}>
+        <Text style={{marginTop: 10, textAlign:'center',}}>Already have an account?</Text>
+          <TouchableOpacity onPress={onPress}>
+            <View style={styles.buttonText}>
               <Text style={styles.buttonTextLogin}>Login here!</Text>
-          </View>
-        </TouchableOpacity>
-        </View>
+            </View>
+          </TouchableOpacity>
+      </View>
       </ImageBackground>
     </View>
   );
@@ -160,11 +168,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 20,
   },
+  inputContainer: {
+    
+  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    padding: 10,
     textAlign: "center",
+    fontFamily: 'Roboto'
   },
   image:{
     flex: 1,
@@ -195,14 +207,14 @@ const styles = StyleSheet.create({
    
   },
   input: {
-    height: 40,
+    height: 30,
     borderColor: "black",
     borderWidth: 2,
     borderRadius: 5,
     marginBottom: 10,
     paddingHorizontal: 15,
     margin: 10,
-    fontFamily: 'Arial',
+    fontFamily: 'Roboto',
     padding: 5,
     backgroundColor: 'white'
   },

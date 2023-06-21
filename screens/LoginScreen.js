@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Ionicons } from "@expo/vector-icons"
+import React, { useState, 
+                useEffect } from "react";
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  ImageBackground,
-} from "react-native";
-import { auth, db } from "../firebase";
+  ImageBackground, } from "react-native";
+import { auth, 
+         db } from "../firebase";
 import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,onAuthStateChanged 
-} from "firebase/auth";
-import { collection, setDoc, doc, addDoc } from "firebase/firestore";
+          signInWithEmailAndPassword,
+          createUserWithEmailAndPassword,onAuthStateChanged  } from "firebase/auth";
+import { setDoc, 
+         doc } from "firebase/firestore";
 
-const Login = ({ navigation }) => {
+
+  const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -61,27 +62,28 @@ const Login = ({ navigation }) => {
      
   };
 
-  const handleRegister = (e, p) => {
-    // Implement your login logic here
-    createUserWithEmailAndPassword(auth, e, p)
-      .then(() => {
-        createNewUser(e)
-          .then(() => {
-            navigation.navigate("Main");
-          })
-          .catch((err) => {
-            alert(err);
-            console.error(err);
-          });
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        alert(errorMessage);
-        console.log(errorMessage);
-        // ..
-      });
-    // You can replace the console.log statements with your actual login implementation
-  };
+  // const handleRegister = (e, p) => {
+  //   // Implement your login logic here
+  //   createUserWithEmailAndPassword(auth, e, p)
+  //     .then(() => {
+  //       createNewUser(e)
+  //         .then(() => {
+  //           navigation.navigate("Main");
+  //         })
+  //         .catch((err) => {
+  //           alert(err);
+  //           console.error(err);
+  //         });
+  //     })
+  //     .catch((error) => {
+  //       const errorMessage = error.message;
+  //       alert(errorMessage);
+  //       console.log(errorMessage);
+  //       // ..
+  //     });
+  //   // You can replace the console.log statements with your actual login implementation
+  // };
+
   const handleLogin = (e, p) => {
     // Implement your login logic here
     signInWithEmailAndPassword(auth, e, p)
@@ -100,30 +102,26 @@ const Login = ({ navigation }) => {
   };
   return (
       <View style={{flex: 1,
-        justifyContent: "center",
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0
-        }}>
-       <ImageBackground source={require('../assets/background1.jpg')} resizeMode="cover" style={styles.image}>
+                    justifyContent: "center",
+                  }}>
+        <ImageBackground 
+          source={require('../assets/background1.jpg')} 
+          resizeMode="cover" 
+          style={styles.image}>
+
        <View style={styles.logoContainer}>
        <ImageBackground
         style={styles.logo}
         source={require('../assets/logo.png')}
        />
        </View>
-       {/*<View style={styles.logoName}>
-       <Text style={styles.logoText}>Bitshares Labs Inc</Text>
-       </View>*/}
        
        <Text style={styles.title}>LATO-LATO INC.</Text>
     
       <TextInput
         style={styles.input}
         placeholder="Email"
-       
+        placeholderTextColor="rgba(0, 0, 0, 0.5)"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -132,6 +130,7 @@ const Login = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Password"
+        placeholderTextColor="rgba(0, 0, 0, 0.5)"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -139,20 +138,17 @@ const Login = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => handleLogin(email, password)}
-      >
+        onPress={() => handleLogin(email, password)}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
+
       <Text style={{marginTop: 10, textAlign:'center',}}>Already have an account?</Text>
       <TouchableOpacity onPress={onPress}>
-          <View style={styles.buttonText}>
-              
+          <View style={styles.buttonText}> 
               <Text style={styles.buttonTextSignUp}>Signup here!</Text>
           </View>
         </TouchableOpacity>
-
-        </ImageBackground>
-        
+        </ImageBackground> 
     </View>
   );
 };
@@ -166,8 +162,6 @@ const styles = StyleSheet.create({
   logoContainer:{
     flexDirection: 'row',
     justifyContent: 'center',
-    //alignItems: 'flex-start',
-    //paddingBottom:0,
   },  
   logo: {
     width: 330, 
@@ -184,7 +178,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 19,
     opacity: 0.6,
-   
   },
   title: {
     fontSize: 40,
@@ -206,7 +199,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 15,
     margin: 10,
-    fontFamily: 'Arial',
+    fontFamily: 'Roboto',
     backgroundColor: 'white'
   },
   button: {
@@ -230,7 +223,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textDecorationLine: 'underline'
   },
- 
     container: {
       flex: 1,
       padding: 16,

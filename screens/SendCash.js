@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#fff',
-    fontFamily: 'Arial'
+    fontFamily: 'Roboto',
   },
   currentBalanceContainer: {
     backgroundColor: '#fff',
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     margin: 10,
-    fontFamily: 'Arial',
+    fontFamily: 'Roboto',
     backgroundColor: 'white'
   },
   transferButton: {

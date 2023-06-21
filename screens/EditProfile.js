@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 15,
     margin: 10,
-    fontFamily: 'Arial',
+    fontFamily: 'Roboto',
     backgroundColor: 'white'
   },
 });
