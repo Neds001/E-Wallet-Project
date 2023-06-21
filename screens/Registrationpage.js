@@ -137,8 +137,10 @@ const Registrationpage = ({ navigation }) => {
           style={styles.input}
           placeholder="Phone number"
           placeholderTextColor="rgba(0, 0, 0, 0.5)"
+          onChangeText={text => setContact(text.replace(/[^0-9]/g, ''))}
+          keyboardType="numeric"
+          maxLength={11}
           value={contact}
-          onChangeText={setContact}
           
         />
       </View>

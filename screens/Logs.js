@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet, TouchableOpacity,ImageBackground } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ImageBackground, Modal } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { auth, firebase } from '../firebase';
@@ -6,10 +6,22 @@ import { onSnapshot, orderBy } from 'firebase/firestore';
 
 const Logs = () => {
   const [logInfo, setLogs] = useState([]);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
   const onPress = () => {
     navigation.navigate('ReceiveLogs');
+  };
+
+  const openModal = (transaction) => {
+    setSelectedTransaction(transaction);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setSelectedTransaction(null);
+    setModalVisible(false);
   };
 
   useEffect(() => {
@@ -47,43 +59,51 @@ const Logs = () => {
     }
   }, []);
 
-
   return (
-    <View style={{flex: 1,
-      justifyContent: "center",
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0
-      }}>
-      <ImageBackground source={require('../assets/background1.jpg')} 
-                       resizeMode="cover" 
-                       style={styles.image}>
-      <FlatList
-        style={styles.flatlistContainer}
-        data={logInfo}
-        renderItem={({ item, index }) => (
-          <View style={[styles.logItem, index === 0 && styles.highlightedLog]}>
-
-            <Text
-                 key={index}
-                 >
-          You have just sent ₱{item.transactions} to {item.ReceiverEmail}
-            </Text>
-
-            <Text style={styles.timestampText}>{item.Timestamp}</Text>
-          </View>
-        )}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContainer}
-      />
+    <View style={styles.container}>
+      <ImageBackground source={require('../assets/background1.jpg')} resizeMode="cover" style={styles.image}>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          style={styles.flatlistContainer}
+          data={logInfo}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity
+              style={[styles.logItem, index === 0 && styles.highlightedLog]}
+              onPress={() => openModal(item)}
+            >
+              <Text>You have just sent ₱{item.transactions} to {item.ReceiverEmail}</Text>
+              <Text style={styles.timestampText}>{item.Timestamp}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.listContainer}
+        />
         <View style={styles.receivedButton}>
           <TouchableOpacity style={styles.ButtonContainer} onPress={onPress}>
             <Text style={styles.buttonText}>Received History</Text>
           </TouchableOpacity>
         </View>
-        </ImageBackground>
+        <Modal
+          visible={modalVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={closeModal}
+        >
+          <View style={styles.modalContainer}>
+            {selectedTransaction && (
+              <View style={styles.transactionModal}>
+                <Text style={styles.modalText}>Transaction Details</Text>
+                <Text>Transaction: ₱{selectedTransaction.transactions}</Text>
+                <Text>Receiver: {selectedTransaction.ReceiverEmail}</Text>
+                <Text>Timestamp: {selectedTransaction.Timestamp}</Text>
+                                <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+                  <Text style={styles.closeButtonText}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        </Modal>
+      </ImageBackground>
     </View>
   );
 };
@@ -93,24 +113,27 @@ export default Logs;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    justifyContent: "center",
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
   },
-  ButtonContainer:{
+  ButtonContainer: {
     marginHorizontal: 80,
-    backgroundColor: "black",
+    backgroundColor: "#111827",
     paddingVertical: 10,
     borderRadius: 5,
     marginTop: 15,
   },
-  buttonText:{
+  buttonText: {
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
   },
-  receivedButton:{
+  receivedButton: {
     padding: 10,
     marginBottom: 10
   },
@@ -119,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  flatlistContainer:{
+  flatlistContainer: {
     padding: 20,
   },
   listContainer: {
@@ -137,7 +160,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#FFA500',
   },
-  image:{
+  image: {
     flex: 1,
     justifyContent: 'center',
   },
@@ -150,4 +173,33 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#888888',
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  transactionModal: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 8,
+    width: '80%',
+  },
+  modalText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: '#111827',
+    padding: 10,
+    borderRadius: 8,
+    alignSelf: 'flex-end',
+  },
+  closeButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
 });
+
