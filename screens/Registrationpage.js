@@ -141,13 +141,14 @@ const Registrationpage = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
+      <View style={{paddingBottom: 10}}>
       <Text style={{marginTop: 10, textAlign:'center',}}>Already have an account?</Text>
       <TouchableOpacity onPress={onPress}>
           <View style={styles.buttonText}>
-              
               <Text style={styles.buttonTextLogin}>Login here!</Text>
           </View>
         </TouchableOpacity>
+        </View>
       </ImageBackground>
     </View>
   );
@@ -202,10 +203,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     margin: 10,
     fontFamily: 'Arial',
+    padding: 5,
+    backgroundColor: 'white'
   },
   button: {
     marginHorizontal: 80,
-    backgroundColor: "black",
+    backgroundColor: "#111827",
     paddingVertical: 10,
     borderRadius: 5,
     marginTop: 15,

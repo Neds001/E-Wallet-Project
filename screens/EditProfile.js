@@ -79,22 +79,32 @@ const EditProfile = () => {
         style={styles.image}
       >
         <View style={styles.contentContainer}>
-          <View style={styles.idContainer}>
+          {/*<View style={styles.idContainer}>
             <View style={styles.userInfo}>
               <Text style={styles.userId}>
                 Here is your Unique ID: {uids}
               </Text>
             </View>
-          </View>
+            </View>*/}
 
           <Text style={styles.balance}>
-            Current Balance: <Text style={{fontWeight: 'bold',}}>₱{userInfo.wallet}</Text>
+            Current Balance: 
+            <View style={styles.infoContainer}>
+            <Text style={{fontWeight: 'bold', color: 'black'}}>₱{userInfo.wallet}</Text>
+            </View>
+
           </Text>
           <Text style={styles.balance}>
-            Full Name: <Text style={{fontWeight: 'bold',}}>{userInfo.fullname}</Text>
+            Full Name: 
+            <View style={styles.infoContainer}>
+            <Text style={{fontWeight: 'bold', color: 'black'}}>{userInfo.fullname}</Text>
+            </View>
           </Text>
           <Text style={styles.balance}>
-            Contact number: <Text style={{fontWeight: 'bold',}}>{userInfo.contact}</Text>
+            Contact number: 
+            <View style={styles.infoContainer}>
+            <Text style={{fontWeight: 'bold', color: 'black'}}>{userInfo.contact}</Text>
+            </View>
           </Text>
 
           <View style={styles.formContainer}>
@@ -112,7 +122,7 @@ const EditProfile = () => {
               value={contact}
               maxLength={11}
               keyboardType="numeric"
-               onChangeText={text => setContact(text.replace(/[^0-9]/g, ''))}
+              onChangeText={text => setContact(text.replace(/[^0-9]/g, ''))}
             />
             <TouchableOpacity
           style={styles.button}
@@ -139,6 +149,14 @@ const styles = StyleSheet.create({
   userInfo: {
     marginBottom: 20,
   },
+  infoContainer:{
+    backgroundColor: '#fff',
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    borderRadius: 5,
+    marginBottom: 10,
+    marginLeft: 5,
+  },
   userId: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -156,7 +174,7 @@ const styles = StyleSheet.create({
   },
   button:{
     marginHorizontal: 80,
-    backgroundColor: "black",
+    backgroundColor: "#111827",
     paddingVertical: 10,
     borderRadius: 5,
     marginTop: 15,
@@ -170,7 +188,7 @@ const styles = StyleSheet.create({
   balance: {
     fontSize: 18,
     textAlign: 'center',
-    color: 'black',
+    color: 'white',
   },
   formContainer: {
     marginTop: 20,
@@ -185,5 +203,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     margin: 10,
     fontFamily: 'Arial',
+    backgroundColor: 'white'
   },
 });

@@ -125,7 +125,9 @@ const historyLogsButton = () => {
           borderBottomWidth: StyleSheet.hairlineWidth,
           margin: 20,
         }}></View>
-      
+
+
+<View style={{justifyContent: 'center', marginTop: 50}}>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.mediumButtonContainer} onPress={sendButton}>
           <View style={styles.circleContainer}>
@@ -146,19 +148,19 @@ const historyLogsButton = () => {
         </TouchableOpacity>
       </View>
 
-      
-
       <View style={styles.buttonsContainer}>
         <View style={{ marginRight: 10 }}>
           <TouchableOpacity style={{ alignItems: 'center' }} onPress={logOutButton}>
             <View style={[styles.smallButtonContainer, { width: 100, height: 100 }]}>
               <Ionicons name="log-out-outline" size={45} color="white" />
               <Text style={[styles.titleText, styles.boldText, { color: 'white', marginTop: 5, textAlign: 'center' }]}>Logout</Text>
-            </View>
-            
+            </View>    
           </TouchableOpacity>
         </View>
       </View>
+      </View>
+      
+
       </ImageBackground>
       
 
@@ -194,7 +196,7 @@ const styles = StyleSheet.create({
     height: 120,
     padding: 20,
     borderRadius: 25,
-    backgroundColor: 'black',
+    backgroundColor: '#111827',
   },
   welcomeText:{
     color: "white",
@@ -228,6 +230,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 20,
     justifyContent: 'space-evenly',
+
    
   },
   mediumButtonContainer: {
@@ -247,7 +250,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 25,
-    backgroundColor: 'black',
+    backgroundColor: '#111827',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 5,
@@ -264,7 +267,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignContent: 'center',
     flexWrap: 'wrap',
-    backgroundColor: 'black',
+    backgroundColor: '#111827',
   },
   boldText: {
     fontWeight: 'bold',
@@ -278,7 +281,7 @@ const styles = StyleSheet.create({
     borderTopColor: 'lightgray',
     backgroundColor: 'white',
     padding: 20,
-    marginBottom: 5
+    marginBottom: 5,
   },
   iconContainer: {
     alignItems: 'center',

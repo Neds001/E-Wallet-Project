@@ -70,11 +70,13 @@ const Login = ({ navigation }) => {
             navigation.navigate("Main");
           })
           .catch((err) => {
+            alert(err);
             console.error(err);
           });
       })
       .catch((error) => {
         const errorMessage = error.message;
+        alert(errorMessage);
         console.log(errorMessage);
         // ..
       });
@@ -90,6 +92,7 @@ const Login = ({ navigation }) => {
       })
       .catch((error) => {
         const errorMessage = error.message;
+        alert(errorMessage);
         console.log(errorMessage);
         // ..
       });
@@ -204,12 +207,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     margin: 10,
     fontFamily: 'Arial',
-    
-
+    backgroundColor: 'white'
   },
   button: {
     marginHorizontal: 80,
-    backgroundColor: "black",
+    backgroundColor: "#111827",
     paddingVertical: 10,
     borderRadius: 5,
     marginTop: 15,
