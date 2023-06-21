@@ -276,8 +276,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     height: 60,
-    //borderTopColor: 'lightgray',
-    //backgroundColor: 'white',
     padding: 20,
     marginBottom: 10,
     borderRadius: 20

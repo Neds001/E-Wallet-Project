@@ -102,7 +102,7 @@ const Registrationpage = ({ navigation }) => {
       <View style={styles.logoContainer}>
        <ImageBackground
           style={styles.logo}
-          source={require('../assets/logoReg.png')}/>
+          source={require('../assets/logo.png')}/>
        </View>
 
       <Text style={styles.title}>Register Your Account Here</Text>
