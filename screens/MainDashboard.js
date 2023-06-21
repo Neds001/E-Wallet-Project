@@ -16,31 +16,32 @@ import { onAuthStateChanged,
 
 const MainDashboard = () => {
   const [userInfo, setUserInfo] = useState([]);
-    const navigation = useNavigation()
+  const navigation = useNavigation()
     
- const sendButton = () =>{
+  const sendButton = () =>{
     navigation.navigate("Send")
- }
- const logOutButton = () =>{
-  auth
-    .signOut()
-    .then(() => {
-      navigation.replace("Login")
-    })
-    .catch(error => alert(error.message))
-}
-const ScanQRButton = () => {
-  navigation.navigate("ScanQR")
-}
-const editProfileButton = () => {
-  navigation.navigate("EditProfile")
-}
-const currencyButton = () => {
-  navigation.navigate("Currency")
-}
-const historyLogsButton = () => {
-  navigation.navigate("Logs")
-}
+  }
+  const logOutButton = () =>{
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("Login")
+      })
+      .catch(error => alert(error.message))
+  }
+
+  const ScanQRButton = () => {
+    navigation.navigate("ScanQR")
+  }
+  const editProfileButton = () => {
+    navigation.navigate("EditProfile")
+  }
+  const currencyButton = () => {
+    navigation.navigate("Currency")
+  }
+  const historyLogsButton = () => {
+    navigation.navigate("Logs")
+  }
 
   const [email, setEmail] = useState();
   const [uids, setUid] = useState();
@@ -95,7 +96,6 @@ const historyLogsButton = () => {
 
   return (
     <SafeAreaView style={{flex: 1,
-      justifyContent: "center",
       }}>
       <ImageBackground source={require('../assets/background1.jpg')} 
                        resizeMode="cover" 
@@ -124,8 +124,11 @@ const historyLogsButton = () => {
           borderBottomColor: 'lightgray',
           borderBottomWidth: StyleSheet.hairlineWidth,
           margin: 20,
-        }}></View>
-      
+        }}>
+      </View>
+
+
+<View style={{justifyContent: 'center', flex: 1}}>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.mediumButtonContainer} onPress={sendButton}>
           <View style={styles.circleContainer}>
@@ -146,34 +149,30 @@ const historyLogsButton = () => {
         </TouchableOpacity>
       </View>
 
-      
-
       <View style={styles.buttonsContainer}>
         <View style={{ marginRight: 10 }}>
           <TouchableOpacity style={{ alignItems: 'center' }} onPress={logOutButton}>
             <View style={[styles.smallButtonContainer, { width: 100, height: 100 }]}>
               <Ionicons name="log-out-outline" size={45} color="white" />
               <Text style={[styles.titleText, styles.boldText, { color: 'white', marginTop: 5, textAlign: 'center' }]}>Logout</Text>
-            </View>
-            
+            </View>    
           </TouchableOpacity>
         </View>
       </View>
+</View>
       </ImageBackground>
       
-
-        
       <View style={styles.footbar}>
         <TouchableOpacity style={styles.iconContainer} onPress={currencyButton}>
-        <Ionicons name="logo-bitcoin" size={24} color="black" />
+        <Ionicons name="logo-bitcoin" size={21} color="#111827" />
           <Text style={styles.iconLabel}>Currency</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconContainer} onPress={ScanQRButton}>
-          <Ionicons name="md-qr-code" size={24} color="black" />
+          <Ionicons name="md-qr-code" size={21} color="#111827" />
           <Text style={styles.iconLabel}>Scan QR</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconContainer} onPress={historyLogsButton}>
-          <Ionicons name="md-time" size={24} color="black" />
+          <Ionicons name="md-time" size={21} color="#111827" />
           <Text style={styles.iconLabel}>History</Text>
         </TouchableOpacity>
       </View>
@@ -194,13 +193,14 @@ const styles = StyleSheet.create({
     height: 120,
     padding: 20,
     borderRadius: 25,
-    backgroundColor: 'black',
+    backgroundColor: '#111827',
   },
   welcomeText:{
     color: "white",
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
+   
    
   },
   welcomeContainer:{
@@ -223,11 +223,13 @@ const styles = StyleSheet.create({
   regularText: {
     fontSize: 30,
     color: 'white',
+    fontWeight: 'bold'
   },
   buttonsContainer: {
     flexDirection: 'row',
     marginBottom: 20,
     justifyContent: 'space-evenly',
+
    
   },
   mediumButtonContainer: {
@@ -247,7 +249,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 25,
-    backgroundColor: 'black',
+    backgroundColor: '#111827',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 5,
@@ -264,7 +266,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignContent: 'center',
     flexWrap: 'wrap',
-    backgroundColor: 'black',
+    backgroundColor: '#111827',
   },
   boldText: {
     fontWeight: 'bold',
@@ -273,12 +275,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: 50,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'lightgray',
-    backgroundColor: 'white',
+    height: 60,
+    //borderTopColor: 'lightgray',
+    //backgroundColor: 'white',
     padding: 20,
-    marginBottom: 5
+    marginBottom: 10,
+    borderRadius: 20
   },
   iconContainer: {
     alignItems: 'center',

@@ -63,8 +63,10 @@ const Dashboard = ({ route, navigation }) => {
   const transferFunds = async () => {
     try {
       const recipientUid = await getRecipientUid(recipientEmail);
+      
 
       const sfDocRef = doc(db, 'users', recipientUid);
+      
       await runTransaction(db, async (transaction) => {
         const sfDoc = await transaction.get(sfDocRef);
         if (!sfDoc.exists()) {
@@ -90,9 +92,11 @@ const Dashboard = ({ route, navigation }) => {
               transaction.update(userRef, {
                 wallet: deductedWallet,
               });
-              console.log('Wallet updated successfully');
+              alert('Successfully sent ₱' + Number(amount) + ' to ' + recipientEmail);
+              console.log('Successfully sent ₱' + Number(amount) + ' to ' + recipientEmail);
             });
           } catch (error) {
+            alert('Error updating wallet:', error);
             console.error('Error updating wallet:', error);
           }
         }
@@ -189,24 +193,29 @@ const Dashboard = ({ route, navigation }) => {
             ))}
           </View>
         </View>
+        <View style={{padding: 20}}>
         <TextInput
           style={styles.input}
           placeholder="Input Recipient's Email: "
+          placeholderTextColor="rgba(0, 0, 0, 0.5)"
           value={recipientEmail}
           onChangeText={setRecipientEmail}
         />
         <TextInput
           style={styles.input}
           placeholder="Input Amount: "
+          placeholderTextColor="rgba(0, 0, 0, 0.5)"
           value={amount}
           onChangeText={setAmount}
         />
+        
         <TouchableOpacity
           style={styles.transferButton}
           onPress={transferFunds}
         >
           <Text style={styles.transferButtonText}>Send Funds</Text>
         </TouchableOpacity>
+        </View>
       </ImageBackground>
     </View>
   );
@@ -222,10 +231,11 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   balanceText: {
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#fff',
+    fontFamily: 'Roboto',
   },
   currentBalanceContainer: {
     backgroundColor: '#fff',
@@ -235,7 +245,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   amountText: {
-    fontSize: 20,
+    fontSize: 23,
     fontWeight: 'bold',
     color: '#333',
   },
@@ -253,16 +263,23 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   input: {
-    backgroundColor: '#fff',
-    padding: 10,
+    height: 40,
+    borderColor: "black",
+    borderWidth: 2,
     borderRadius: 5,
     marginBottom: 10,
+    padding: 10,
+    margin: 10,
+    fontFamily: 'Roboto',
+    backgroundColor: 'white'
   },
   transferButton: {
-    backgroundColor: 'black',
-    padding: 10,
+    marginHorizontal: 80,
+    backgroundColor: "#111827",
+    paddingVertical: 10,
     borderRadius: 5,
-    alignItems: 'center',
+    marginTop: 15,
+    alignItems: 'center'
   },
   transferButtonText: {
     color: '#fff',
