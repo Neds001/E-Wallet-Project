@@ -1,34 +1,57 @@
-
-
-import React, { Component } from "react";
-import { StyleSheet, View, TextInput } from "react-native";
-import MaterialRightIconTextbox from "../components/MaterialRightIconTextbox";
-import MaterialUnderlineTextbox from "../components/MaterialUnderlineTextbox";
-import MaterialButtonGrey from "../components/MaterialButtonGrey";
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, Button } from 'react-native';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 export default function ScanQR() {
-  const handleLogout = () => {
-    console.log('Logout button clicked!');
-    // Implement logout logic here
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+  const [text, setText] = useState('Not yet scanned')
+
+  const askForCameraPermission = () => {
+    (async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })()
+  }
+
+  // Request Camera Permission
+  useEffect(() => {
+    askForCameraPermission();
+  }, []);
+
+  // What happens when we scan the bar code
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    setText(data)
+    console.log('Type: ' + type + '\nData: ' + data)
   };
 
-  const handleCardPress = (cardName) => {
-    console.log(`Clicked on ${cardName} card!`);
-    // Handle the click event for each card
-  };
+  // Check permissions and return the screens
+  if (hasPermission === null) {
+    return (
+      <View style={styles.container}>
+        <Text>Requesting for camera permission</Text>
+      </View>)
+  }
+  if (hasPermission === false) {
+    return (
+      <View style={styles.container}>
+        <Text style={{ margin: 10 }}>No access to camera</Text>
+        <Button title={'Allow Camera'} onPress={() => askForCameraPermission()} />
+      </View>)
+  }
 
+  // Return the View
   return (
     <View style={styles.container}>
-      <TextInput placeholder="Log In" style={styles.textInput}></TextInput>
-      <MaterialRightIconTextbox
-        style={styles.materialRightIconTextbox}
-      ></MaterialRightIconTextbox>
-      <MaterialUnderlineTextbox
-        style={styles.materialUnderlineTextbox}
-      ></MaterialUnderlineTextbox>
-      <MaterialButtonGrey
-        style={styles.materialButtonGrey}
-      ></MaterialButtonGrey>
+      <View style={styles.barcodebox}>
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={{ height: 400, width: 400 }} />
+      </View>
+      <Text style={styles.maintext}>{text}</Text>
+
+      {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
     </View>
   );
 }
@@ -36,37 +59,21 @@ export default function ScanQR() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(31,31,31,1)",
+    backgroundColor: '#fff',
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'center'
   },
-  textInput: {
-    fontFamily: "Arial",
-    color: "#121212",
-    width: 121,
-    height: 53,
-    lineHeight: 40,
-    fontSize: 40,
-    marginTop: 226,
-    marginLeft: 51
+  maintext: {
+    fontSize: 16,
+    margin: 20,
   },
-  materialRightIconTextbox: {
-    height: 43,
-    width: 298,
-    marginTop: 166,
-    marginLeft: 33
-  },
-  materialUnderlineTextbox: {
-    height: 43,
-    width: 298,
-    marginTop: -108,
-    marginLeft: 33
-  },
-  materialButtonGrey: {
-    height: 36,
-    width: 100,
-    borderRadius: 15,
-    marginTop: 120,
-    marginLeft: 130
+  barcodebox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 300,
+    width: 300,
+    overflow: 'hidden',
+    borderRadius: 30,
+    backgroundColor: 'tomato'
   }
 });
