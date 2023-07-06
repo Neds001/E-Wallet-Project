@@ -1,103 +1,124 @@
 import React, { useState } from "react";
 import {
-         View,
-         Text,
-         TextInput,
-         StyleSheet,
-         TouchableOpacity,
-         ImageBackground, } from "react-native";
-import { auth, 
-         db } from "../firebase";
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
+import { Image } from "expo-image";
+import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
+import { auth, db } from "../firebase";
 import {
-         signInWithEmailAndPassword,
-         createUserWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
-import { setDoc, 
-         doc } from "firebase/firestore";
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  sendEmailVerification,
+} from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
 
 const Registrationpage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullname, setFullname] = useState("");
   const [contact, setContact] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const onPress = () => {
-    navigation.navigate("Login")
-  }
+    navigation.navigate("Login");
+  };
 
   const createNewUser = async (email) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        const uid  = user.uid;
+        const uid = user.uid;
         console.log(uid);
         try {
-          const newUser = async() =>{
+          const newUser = async () => {
             await setDoc(doc(db, "users", uid), {
               email: email,
               wallet: 0,
-              fullname:fullname,
-              contact: contact
+              fullname: fullname,
+              contact: contact,
+              emailVerified: false,
             });
-          }
+          };
           newUser();
-        }catch (err){
+        } catch (err) {
           console.error(err);
         }
-        // ...
       } else {
         // User is signed out
         // ...
       }
     });
-     
   };
 
-  const handleRegister = (e, p) => {
-    // Implement your login logic here
+  const handleRegister = (e, p, confirmP) => {
+    if (p !== confirmP) {
+      alert("Passwords do not match. Please confirm your password.");
+      console.log("password does not match");
+      return;
+    }
+    if (
+      fullname.trim() === "" ||
+      email.trim() === "" ||
+      p.trim() === "" ||
+      confirmP.trim() === ""
+    ) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    if (fullname.trim() === "") {
+      alert("Please enter your fullname.");
+      console.log("empty fullname");
+      return;
+    }
+    if (e.trim() === "") {
+      alert("Please enter an email.");
+      return;
+    }
+    if (p.trim() === "") {
+      alert("Please enter a password.");
+      return;
+    }
+    if (contact.trim() === "") {
+      alert("Please enter your contact number.");
+      console.log("empty contact number");
+      return;
+    }
+    if (!/^\d+$/.test(contact)) {
+      alert("Contact number should contain only numbers.");
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, e, p)
-      .then(() => {
-        createNewUser(e)
+      .then(({ user }) => {
+        sendEmailVerification(user)
           .then(() => {
-            alert("Registration Successful!");
-            console.log("Registration Successful!")
-            navigation.navigate("Login");
+            createNewUser(e)
+              .then(() => {
+                alert("Registration Successful! Verification email sent.");
+                console.log("Registration Successful!");
+                navigation.navigate("Login");
+              })
+              .catch((err) => {
+                console.error(err);
+              });
           })
-          .catch((err) => {
-            console.error(err);
+          .catch((error) => {
+            console.log(error.message);
           });
       })
       .catch((error) => {
         const errorMessage = error.message;
         console.log(errorMessage);
-        // ..
       });
-    // You can replace the console.log statements with your actual login implementation
   };
-  const handleLogin = (e, p) => {
-    // Implement your login logic here
-    signInWithEmailAndPassword(auth, e, p)
-      .then(() => {
-        navigation.navigate("Main", {
-          email: e,
-        });
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        console.log(errorMessage);
-        // ..
-      });
-    // You can replace the console.log statements with your actual login implementation
-  };
+
   return (
-    <View style={{flex: 1,
-                  justifyContent: "center",
-                  flexDirection: 'column' }}>
-      <ImageBackground 
-        source={require('../assets/background1.jpg')} 
-        resizeMode="cover" 
-        style={styles.image}>
-      
+    <View style={styles.container}>
       {/* logo cointainer */}
       <View style={styles.logoContainer}>
        <ImageBackground
@@ -105,13 +126,13 @@ const Registrationpage = ({ navigation }) => {
           source={require('../assets/logo.png')}/>
        </View>
 
-      <Text style={styles.title}>Register Your Account Here</Text>
+      <Text style={styles.title}>Sign Up</Text>
       
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
           placeholder="Email"
-          placeholderTextColor="rgba(0, 0, 0, 0.5)"
+          placeholderTextColor="rgba(255, 255, 255, 0.32)"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -119,66 +140,90 @@ const Registrationpage = ({ navigation }) => {
         />
         <TextInput
           style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="rgba(0, 0, 0, 0.5)"
-          value={password}
-          onChangeText={setPassword}
+          placeholder="Enter your 6 digit PIN"
+          keyboardType="numeric"
+          maxLength={6}
+          placeholderTextColor="rgba(255, 255, 255, 0.32)"
+          onChangeText={(text) => {
+            const numericValue = text.replace(/[^0-9]/g, '');
+            setPassword(numericValue);
+            }}
+            secureTextEntry
+            value={password}
+        />
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="rgba(255, 255, 255, 0.32)"
+          placeholder="Confirm your 6 digit PIN"
+          keyboardType="numeric"
+          maxLength={6}
+          onChangeText={(text) => {
+            const numericValue = text.replace(/[^0-9]/g, '');
+            setConfirmPassword(numericValue);
+          }}
+          value={confirmPassword}
           secureTextEntry
         />
         <TextInput
           style={styles.input}
+          placeholderTextColor="rgba(255, 255, 255, 0.32)"
           placeholder="Fullname"
-          placeholderTextColor="rgba(0, 0, 0, 0.5)"
           value={fullname}
           onChangeText={setFullname}
-          
         />
         <TextInput
           style={styles.input}
-          placeholder="Phone number"
-          placeholderTextColor="rgba(0, 0, 0, 0.5)"
-          onChangeText={text => setContact(text.replace(/[^0-9]/g, ''))}
+          placeholder="Phone Number"
+          placeholderTextColor="rgba(255, 255, 255, 0.32)"
           keyboardType="numeric"
           maxLength={11}
+          onChangeText={(text) => setContact(text.replace(/[^0-9]/g, ""))}
           value={contact}
-          
         />
       </View>
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => handleRegister(email, password)}>
+        onPress={() => handleRegister(email, password, confirmPassword)}>
           <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
 
-      <View style={{paddingBottom: 10}}>
-        <Text style={{marginTop: 10, textAlign:'center',}}>Already have an account?</Text>
-          <TouchableOpacity onPress={onPress}>
-            <View style={styles.buttonText}>
-              <Text style={styles.buttonTextLogin}>Login here!</Text>
-            </View>
-          </TouchableOpacity>
-      </View>
-      </ImageBackground>
+      <View style={styles.buttonText}> 
+      <Text style={{marginTop: 10, textAlign:'center', color: Color.gray_700}}>Already have an account? </Text>
+      <TouchableOpacity onPress={onPress}>
+              <Text style={styles.buttonTextSignUp}> Log In</Text>
+        </TouchableOpacity></View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: Color.blackModePrimaryDark,
     flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 20,
+    justifyContent:'center',
   },
   inputContainer: {
     
   },
+  buttonTextSignUp:{
+      marginTop: 10,
+      color: 'royalblue',
+      fontSize: 13,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      textDecorationLine: 'underline',
+  },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    padding: 10,
-    textAlign: "center",
-    fontFamily: 'Roboto'
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingTop: 0,
+    color: 'gray',
+    padding: 20,
+    textAlign: 'center',
+    fontFamily: FontFamily.poppinsBold,
+    letterSpacing: 1,
+    color: Color.sUNRISEWhite,
   },
   image:{
     flex: 1,
@@ -191,8 +236,8 @@ const styles = StyleSheet.create({
     paddingBottom:0,
   },  
   logo: {
-    width: 250, 
-    height: 250, 
+    width: 220, 
+    height: 220, 
     //flexDirection: 'column',
   },
   logoName: {
@@ -209,16 +254,17 @@ const styles = StyleSheet.create({
    
   },
   input: {
-    height: 30,
-    borderColor: "black",
+    borderColor: '#7b61ff',
     borderWidth: 2,
-    borderRadius: 5,
     marginBottom: 10,
-    paddingHorizontal: 15,
+    padding: 10,
     margin: 10,
-    fontFamily: 'Roboto',
-    padding: 5,
-    backgroundColor: 'white'
+    color: Color.gray_700,
+    fontFamily: FontFamily.poppinsBold,
+    borderRadius: Border.br_xs,
+    backgroundColor: Color.blackModeSecondaryDark,
+    width: "95%",
+    height: 56,
   },
   button: {
     marginHorizontal: 80,
