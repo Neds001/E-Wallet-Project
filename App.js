@@ -10,11 +10,13 @@ import Currency from './screens/Currency';
 import Registrationpage from './screens/Registrationpage';
 import Logs from './screens/Logs';
 import ReceiveLogs from './screens/ReceiveLogs';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <SafeAreaProvider>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen options = {{headerShown: false}}name="Login" component={LoginScreen} />
@@ -28,7 +30,9 @@ export default function App() {
         <Stack.Screen name="ReceiveLogs" component={ReceiveLogs}/>
       </Stack.Navigator>
     </NavigationContainer>
+    </SafeAreaProvider>
   );
+    
 }
 
 const styles = StyleSheet.create({
