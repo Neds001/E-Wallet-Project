@@ -13,6 +13,8 @@ import Logs from './screens/Logs';
 import ReceiveLogs from './screens/ReceiveLogs';
 import GetStarted from './screens/GetStarted';
 import { useFonts } from 'expo-font';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 
 const Stack = createNativeStackNavigator();
 

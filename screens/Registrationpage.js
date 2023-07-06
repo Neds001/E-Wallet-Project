@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     
   },
   buttonTextSignUp:{
-      marginTop: 10,
+      marginTop: 5,
       color: 'royalblue',
       fontSize: 13,
       fontWeight: 'bold',
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   input: {
     borderColor: '#7b61ff',
     borderWidth: 2,
-    marginBottom: 10,
+    marginBottom: 5,
     padding: 10,
     margin: 10,
     color: Color.gray_700,
