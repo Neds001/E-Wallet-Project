@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Modal } from "react-native";
 import { Image } from "expo-image";
-import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
+import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
 import { auth, 
          db } from "../firebase";
 import {
@@ -231,7 +231,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
             secureTextEntry
           />
           {/* {password.length === 6 && handleLogin()} */}
-          <TouchableOpacity onPress={handleLogin}><Text style={{color: 'green'}}>OK</Text></TouchableOpacity>
+          <TouchableOpacity onPress={handleLogin} style={styles.okbutton}>
+            <Text style={styles.buttonText}>OK</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>
@@ -274,7 +276,6 @@ const styles = StyleSheet.create({
   labelText:{
     color: Color.gray_700,
     fontFamily: FontFamily.poppins,
-
   },
   modalOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -369,6 +370,16 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         overflow: "hidden",
+        marginBottom: 30,
+  },
+  okbutton:{
+        borderRadius: Border.br_xs,
+        backgroundColor: Color.sUNRISECoral,
+        marginTop: 10,
+        width: 55,
+        height: 45,
+        flexDirection: "column",
+        justifyContent: "center",
         marginBottom: 30,
   },
   buttonTextSignUp: {
