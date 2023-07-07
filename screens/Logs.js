@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ImageBackground, Modal } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ImageBackground, Modal, StatusBar } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { auth, firebase } from '../firebase';
@@ -61,6 +61,7 @@ const Logs = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#141414" />
       <ImageBackground source={require('../assets/background1.jpg')} resizeMode="cover" style={styles.image}>
         <FlatList
           showsVerticalScrollIndicator={false}

@@ -1,29 +1,18 @@
-import React, { useState, 
-                useEffect,
-                useRef } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Modal } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigation } from '@react-navigation/core'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Modal, ToastAndroid, StatusBar } from "react-native";
 import { Image } from "expo-image";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
-import { auth, 
-         db } from "../firebase";
-import {
-          signInWithEmailAndPassword,
-          createUserWithEmailAndPassword,
-          onAuthStateChanged  } from "firebase/auth";
-import { setDoc, 
-         doc } from "firebase/firestore";
+import { auth, db } from "../firebase";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged  } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
 import * as LocalAuthentication from "expo-local-authentication";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 
   const Login = ({ navigation }) => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailVerified, setEmailVerified] = useState(false); // Set initial value to false
@@ -33,6 +22,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
   const pinCodeInputRef = useRef(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessageText, setAlertMessageText] = useState("");
 
   const onPress = () => {
     navigation.navigate("Registrationpage")
@@ -52,9 +42,6 @@ import AwesomeAlert from 'react-native-awesome-alerts';
       pinCodeInputRef.current.focus();
     }, 0);
   };
-
-  
-  
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -91,13 +78,14 @@ import AwesomeAlert from 'react-native-awesome-alerts';
             .then(() => {
               const user = auth.currentUser;
               if (user.emailVerified) {
+                ToastAndroid.show('Login Successfully', ToastAndroid.LONG);
                 navigation.navigate("Main", { email: storedEmail });
               } else {
-                // <AwesomeAlert
-                //   show = {true}
-                //   title="Email not verified"
-                // />
-                // alert("Email not verified. Please verify your email to login.");
+                setAlertMessage("Verification Failed!");
+                setAlertMessageText("Please verify your email to login");
+                setShowAlert(true);
+                navigation.navigate('Login');
+                //alert("Email not verified. Please verify your email to login.");
                 console.log("Email not verified");
               }
             })
@@ -114,6 +102,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
         console.log("Biometric authentication failed");
       }
     } catch (error) {
+      ToastAndroid.show('Biometric authentication error:',ToastAndroid.LONG);
       console.log("Biometric authentication error:", error);
     }
   };
@@ -137,16 +126,23 @@ import AwesomeAlert from 'react-native-awesome-alerts';
         if (user.emailVerified) {
           AsyncStorage.setItem("email", email);
           AsyncStorage.setItem("password", password);
+          ToastAndroid.show('Login Successfully', ToastAndroid.LONG);
           navigation.navigate("Main", { email });
         } else {
-          alert("Email not verified. Please verify your email to login.");
+          setAlertMessage("Verification Failed!");
+          setAlertMessageText("Please verify your email to login");
+          setShowAlert(true);
+          navigation.navigate('Login');
+          //alert("Email not verified. Please verify your email to login.");
           console.log("Email not verified");
         }
       })
       .catch((error) => {
         const errorMessage = error.message;
-        alert(errorMessage);
-        console.log(errorMessage);
+        //wrong password pop up message
+        setAlertMessage("Wrong Password");
+        setShowAlert(true);
+        console.log("wrong password");
       });
   };
 
@@ -162,6 +158,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 
   return (
       <View style={styles.container}>
+        <StatusBar backgroundColor="#141414" />
        <View style={styles.logoContainer}>
        <Image
         style={styles.logo}
@@ -243,19 +240,24 @@ import AwesomeAlert from 'react-native-awesome-alerts';
           />
           {/* {password.length === 6 && handleLogin()} */}
           <TouchableOpacity onPress={handleLogin} style={styles.okbutton}>
-            <Text style={styles.buttonText}>OK</Text>
-            <AwesomeAlert
-              show={showAlert}
-              title={alertMessage}
-              showConfirmButton = {true}
-              confirmText="Ok"
-              onConfirmPressed={()=>{setShowAlert(false)}}/>
+            <Text style={styles.buttonText}>Confirm</Text>
+            
           </TouchableOpacity>
         </View>
       </View>
     </Modal>
 
-        
+    <AwesomeAlert
+      show={showAlert}
+      title={alertMessage}
+      message={alertMessageText}
+      showConfirmButton = {true}
+      confirmText="Ok"
+      confirmButtonStyle={{backgroundColor: Color.sUNRISECoral}}
+      confirmButtonTextStyle={styles.buttonText}
+      onConfirmPressed={()=>{setShowAlert(false)}}
+      />
+
     </View>
   );
 };
@@ -364,9 +366,9 @@ const styles = StyleSheet.create({
     height: 56,
   },
   buttonText: {
-    color: 'white',
+    color: Color.gray_700,
+    fontFamily: FontFamily.poppinsBold,
     fontSize: 16,
-    fontWeight: 'bold',
     textAlign: 'center',
     flexDirection: 'row',
     justifyContent: 'center'
@@ -393,7 +395,7 @@ const styles = StyleSheet.create({
         borderRadius: Border.br_xs,
         backgroundColor: Color.sUNRISECoral,
         marginTop: 10,
-        width: 55,
+        width: 80,
         height: 45,
         flexDirection: "column",
         justifyContent: "center",

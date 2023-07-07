@@ -1,22 +1,11 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
+import { View, Text, TextInput,StyleSheet,TouchableOpacity,ImageBackground, ToastAndroid, StatusBar} from "react-native";
 import { Image } from "expo-image";
 import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 import { auth, db } from "../firebase";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  sendEmailVerification,
-} from "firebase/auth";
+import {signInWithEmailAndPassword,createUserWithEmailAndPassword,onAuthStateChanged,sendEmailVerification,} from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const Registrationpage = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -24,6 +13,9 @@ const Registrationpage = ({ navigation }) => {
   const [fullname, setFullname] = useState("");
   const [contact, setContact] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessageTitle, setAlertMessageTitle] = useState("");
 
   const onPress = () => {
     navigation.navigate("Login");
@@ -57,7 +49,11 @@ const Registrationpage = ({ navigation }) => {
 
   const handleRegister = (e, p, confirmP) => {
     if (p !== confirmP) {
-      alert("Passwords do not match. Please confirm your password.");
+      // alert("Passwords do not match. Please confirm your password.");
+      //ToastAndroid.show('Password do not match.', ToastAndroid.LONG);
+      setAlertMessage("Password do not match");
+      setAlertMessageTitle("Please confirm your password");
+      setShowAlert(true);
       console.log("password does not match");
       return;
     }
@@ -65,31 +61,39 @@ const Registrationpage = ({ navigation }) => {
       fullname.trim() === "" ||
       email.trim() === "" ||
       p.trim() === "" ||
-      confirmP.trim() === ""
+      confirmP.trim() === "" ||
+      contact.trim() === ""
     ) {
-      alert("Please fill in all fields.");
+      // alert("Please fill in all fields.");
+      ToastAndroid.show('Please fill in all fields.', 
+      ToastAndroid.SHORT);
       return;
     }
     if (fullname.trim() === "") {
-      alert("Please enter your fullname.");
-      console.log("empty fullname");
+      // alert("Please enter your fullname.");
+      ToastAndroid.show('Please enter your fullname.', ToastAndroid.SHORT);
+      console.log("empty fullname.");
       return;
     }
     if (e.trim() === "") {
-      alert("Please enter an email.");
+      // alert("Please enter an email.");
+      ToastAndroid.show('Please enter an email.', ToastAndroid.SHORT);
       return;
     }
     if (p.trim() === "") {
-      alert("Please enter a password.");
+      // alert("Please enter a password.");
+      ToastAndroid.show('Please enter a password.', ToastAndroid.SHORT);
       return;
     }
     if (contact.trim() === "") {
-      alert("Please enter your contact number.");
+      // alert("Please enter your contact number.");
+      ToastAndroid.show('Please enter your contact number.', ToastAndroid.SHORT);
       console.log("empty contact number");
       return;
     }
     if (!/^\d+$/.test(contact)) {
-      alert("Contact number should contain only numbers.");
+      // alert("Contact number should contain only numbers.");
+      ToastAndroid.show('Contact number should contain only digits',ToastAndroid.SHORT);
       return;
     }
 
@@ -99,7 +103,11 @@ const Registrationpage = ({ navigation }) => {
           .then(() => {
             createNewUser(e)
               .then(() => {
-                alert("Registration Successful! Verification email sent.");
+                ToastAndroid.show('Registration Successful!',ToastAndroid.SHORT);
+                // setAlertMessage("Registration Successful!");
+                // setAlertMessageTitle("Verification sent to your email.");
+                // setShowAlert(true);
+                // alert("Registration Successful! Verification email sent.");
                 console.log("Registration Successful!");
                 navigation.navigate("Login");
               })
@@ -112,6 +120,10 @@ const Registrationpage = ({ navigation }) => {
           });
       })
       .catch((error) => {
+        //error message pop-up for email in use
+        setAlertMessage("Registration Failed!");
+        setAlertMessageTitle("Email is already in use");
+        setShowAlert(true);
         const errorMessage = error.message;
         console.log(errorMessage);
       });
@@ -119,6 +131,7 @@ const Registrationpage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#141414" />
       {/* logo cointainer */}
       <View style={styles.logoContainer}>
        <ImageBackground
@@ -192,8 +205,22 @@ const Registrationpage = ({ navigation }) => {
       <Text style={{marginTop: 10, textAlign:'center', color: Color.gray_700}}>Already have an account? </Text>
       <TouchableOpacity onPress={onPress}>
               <Text style={styles.buttonTextSignUp}> Log In</Text>
-        </TouchableOpacity></View>
+      </TouchableOpacity>
+      </View>
+
+      <AwesomeAlert
+      show={showAlert}
+      title={alertMessage}
+      message={alertMessageTitle}
+      showConfirmButton = {true}
+      confirmText="Ok"
+      confirmButtonStyle={{backgroundColor: Color.sUNRISECoral}}
+      confirmButtonTextStyle={styles.buttonText}
+      onConfirmPressed={()=>{setShowAlert(false)}}
+      />
+
     </View>
+    
   );
 };
 
@@ -207,7 +234,7 @@ const styles = StyleSheet.create({
     
   },
   buttonTextSignUp:{
-      marginTop: 5,
+      marginTop: 10,
       color: 'royalblue',
       fontSize: 13,
       fontWeight: 'bold',
@@ -274,10 +301,13 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   buttonText: {
-    color: "white",
+    padding: 5,
+    color: Color.gray_700,
+    fontFamily: FontFamily.poppinsBold,
     fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
+    textAlign: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   buttonTextLogin: {
     marginTop: 10,

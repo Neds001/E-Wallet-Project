@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, StatusBar } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 export default function ScanQR() {
@@ -44,6 +44,7 @@ export default function ScanQR() {
   // Return the View
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#141414" />
       <View style={styles.barcodebox}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}

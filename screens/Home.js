@@ -1,9 +1,5 @@
-import { View, 
-    Text, 
-    StyleSheet, 
-    TouchableOpacity,
-    ImageBackground,
-    SafeAreaView, } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, SafeAreaView, StatusBar} from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Image } from "expo-image";
 import { Color, Border, FontFamily, FontSize, Padding } from "../GlobalStyles";
 import React, { useState, useEffect } from 'react';
@@ -18,7 +14,7 @@ import { onAuthStateChanged,
 
 export default function Home() {
         const [userInfo, setUserInfo] = useState([]);
-  const navigation = useNavigation()
+        const navigation = useNavigation()
   
     
   const sendButton = () =>{
@@ -99,6 +95,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar backgroundColor="#141414" />
       <View style={{padding: 20}}>
         <View style={styles.header}>
           <View>
@@ -158,6 +155,7 @@ export default function Home() {
       </View>
 </View>
     </SafeAreaView>
+    
   )
 }
 

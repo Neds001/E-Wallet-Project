@@ -16,6 +16,7 @@ import { useFonts } from 'expo-font';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
