@@ -20,6 +20,7 @@ import { setDoc,
          doc } from "firebase/firestore";
 import * as LocalAuthentication from "expo-local-authentication";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 
   const Login = ({ navigation }) => {
@@ -30,6 +31,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
   const [modalVisible, setModalVisible] = useState(false);
   const [pinCode, setPinCode] = useState('');
   const pinCodeInputRef = useRef(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const onPress = () => {
     navigation.navigate("Registrationpage")
@@ -50,6 +53,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
     }, 0);
   };
 
+  
   
 
   useEffect(() => {
@@ -89,7 +93,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
               if (user.emailVerified) {
                 navigation.navigate("Main", { email: storedEmail });
               } else {
-                alert("Email not verified. Please verify your email to login.");
+                // <AwesomeAlert
+                //   show = {true}
+                //   title="Email not verified"
+                // />
+                // alert("Email not verified. Please verify your email to login.");
                 console.log("Email not verified");
               }
             })
@@ -110,13 +118,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
     }
   };
 
+
   const handleLogin = () => {
     if (email.trim() === "") {
-      alert("Please enter an email.");
+      setAlertMessage("Email is empty");
+      setShowAlert(true);
       return;
     }
     if (password.trim() === "") {
-      alert("Please enter a password.");
+      setAlertMessage("Password is empty");
+      setShowAlert(true);
       return;
     }
 
@@ -233,6 +244,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
           {/* {password.length === 6 && handleLogin()} */}
           <TouchableOpacity onPress={handleLogin} style={styles.okbutton}>
             <Text style={styles.buttonText}>OK</Text>
+            <AwesomeAlert
+              show={showAlert}
+              title={alertMessage}
+              showConfirmButton = {true}
+              confirmText="Ok"
+              onConfirmPressed={()=>{setShowAlert(false)}}/>
           </TouchableOpacity>
         </View>
       </View>
