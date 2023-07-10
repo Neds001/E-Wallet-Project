@@ -1,22 +1,145 @@
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, SafeAreaView, StatusBar} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, StatusBar, Dimensions} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Image } from "expo-image";
 import { Color, Border, FontFamily, FontSize, Padding } from "../GlobalStyles";
 import React, { useState, useEffect } from 'react';
 import { auth } from '../firebase';
-import { doc,
-    onSnapshot } from 'firebase/firestore'
+import { doc, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useNavigation } from '@react-navigation/core'
 import { Ionicons} from "@expo/vector-icons"
-import { onAuthStateChanged, 
-    signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { Feather } from '@expo/vector-icons';
+import { color } from 'react-native-reanimated';
 
 export default function Home() {
-        const [userInfo, setUserInfo] = useState([]);
-        const navigation = useNavigation()
+
+  //Gas API's
+  const [bnbGasData, setBnbGasData] = useState(null);
+  const [ethGasData, setEthGasData] = useState(null);
+  const [polygonGasData, setPolygonGasData] = useState(null);
+  const [ftmGasData, setFtmGasData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [currentTime, setCurrentTime] = useState(null);
+  const bnbAPI_KEY = 'TCNY4UT93EH2719XS7KD3HVBP85KKKE273'; // Replace with your BSCScan API key
+  const ethAPI_KEY = 'HNYFG59NRZTGXZN6A6A4VZ2A4AWX1C44W3';
+  const polygonAPI_KEY = 'SHM1Q2VNZ9MIVKY8IE62F4MHYGCMPJDR31'; // Replace with your PolygonScan API key
+  const ftmAPI_KEY = '967A93QACPTC6QM1DN66TS5799TT9U861R'; // Replace with your FTMScan API key
+
+  const [userInfo, setUserInfo] = useState([]);
+  const navigation = useNavigation()
+
+  useEffect(() => {
+    const fetchBnbGasData = async () => {
+      try {
+        const response = await fetch(
+          `https://api.bscscan.com/api?module=gastracker&action=gasoracle&apikey=${bnbAPI_KEY}`
+        );
+
+        if (response.ok) {
+          const gasData = await response.json();
+          setBnbGasData(gasData.result);
+          console.log("bnb data: ", gasData);
+        } else {
+          console.log('Error fetching BNB gas data:', response.status);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.log('Error fetching BNB gas data:', error);
+        setLoading(false);
+      }
+    };
+
+    const fetchEthGasData = async () => {
+      try {
+        const response = await fetch(
+          `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${ethAPI_KEY}`
+        );
+
+        if (response.ok) {
+          const gasData = await response.json();
+          setEthGasData(gasData.result);
+          console.log("ETH data: ", gasData);
+        } else {
+          console.log('Error fetching Ethereum gas data:', response.status);
+        }
+      } catch (error) {
+        console.log('Error fetching Ethereum gas data:', error);
+      }
+    };
+
+    const fetchPolygonGasData = async () => {
+      try {
+        const response = await fetch(
+          `https://api.polygonscan.com/api?module=gastracker&action=gasoracle&apikey=${polygonAPI_KEY}`
+        );
+
+        if (response.ok) {
+          const gasData = await response.json();
+          setPolygonGasData(gasData.result);
+          console.log("polygon data: ",gasData);
+        } else {
+          console.log('Error fetching Polygon gas data:', response.status);
+        }
+      } catch (error) {
+        console.log('Error fetching Polygon gas data:', error);
+      }
+    };
+
+    const fetchFtmGasData = async () => {
+      try {
+        const response = await fetch(
+          `https://api.ftmscan.com/api?module=gastracker&action=gasoracle&apikey=${ftmAPI_KEY}`
+        );
+
+        if (response.ok) {
+          const gasData = await response.json();
+          setFtmGasData(gasData.result);
+          console.log("fantom data: " ,gasData);
+        } else {
+          console.log('Error fetching Fantom gas data:', response.status);
+        }
+      } catch (error) {
+        console.log('Error fetching Fantom gas data:', error);
+      }
+    };
+
+    fetchBnbGasData();
+    fetchEthGasData();
+    fetchPolygonGasData();
+    fetchFtmGasData();
+
+    const intervalId = setInterval(() => {
+      fetchBnbGasData();
+      fetchEthGasData();
+      fetchPolygonGasData();
+      fetchFtmGasData();
+    }, 10000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  useEffect(() => {
+    const updateCurrentTime = () => {
+      const now = new Date();
+      setCurrentTime(now.toLocaleString());
+    };
+
+    const intervalId = setInterval(() => {
+      updateCurrentTime();
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+
   
-    
+  //end of gas API BACK
+
   const sendButton = () =>{
     navigation.navigate("Send")
   }
@@ -96,64 +219,80 @@ export default function Home() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#141414" />
-      <View style={{padding: 20}}>
-        <View style={styles.header}>
-          <View>
-            <Text style={{ fontWeight: 'bold', color: 'white', }}>
-              Balance
-            </Text>
-            <View style={{ alignItems: 'center' }}>
-            <Text style={[styles.regularText, { color: "white", }]}>₱ {userInfo.wallet}</Text>
-            </View>
+
+      <View style={styles.upperContainer}>
+        <View><Text style={styles.welcomeText}>Welcome</Text></View>
+          <View style={styles.welcomeContainer}>
+            <Ionicons name='person-circle' size={45} color='#fff'/>
+            <Text style={styles.nameText}>{userInfo.fullname}</Text>
+            <Ionicons name='notifications' size={35} color='#fff'/>
           </View>
+      </View>
+
+      <View style={{paddingHorizontal: 110}}>
+        <View style={styles.balanceContainer}>
+          <Text style={styles.balanceText}>Balance</Text>
         </View>
       </View>
-      
 
-      <View style={styles.welcomeContainer}>
-        <Text style={styles.welcomeText}>Welcome, {userInfo.fullname}</Text>
+      <View style={styles.blackContainer}>
+      <View style={styles.purpleContainer}>
+        <Text style={styles.totalBalanceText}>Total balance</Text>
+        <Text style={styles.purpleContainerText}>₱ {userInfo.wallet}</Text>
       </View>
-      <View
-        style={{
-          borderBottomColor: 'lightgray',
-          borderBottomWidth: StyleSheet.hairlineWidth,
-          margin: 20,
-        }}>
-      </View>
-
-
-<View style={styles.container}>
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.mediumButtonContainer} onPress={sendButton}>
-          <View style={styles.circleContainer}>
-            <View style={[styles.circle, { width: 100, height: 100, }]}>
-              <Ionicons name="send" size={30} color="white" />
-              <Text style={[styles.titleText, styles.boldText, { color: 'white', marginTop: 5, textAlign: 'center' }]}>Send</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.mediumButtonContainer} onPress={editProfileButton}>
-          <View style={styles.circleContainer}>
-            <View style={[styles.circle, { width: 100, height: 100, }]}>
-              <Ionicons name="person-outline" size={30} color="white" />
-              <Text style={[styles.titleText, styles.boldText, { color: 'white', marginTop: 5, textAlign: 'center' }]}>Edit Profile</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.buttonsContainer}>
-        <View style={{ marginRight: 10 }}>
-          <TouchableOpacity style={{ alignItems: 'center' }} onPress={logOutButton}>
-            <View style={[styles.smallButtonContainer, { width: 100, height: 100 }]}>
-              <Ionicons name="log-out-outline" size={45} color="white" />
-              <Text style={[styles.titleText, styles.boldText, { color: 'white', marginTop: 5, textAlign: 'center' }]}>Logout</Text>
-            </View>    
+        <View style={{flexDirection: 'row', justifyContent: 'space-around', alignItems:'center', padding: 10}}>
+          <TouchableOpacity onPress={sendButton}>
+          <Image 
+          style={styles.sendImage}
+          source={require('../assets/send.png')}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={editProfileButton}>
+          <Image 
+          style={styles.sendImage}
+          source={require('../assets/receive.png')}/>
+          </TouchableOpacity>
+          <TouchableOpacity>
+          <Image 
+          style={styles.sendImage}
+          source={require('../assets/others.png')}/>
           </TouchableOpacity>
         </View>
+      
+        <View style={{flexDirection: 'row', justifyContent:'space-around', alignItems:'center', paddingBottom: 10}}>
+        <Text style={{color:'#fff', fontFamily: FontFamily.poppinsMedium, marginLeft: 10}}>Send to</Text>
+        <Text style={{color:'#fff', fontFamily: FontFamily.poppinsMedium}}>Receive</Text>
+        <Text style={{color:'#fff', fontFamily: FontFamily.poppinsMedium, marginRight:10}}>Others</Text>
+        </View>
       </View>
-</View>
+
+      <View style={styles.gasContainer}>
+        <ScrollView
+          //onScroll={({nativeEvent})=>onchange(nativeEvent)}
+          showsHorizontalScrollIndicator = {false}
+          //pagingEnabled
+          horizontal
+        >
+          <View style={styles.eth}>
+            
+
+          </View>
+
+        </ScrollView>
+      </View>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </SafeAreaView>
     
   )
@@ -162,105 +301,74 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
     backgroundColor: Color.blackModePrimaryDark,
+    paddingHorizontal: 10
   },
-  header: {
-    height: 120,
-    padding: 20,
-    borderRadius: 25,
-    backgroundColor: '#111827',
+  nameText:{
+    color: "white",
+    fontSize: 25,
+    fontFamily: FontFamily.poppinsBold,
+    textAlign: "center",
   },
   welcomeText:{
     color: "white",
-    fontSize: 25,
-    fontWeight: "bold",
+    fontSize: 17,
+    fontFamily: FontFamily.poppinsMedium,
     textAlign: "center",
-   
-   
   },
   welcomeContainer:{
-    padding: 10
-  },
-  image:{
-    flex: 1,
-    //justifyContent: 'center'
-  },
-  titleText: {
-    fontSize: 12,
-    color: 'white',
-    textAlign: 'center',
-  },
-  HeadlineText: {
-    fontSize: 12,
-    marginBottom: 10,
-    color: 'gray',
-  },
-  regularText: {
-    fontSize: 30,
-    color: 'white',
-    fontWeight: 'bold'
-  },
-  buttonsContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
-    justifyContent: 'space-evenly',
-
-   
-  },
-  mediumButtonContainer: {
-    height: 90,
-    width: 90,
-    padding: 20,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    flexDirection: 'row',
-    borderRadius: 100,
-    alignContent: 'center',
-    flexWrap: 'wrap',
-    backgroundColor: 'white',
+  },
+  upperContainer:{
+    marginTop: 20
+  },
+  balanceContainer:{
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    borderColor: Color.gray_100,
+    borderWidth: 3,
+    margin: 10,
+  },
+  balanceText:{
+    fontSize: 20,
+    fontFamily: FontFamily.poppinsMedium
+  },
+  purpleContainer:{
+    alignItems: 'center',
+    backgroundColor: '#7B61FF',
+    borderRadius: 38,
+    borderColor: Color.gray_100,
+    borderWidth: 1,
+  },
+  blackContainer:{
+    flexDirection: 'column',
+    backgroundColor: '#262329',
+    borderRadius: 40,
+    borderColor: Color.gray_100,
     
   },
-  circle: {
-    width: 40,
-    height: 40,
-    borderRadius: 25,
-    backgroundColor: '#111827',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 5,
+  purpleContainerText:{
+    color: Color.gray_700,
+    fontSize: 45,
+    fontFamily: FontFamily.poppinsMedium
+  },
+  totalBalanceText:{
+    color: '#C9C9C9',
+    marginTop: 10, 
+    fontSize: 15, 
+    fontFamily: FontFamily.poppinsMedium
+  },
+  sendImage:{
+    height: 50,
+    width: 50
+  },
+  gasContainer:{
 
   },
-  smallButtonContainer: {
-    height: 50,
-    width: 50,
-    padding: 10,
-    marginBottom: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderRadius: 25,
-    alignContent: 'center',
-    flexWrap: 'wrap',
-    backgroundColor: '#111827',
-  },
-  boldText: {
-    fontWeight: 'bold',
-  },
-  footbar: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    height: 60,
-    padding: 20,
-    marginBottom: 10,
-    borderRadius: 20
-  },
-  iconContainer: {
-    alignItems: 'center',
-  },
-  iconLabel: {
-    fontSize: 12,
-    marginTop: 2,
-  },
+
 });

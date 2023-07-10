@@ -1,9 +1,4 @@
-import { View, 
-  Text, 
-  StyleSheet, 
-  TouchableOpacity,
-  ImageBackground,
-  SafeAreaView, } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity,ImageBackground,SafeAreaView, } from 'react-native';
 import { useNavigation } from '@react-navigation/core'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Currency from './Currency';
