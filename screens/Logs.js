@@ -13,6 +13,11 @@ const Logs = () => {
 
   const onPress = () => {
     navigation.navigate('ReceiveLogs');
+    
+  };
+  const onPress2 = () => {
+    navigation.navigate('Logs');
+    
   };
 
   const openModal = (transaction) => {
@@ -68,7 +73,10 @@ const Logs = () => {
           <TouchableOpacity style={styles.ButtonContainer} onPress={onPress}>
             <Text style={styles.buttonText}>Received</Text>
           </TouchableOpacity>
-        
+          
+          <TouchableOpacity style={styles.ButtonContainer} onPress={onPress2}>
+            <Text style={styles.buttonText}>Sent</Text>
+          </TouchableOpacity>
         </View>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -79,7 +87,7 @@ const Logs = () => {
               style={[styles.logItem, index === 0 && styles.highlightedLog]}
               onPress={() => openModal(item)}
             >
-              <Text>You have just sent ₱{item.transactions} to {item.ReceiverEmail}</Text>
+              <Text style= {styles.pesoText}>{item.ReceiverEmail}<Text style = {styles.ReceiverEmail}> -₱ {item.transactions} </Text> </Text>
               <Text style={styles.timestampText}>{item.Timestamp}</Text>
             </TouchableOpacity>
           )}
@@ -128,9 +136,10 @@ const styles = StyleSheet.create({
     right: 0
   },
   ButtonContainer: {
-    marginHorizontal: 80,
+    justifyContent: 'space-between',
     backgroundColor: "#111827",
     paddingVertical: 10,
+    paddingHorizontal:20,
     borderRadius: 5,
     marginTop: 15,
   },
@@ -141,7 +150,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   receivedButton: {
-    padding: 0.5,
+    padding: 10,
+    flexDirection: "row",
+    justifyContent: "center",
   },
   loadingContainer: {
     flex: 1,
@@ -155,7 +166,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   logItem: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#7B61FF',
     padding: 16,
     marginBottom: 8,
     borderRadius: 8,
@@ -166,10 +177,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#FFA500',
   },
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-  },
+ 
   logText: {
     fontSize: 16,
     marginBottom: 8,
@@ -177,7 +185,9 @@ const styles = StyleSheet.create({
   },
   timestampText: {
     fontSize: 12,
-    color: '#888888',
+    color: 'white',
+    fontFamily: FontFamily.poppinsRegular,
+    alignSelf: 'flex-end',
   },
   modalContainer: {
     flex: 1,
@@ -214,5 +224,14 @@ const styles = StyleSheet.create({
   textAlign: 'center',
   marginTop: 45,
   },
+  pesoText: {
+    color: 'white',
+    fontFamily: FontFamily.poppinsMedium,
+  },
+  ReceiverEmail:{
+    color: 'red',
+    
+    
+  }
 });
 
