@@ -300,15 +300,18 @@ export default function Home() {
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              <Text style={styles.gasText}>{ethGasData.SafeGasPrice}</Text>
+              <Text style={styles.gasText}>{ethGasData.SafeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              <Text style={styles.gasText}>{ethGasData.ProposeGasPrice}</Text>
+              <Text style={styles.gasText}>{ethGasData.ProposeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              <Text style={styles.gasText}>{ethGasData.FastGasPrice}</Text>
+              <Text style={styles.gasText}>{ethGasData.FastGasPrice}
+              </Text>
             </View>
             </View>
 
@@ -337,15 +340,18 @@ export default function Home() {
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              <Text style={styles.gasText}>{bnbGasData.SafeGasPrice}</Text>
+              <Text style={styles.gasText}>{bnbGasData.SafeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              <Text style={styles.gasText}>{bnbGasData.ProposeGasPrice}</Text>
+              <Text style={styles.gasText}>{bnbGasData.ProposeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              <Text style={styles.gasText}>{bnbGasData.FastGasPrice}</Text>
+              <Text style={styles.gasText}>{bnbGasData.FastGasPrice}
+              </Text>
             </View>
             </View>
 
@@ -375,15 +381,18 @@ export default function Home() {
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              <Text style={styles.gasText}> {polygonGasData.SafeGasPrice}</Text>
+              <Text style={styles.gasText}> {polygonGasData.SafeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              <Text style={styles.gasText}>{polygonGasData.ProposeGasPrice}</Text>
+              <Text style={styles.gasText}>{polygonGasData.ProposeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              <Text style={styles.gasText}>{polygonGasData.FastGasPrice}</Text>
+              <Text style={styles.gasText}>{polygonGasData.FastGasPrice}
+              </Text>
             </View>
             </View>
 
@@ -413,15 +422,18 @@ export default function Home() {
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              <Text style={styles.gasText}> {ftmGasData.SafeGasPrice}</Text>
+              <Text style={styles.gasText}> {ftmGasData.SafeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              <Text style={styles.gasText}>{ftmGasData.ProposeGasPrice}</Text>
+              <Text style={styles.gasText}>{ftmGasData.ProposeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              <Text style={styles.gasText}>{ftmGasData.FastGasPrice}</Text>
+              <Text style={styles.gasText}>{ftmGasData.FastGasPrice}
+              </Text>
             </View>
             </View>
 
