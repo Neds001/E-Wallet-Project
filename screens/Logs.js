@@ -2,7 +2,7 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, ImageBackground, Mo
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { auth, firebase } from '../firebase';
-import { onSnapshot, orderBy } from 'firebase/firestore';
+import { onSnapshot} from 'firebase/firestore';
 import {Color, FontFamily} from '../GlobalStyles'
 
 const Logs = () => {
@@ -68,7 +68,7 @@ const Logs = () => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#141414" />
-      <Text style={styles.title}>Transactions</Text>
+      <Text style={styles.title}>Transaction History</Text>
       <View style={styles.receivedButton}>
           <TouchableOpacity style={styles.ButtonContainer} onPress={onPress}>
             <Text style={styles.buttonText}>Received</Text>
@@ -87,7 +87,8 @@ const Logs = () => {
               style={[styles.logItem, index === 0 && styles.highlightedLog]}
               onPress={() => openModal(item)}
             >
-              <Text style= {styles.pesoText}>{item.ReceiverEmail}<Text style = {styles.ReceiverEmail}> -₱ {item.transactions} </Text> </Text>
+              <Text style= {styles.pesoText}> Sent to {item.ReceiverEmail} </Text>
+              <Text style = {styles.ReceiverEmail}> -₱ {item.transactions} </Text>
               <Text style={styles.timestampText}>{item.Timestamp}</Text>
             </TouchableOpacity>
           )}
@@ -105,9 +106,9 @@ const Logs = () => {
             {selectedTransaction && (
               <View style={styles.transactionModal}>
                 <Text style={styles.modalText}>Transaction Details</Text>
-                <Text>Transaction: ₱{selectedTransaction.transactions}</Text>
-                <Text>Receiver: {selectedTransaction.ReceiverEmail}</Text>
-                <Text>Timestamp: {selectedTransaction.Timestamp}</Text>
+                <Text style= {styles.modTrans}>Transaction: ₱{selectedTransaction.transactions}</Text>
+                <Text style= {styles.modTrans}>Receiver: {selectedTransaction.ReceiverEmail}</Text>
+                <Text style= {styles.modTrans}>Timestamp: {selectedTransaction.Timestamp}</Text>
                                 <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
                   <Text style={styles.closeButtonText}>Close</Text>
                 </TouchableOpacity>
@@ -137,17 +138,18 @@ const styles = StyleSheet.create({
   },
   ButtonContainer: {
     justifyContent: 'space-between',
-    backgroundColor: "#111827",
+    backgroundColor: "#7B61FF",
     paddingVertical: 10,
     paddingHorizontal:20,
     borderRadius: 5,
     marginTop: 15,
+    
   },
   buttonText: {
     color: "white",
     fontSize: 16,
-    fontWeight: "bold",
     textAlign: "center",
+    fontFamily: FontFamily.poppinsMedium,
   },
   receivedButton: {
     padding: 10,
@@ -166,11 +168,12 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   logItem: {
-    backgroundColor: '#7B61FF',
+    backgroundColor: '#483D8B',
     padding: 16,
     marginBottom: 8,
     borderRadius: 8,
     elevation: 2,
+    
   },
   highlightedLog: {
     backgroundColor: '#FFD700',
@@ -203,19 +206,20 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontSize: 18,
-    fontWeight: 'bold',
     marginBottom: 10,
+    fontFamily: FontFamily.poppinsBold,
   },
   closeButton: {
     marginTop: 20,
-    backgroundColor: '#111827',
+    backgroundColor: '#7B61FF',
     padding: 10,
     borderRadius: 8,
     alignSelf: 'flex-end',
   },
   closeButtonText: {
     color: 'white',
-    fontWeight: 'bold',
+    fontFamily: FontFamily.poppinsMedium,
+
   },
   title:{
   color: 'white',
@@ -230,8 +234,12 @@ const styles = StyleSheet.create({
   },
   ReceiverEmail:{
     color: 'red',
-    
-    
+    alignSelf: 'flex-end',
+    fontSize: 20,
+  },
+  modTrans:{
+    fontFamily: FontFamily.poppinsMedium,
+    fontSize: 13,
   }
 });
 
