@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { auth, firebase } from '../firebase';
 import { onSnapshot, orderBy } from 'firebase/firestore';
+import {Color, FontFamily} from '../GlobalStyles'
 
 const Logs = () => {
   const [logInfo, setLogs] = useState([]);
@@ -62,7 +63,13 @@ const Logs = () => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#141414" />
-      <ImageBackground source={require('../assets/background1.jpg')} resizeMode="cover" style={styles.image}>
+      <Text style={styles.title}>Transactions</Text>
+      <View style={styles.receivedButton}>
+          <TouchableOpacity style={styles.ButtonContainer} onPress={onPress}>
+            <Text style={styles.buttonText}>Received</Text>
+          </TouchableOpacity>
+        
+        </View>
         <FlatList
           showsVerticalScrollIndicator={false}
           style={styles.flatlistContainer}
@@ -79,11 +86,7 @@ const Logs = () => {
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContainer}
         />
-        <View style={styles.receivedButton}>
-          <TouchableOpacity style={styles.ButtonContainer} onPress={onPress}>
-            <Text style={styles.buttonText}>Received History</Text>
-          </TouchableOpacity>
-        </View>
+      
         <Modal
           visible={modalVisible}
           animationType="slide"
@@ -104,7 +107,7 @@ const Logs = () => {
             )}
           </View>
         </Modal>
-      </ImageBackground>
+      
     </View>
   );
 };
@@ -113,7 +116,10 @@ export default Logs;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    backgroundColor: Color.blackModePrimaryDark,
     justifyContent: "center",
     position: 'absolute',
     top: 0,
@@ -135,8 +141,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   receivedButton: {
-    padding: 10,
-    marginBottom: 10
+    padding: 0.5,
   },
   loadingContainer: {
     flex: 1,
@@ -201,6 +206,13 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  title:{
+  color: 'white',
+  fontFamily: FontFamily.poppinsBold,
+  fontSize: 25,
+  textAlign: 'center',
+  marginTop: 45,
   },
 });
 
