@@ -11,6 +11,8 @@ import { Ionicons} from "@expo/vector-icons"
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { Feather } from '@expo/vector-icons';
 import { color } from 'react-native-reanimated';
+import { Row, Rows, Table, TableWrapper } from 'react-native-table-component';
+
 
 export default function Home() {
 
@@ -28,6 +30,7 @@ export default function Home() {
 
   const [userInfo, setUserInfo] = useState([]);
   const navigation = useNavigation()
+
 
   useEffect(() => {
     const fetchBnbGasData = async () => {
@@ -238,7 +241,8 @@ export default function Home() {
       <View style={styles.blackContainer}>
       <View style={styles.purpleContainer}>
         <Text style={styles.totalBalanceText}>Total balance</Text>
-        <Text style={styles.purpleContainerText}>₱ {userInfo.wallet}</Text>
+        <Text style={styles.purpleContainerText}>₱ {userInfo.wallet ? userInfo.wallet.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>
+
       </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-around', alignItems:'center', padding: 10}}>
           <TouchableOpacity onPress={sendButton}>
@@ -265,34 +269,176 @@ export default function Home() {
         </View>
       </View>
 
+  
+
       <View style={styles.gasContainer}>
         <ScrollView
-          //onScroll={({nativeEvent})=>onchange(nativeEvent)}
-          showsHorizontalScrollIndicator = {false}
-          //pagingEnabled
+          showsHorizontalScrollIndicator = {false} 
           horizontal
-        >
-          <View style={styles.eth}>
+          contentContainerStyle = {styles.gasFeeContent}>
+
+          <View style={styles.ethContainer}>
+            <View style={styles.ethContent}>
+            <Image source={require('../assets/eth.png')}
+              style={styles.ethImage}
+            />
+            <Text style={styles.ethText}>            ETHEREUM               </Text>
+            <Image
+              source={require('../assets/gasIcon.png')}
+              style={styles.gasImage}
+            />
+            </View>
+            <View>
+            <View style={styles.gasTextContainer}>
+            <Text style={styles.gasFeeText}>   GAS FEE</Text>
+            <Text style={styles.time}>{currentTime} UTC</Text>
+            </View>
+            <Text style={{marginTop: -25}}>         ETH</Text>
+            </View>
+            <View style={{justifyContent:'center', alignItems: 'center'}}>
+              <Text style={styles.gasFeeText}>GWEI</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>LOW</Text>
+              <Text style={styles.gasText}>{ethGasData.SafeGasPrice}</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>AVERAGE</Text>
+              <Text style={styles.gasText}>{ethGasData.ProposeGasPrice}</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>PRIORITY</Text>
+              <Text style={styles.gasText}>{ethGasData.FastGasPrice}</Text>
+            </View>
+            </View>
+
+
+
+            <View style={styles.ethContainer}>
+            <View style={styles.ethContent}>
+            <Image source={require('../assets/bnb.png')}
+              style={styles.ethImage}
+            />
+            <Text style={styles.ethText}>            BINANCE               </Text>
+            <Image
+              source={require('../assets/gasIcon.png')}
+              style={styles.gasImage}
+            />
+            </View>
+            <View>
+            <View style={styles.gasTextContainer}>
+            <Text style={styles.gasFeeText}>   GAS FEE</Text>
+            <Text style={styles.time}>{currentTime} UTC</Text>
+            </View>
+            <Text style={{marginTop: -25}}>         BNB</Text>
+            </View>
+            <View style={{justifyContent:'center', alignItems: 'center'}}>
+              <Text style={styles.gasFeeText}>GWEI</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>LOW</Text>
+              <Text style={styles.gasText}>{bnbGasData.SafeGasPrice}</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>AVERAGE</Text>
+              <Text style={styles.gasText}>{bnbGasData.ProposeGasPrice}</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>PRIORITY</Text>
+              <Text style={styles.gasText}>{bnbGasData.FastGasPrice}</Text>
+            </View>
+            </View>
+
+
+
+
+            <View style={styles.ethContainer}>
+            <View style={styles.ethContent}>
+            <Image source={require('../assets/polygon.png')}
+              style={styles.ethImage}
+            />
+            <Text style={styles.ethText}>            POLYGON               </Text>
+            <Image
+              source={require('../assets/gasIcon.png')}
+              style={styles.gasImage}
+            />
+            </View>
+            <View>
+            <View style={styles.gasTextContainer}>
+            <Text style={styles.gasFeeText}>   GAS FEE</Text>
+            <Text style={styles.time}>{currentTime} UTC</Text>
+            </View>
+            <Text style={{marginTop: -25}}>         POLYGON</Text>
+            </View>
+            <View style={{justifyContent:'center', alignItems: 'center'}}>
+              <Text style={styles.gasFeeText}>GWEI</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>LOW</Text>
+              <Text style={styles.gasText}> {polygonGasData.SafeGasPrice}</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>AVERAGE</Text>
+              <Text style={styles.gasText}>{polygonGasData.ProposeGasPrice}</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>PRIORITY</Text>
+              <Text style={styles.gasText}>{polygonGasData.FastGasPrice}</Text>
+            </View>
+            </View>
+
+
+
+
+            <View style={styles.ethContainer}>
+            <View style={styles.ethContent}>
+            <Image source={require('../assets/fantom.png')}
+              style={styles.ethImage}
+            />
+            <Text style={styles.ethText}>            FANTOM               </Text>
+            <Image
+              source={require('../assets/gasIcon.png')}
+              style={styles.gasImage}
+            />
+            </View>
+            <View>
+            <View style={styles.gasTextContainer}>
+            <Text style={styles.gasFeeText}>   GAS FEE</Text>
+            <Text style={styles.time}>{currentTime} UTC</Text>
+            </View>
+            <Text style={{marginTop: -25}}>         FTM</Text>
+            </View>
+            <View style={{justifyContent:'center', alignItems: 'center'}}>
+              <Text style={styles.gasFeeText}>GWEI</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>LOW</Text>
+              <Text style={styles.gasText}> {ftmGasData.SafeGasPrice}</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>AVERAGE</Text>
+              <Text style={styles.gasText}>{ftmGasData.ProposeGasPrice}</Text>
+            </View>
+            <View style={styles.gasFeee}>
+              <Text style={styles.gasText}>PRIORITY</Text>
+              <Text style={styles.gasText}>{ftmGasData.FastGasPrice}</Text>
+            </View>
+            </View>
+
+
+
+
+
+
             
 
-          </View>
+
+            
+
 
         </ScrollView>
       </View>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
     </SafeAreaView>
     
   )
@@ -368,7 +514,59 @@ const styles = StyleSheet.create({
     width: 50
   },
   gasContainer:{
-
+    marginTop: 15,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  gasFeeContent:{
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  ethContainer:{
+    backgroundColor: '#D9D9D9',
+    borderRadius: 35,
+    marginLeft: 10
+    // paddingHorizontal: 70,
+    
+  },
+  ethContent:{
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10
+  },
+  ethImage:{
+    marginTop: 5,
+    width: 70,
+    height: 70,
+  },
+  gasImage:{
+    width: 40,
+    height: 40,
+  },
+  ethText:{
+    fontFamily: FontFamily.poppinsBold,
+    fontSize: 20
+  },
+  gasTextContainer:{
+    justifyContent:'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    marginTop: -30
+  },
+  gasFeeText:{
+    fontFamily: FontFamily.poppinsBold,
+    fontSize: 20
+  },
+  gasFeee:{
+    flexDirection: 'row', 
+    alignItems:'center', 
+    justifyContent:'space-around',
+    padding: 8
+  },
+  gasText:{
+    fontFamily: FontFamily.poppinsMedium,
+    fontSize: 15
   },
 
 });
