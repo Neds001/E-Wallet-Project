@@ -1,21 +1,13 @@
-import React, { useState, 
-  useEffect, useContext } from 'react';
-import { View, 
-Text, 
-StyleSheet, 
-TextInput, 
-ImageBackground,
-SafeAreaView,
-TouchableOpacity, Switch } from 'react-native';
-import { auth, 
-firebase } from '../firebase';
-import { doc, 
-getDoc,onSnapshot, updateDoc } from 'firebase/firestore';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, TextInput, ImageBackground,SafeAreaView,TouchableOpacity, Switch, StatusBar } from 'react-native';
+import { auth, firebase } from '../firebase';
+import { doc, getDoc,onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { onAuthStateChanged } from "firebase/auth";
 import QRCode from 'react-native-qrcode-svg';
 import { useNavigation } from '@react-navigation/native';
 import { AppContext } from '../AppContext';
+import { Color } from '../GlobalStyles';
 
 const EditProfile = () => {
 const { showFingerprint, setShowFingerprint } = useContext(AppContext);
@@ -86,20 +78,16 @@ flex: 1,
 justifyContent: 'center',
 flexDirection: 'column'
 }}>
-<ImageBackground
-source={require('../assets/background1.jpg')}
-resizeMode="cover"
-style={styles.image}
->
+<StatusBar backgroundColor="#141414" />
 <View style={styles.contentContainer}>
 
-<View style={styles.qrCodeContainer}>
+{/* <View style={styles.qrCodeContainer}>
 <View style={styles.qrCode}>
 {qrCodeValue ? (
   <QRCode value={qrCodeValue} size={180} />
 ) : null}
 </View>
-</View>
+</View> */}
 
 <Text style={styles.balance}>
 Current Balance: 
@@ -168,7 +156,6 @@ onPress={editProfile}
 </View>
 
 </View>
-</ImageBackground>
 </SafeAreaView>
 );
 };
@@ -180,6 +167,7 @@ contentContainer: {
 flex: 1,
 justifyContent: 'center',
 alignItems: 'center',
+backgroundColor: Color.blackModePrimaryDark
 },
 userInfo: {
 marginBottom: 20,

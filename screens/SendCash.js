@@ -661,7 +661,7 @@ const styles = StyleSheet.create({
   transferText:{
     fontFamily: FontFamily.poppinsMedium,
     fontSize: 20,
-    color: Color.gray_700
+    color: '#fff'
   },
   buttonText: {
     color: Color.gray_700,
