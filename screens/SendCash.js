@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, ToastAndroid} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { collection, query, where, onSnapshot, runTransaction,getDoc, doc, getDocs, addDoc, Timestamp, orderBy, limit } from "firebase/firestore";
@@ -26,13 +26,9 @@ const Dashboard = ({ route }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [selectedAmount, setSelectedAmount] = useState('');
   const [amountError, setAmountError] = useState(false);
-  const [notes, setNotes] = useState("");
   const [showProgressAlert, setShowProgressAlert] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-
-
-
-
+  const [note, setNote] = useState(''); // State for note value
 
 
 
@@ -70,7 +66,8 @@ const Dashboard = ({ route }) => {
           // console.log('Password match');
         }
         else {
-          alert("Incorrect Password");
+          ToastAndroid.show('Invalid Action/no PIN', 
+          ToastAndroid.SHORT);
         }  
       } else {
         console.log('User document not found');
@@ -116,13 +113,13 @@ const Dashboard = ({ route }) => {
   
   
     const transferFunds = async () => {
-      setShowProgressAlert(true);
       const user = auth.currentUser;
-    if (Number(amount) < 20) {
+    if (Number(amount) < 5) {
         setAmountError(true);
         return;
     }
     if (user && user.emailVerified) {
+      setShowProgressAlert(true);
       try {
         const recipientUid = await getRecipientUid(recipientEmail);
         const sfDocRef = doc(db, 'users', recipientUid);
@@ -177,6 +174,30 @@ const Dashboard = ({ route }) => {
             });
           };
           await newTransactions();
+
+          const sentHisNote = async () => {
+            const sentRef = collection(db, 'users', uid, "notes", "messages", "sentMessages"); // Reference to the "Notes" collection
+            await addDoc(sentRef, {
+              transactions: amount,
+              Timestamp: new Date(),
+              ReceiverUid: recipientUid,
+              ReceiverEmail: recipientEmail,
+              Note: note, // Add the note value to the document
+            });
+          };
+          await sentHisNote();
+  
+          const receivedHisNote = async () => {
+            const receivedRef = collection(db, 'users', recipientUid, "notes", "messages", "receivedMessages"); // Reference to the "Notes" collection
+            await addDoc(receivedRef, {
+              transactions: amount,
+              Timestamp: new Date(),
+              Sender: uid,
+              SenderEmail: SenderEmail,
+              Note: note, // Add the note value to the document
+            });
+          };
+          await receivedHisNote();
   
           const receivedHis = async () => {
             await addDoc(collection(db, 'users', recipientUid, 'history', 'DUgVrFDJhas4wAuX07re', 'Recieved'), {
@@ -300,7 +321,7 @@ const Dashboard = ({ route }) => {
       
       <View style={{flexDirection:'row', padding: 10}}>
         <Text style={{color: '#fff', fontFamily: FontFamily.poppinsMedium}}>Amount</Text>
-        <Text style={{color: 'rgba(255, 255, 255, 0.15)'}}> *insert amount (min ₱20)</Text>
+        <Text style={{color: 'rgba(255, 255, 255, 0.15)'}}> *insert amount (min ₱5.00)</Text>
       </View>
       <View style={{justifyContent: 'center', alignItems:'center'}}>
       <View style={{flexDirection: 'row'}}>
@@ -320,7 +341,7 @@ const Dashboard = ({ route }) => {
         </View>
       </View>
       </View>
-      {amountError && (<Text style={styles.errorText}>Amount should be at least ₱20</Text>)}
+      {amountError && (<Text style={styles.errorText}>Amount should be at least ₱5.00</Text>)}
 
       <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10}}>
       <TouchableOpacity
@@ -430,7 +451,7 @@ const Dashboard = ({ route }) => {
       </View>
       </View>
 
-      <View style={{flexDirection:'row', padding: 10, marginTop: 20}}>
+      <View style={{flexDirection:'row', padding: 10, marginTop: 10}}>
         <Text style={{color: '#fff', fontFamily: FontFamily.poppinsMedium}}>Notes</Text>
         <Text style={{color: 'rgba(255, 255, 255, 0.15)'}}> *optional</Text>
       </View>
@@ -443,8 +464,9 @@ const Dashboard = ({ route }) => {
         color={'#fff'}
         fontFamily={FontFamily.poppinsMedium}
         fontSize={15}
-        value={notes}
-        onChangeText={setNotes}
+        value={note}
+        onChangeText={setNote}
+        
       />
 
       </View>
@@ -474,7 +496,7 @@ const Dashboard = ({ route }) => {
     <AwesomeAlert
         show={showSuccessAlert}
         title="Transfer Success!"
-        message={`sent ₱${Number(amount)} to ${recipientEmail}\nNotes: ${notes}`}
+        message={`sent ₱${Number(amount)} to ${recipientEmail}\nNotes: ${note}`}
         closeOnTouchOutside={false}
         closeOnHardwareBackPress={false}
         showCancelButton={false}
@@ -517,10 +539,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#7B61FF',
     borderRadius: 38,
     borderColor: Color.gray_100,
-    borderWidth: 1,
+    borderWidth: 1
   },
   purpleContainerText:{
-    color: Color.gray_700,
+    color: '#fff',
     fontSize: 45,
     fontFamily: FontFamily.poppinsMedium
   },

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigation } from '@react-navigation/core'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Modal, ToastAndroid, StatusBar } from "react-native";
 import { Image } from "expo-image";
@@ -9,6 +9,7 @@ import { setDoc, doc } from "firebase/firestore";
 import * as LocalAuthentication from "expo-local-authentication";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AwesomeAlert from 'react-native-awesome-alerts';
+import { AppContext } from "../AppContext";
 
 
   const Login = ({ navigation }) => {
@@ -23,10 +24,24 @@ import AwesomeAlert from 'react-native-awesome-alerts';
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertMessageText, setAlertMessageText] = useState("");
+  const { showFingerprint } = useContext(AppContext);
+  const [isEmailEditable, setIsEmailEditable] = useState(false);
+
 
   const onPress = () => {
     navigation.navigate("Registrationpage")
   }
+
+  const handleEnableEmailEdit = () => {
+    setIsEmailEditable(true);
+  };
+  
+  const handleChangeEmail = () => {
+    // Logic to handle email change
+    // For example, you can make an API call to update the email in the backend
+    console.log("Email changed:", email);
+    setIsEmailEditable(false);
+  };
 
   const handlePinCode = (number) => {
     setPinCode(pinCode + number);
@@ -156,6 +171,24 @@ import AwesomeAlert from 'react-native-awesome-alerts';
     setPassword(updatedPassword);
   };
 
+  useEffect(() => {
+    const retrieveSavedEmail = async () => {
+      try {
+        const savedEmail = await AsyncStorage.getItem("email");
+        if (savedEmail) {
+          setEmail(savedEmail);
+        }
+      } catch (error) {
+        console.log("Error retrieving saved email:", error);
+      }
+    };
+  
+    retrieveSavedEmail();
+  }, []);
+
+
+
+
   return (
       <View style={styles.container}>
         <StatusBar backgroundColor="#141414" />
@@ -169,28 +202,38 @@ import AwesomeAlert from 'react-native-awesome-alerts';
        <Text style={styles.title}>Log in</Text>
     
       <TextInput
-        style={styles.input}
+        style={[styles.input, !isEmailEditable && styles.disabledInput]}
         placeholder="Email"
         placeholderTextColor="rgba(255, 255, 255, 0.32)"
         value={email}
-        onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        editable={isEmailEditable}
+        onChangeText={setEmail}
       />
+
+<TouchableOpacity onPress={isEmailEditable ? handleChangeEmail : handleEnableEmailEdit}>
+  <Text style={styles.changeEmailButton}>{isEmailEditable ? 'Save' : 'Change Email'}</Text>
+</TouchableOpacity>
+
       <Text style={styles.title1}>Login Using:</Text>
       <View style={styles.iconContainer}>
-        <TouchableOpacity 
-            onPress={handleBiometricAuth}
-            >
-              <Image 
-                style={styles.icon1}
-                source={require("../assets/fingerprint.png")}
-              />
+
+
+      <TouchableOpacity 
+          onPress={handleBiometricAuth}
+          >
+          {showFingerprint && (
+            <TouchableOpacity onPress={handleBiometricAuth}>
+              <Image style={styles.icon1} source={require("../assets/fingerprint.png")} />
               <View style={styles.label}>
-      <Text style={styles.labelText}>Fingerprint</Text>
-    
-      </View>
-        </TouchableOpacity>
+                <Text style={styles.labelText}>Fingerprint</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+      </TouchableOpacity>
+
+
         <TouchableOpacity onPress={handleMpinImagePress}>
               <Image 
                 style={styles.icon2}

@@ -145,26 +145,13 @@ export default function Home() {
   const sendButton = () =>{
     navigation.navigate("Send")
   }
-  const logOutButton = () =>{
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace("Login")
-      })
-      .catch(error => alert(error.message))
-  }
 
-  const ScanQRButton = () => {
-    navigation.navigate("ScanQR")
+  const profileButton = () => {
+    navigation.navigate("Profile")
   }
-  const editProfileButton = () => {
-    navigation.navigate("EditProfile")
-  }
-  const currencyButton = () => {
-    navigation.navigate("Currency")
-  }
-  const historyLogsButton = () => {
-    navigation.navigate("Logs")
+  
+  const noitificationButton = () => {
+    navigation.navigate("Notifications")
   }
 
   const [email, setEmail] = useState();
@@ -225,11 +212,18 @@ export default function Home() {
       <View style={styles.upperContainer}>
         <View><Text style={styles.welcomeText}>Welcome</Text></View>
           <View style={styles.welcomeContainer}>
-            <TouchableOpacity  onPress={editProfileButton}>
+            <TouchableOpacity  onPress={profileButton}>
             <Ionicons name='person-circle' size={45} color='#fff'/>
             </TouchableOpacity>
-            <Text style={styles.nameText}>{userInfo.fullname}</Text>
+            <Text style={styles.nameText}>
+              {userInfo.fullname && userInfo.fullname
+                .split(' ')
+                .map((name, index) => (index === 0 ? name : name.charAt(0).toUpperCase() + '.'))
+                .join(' ')}
+            </Text>
+            <TouchableOpacity onPress={noitificationButton}>
             <Ionicons name='notifications' size={35} color='#fff'/>
+            </TouchableOpacity>
           </View>
       </View>
 
@@ -500,7 +494,7 @@ const styles = StyleSheet.create({
     
   },
   purpleContainerText:{
-    color: Color.gray_700,
+    color: '#fff',
     fontSize: 45,
     fontFamily: FontFamily.poppinsMedium
   },
