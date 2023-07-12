@@ -40,7 +40,7 @@ export default function App() {
         <Stack.Screen options = {{headerShown: false}} name="GetStarted" component={GetStarted} /> 
         <Stack.Screen options = {{headerShown: false}} name="Login" component={LoginScreen} />
         <Stack.Screen options = {{headerShown: false}} name="Main" component={MainDashboard}/>
-        <Stack.Screen name="Send" component={SendCash}/>
+        <Stack.Screen options = {{headerShown: false}} name="Send" component={SendCash}/>
         <Stack.Screen name="ScanQR" component={ScanQR}/>
         <Stack.Screen name="EditProfile" component={EditProfile}/>
         <Stack.Screen name="Currency" component={Currency}/>

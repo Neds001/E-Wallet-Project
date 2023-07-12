@@ -33,6 +33,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.71.8",
     "react-native-awesome-alerts": "^2.0.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-reanimated": "~2.14.4",
     "react-native-redash": "^18.1.0",

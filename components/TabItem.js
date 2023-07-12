@@ -22,7 +22,7 @@ const TabItem = ({ label, icon, index, activeIndex, onTabPress }) => {
   const labelPosition = getPathXCenterByIndex(curvedPaths, index)
 
   const tabStyle = useAnimatedStyle(() => {
-  const translateY = animatedActiveIndex.value - 1 === index ? -25 : 20
+  const translateY = animatedActiveIndex.value - 1 === index ? -23 : 20
   const iconPositionX = iconPosition - index * ICON_SIZE
     return {
       width: ICON_SIZE,

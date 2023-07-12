@@ -11,7 +11,6 @@ import { Ionicons} from "@expo/vector-icons"
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { Feather } from '@expo/vector-icons';
 import { color } from 'react-native-reanimated';
-import { Row, Rows, Table, TableWrapper } from 'react-native-table-component';
 
 
 export default function Home() {
@@ -23,10 +22,10 @@ export default function Home() {
   const [ftmGasData, setFtmGasData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(null);
-  const bnbAPI_KEY = 'TCNY4UT93EH2719XS7KD3HVBP85KKKE273'; // Replace with your BSCScan API key
+  const bnbAPI_KEY = 'TCNY4UT93EH2719XS7KD3HVBP85KKKE273'; 
   const ethAPI_KEY = 'HNYFG59NRZTGXZN6A6A4VZ2A4AWX1C44W3';
-  const polygonAPI_KEY = 'SHM1Q2VNZ9MIVKY8IE62F4MHYGCMPJDR31'; // Replace with your PolygonScan API key
-  const ftmAPI_KEY = '967A93QACPTC6QM1DN66TS5799TT9U861R'; // Replace with your FTMScan API key
+  const polygonAPI_KEY = 'SHM1Q2VNZ9MIVKY8IE62F4MHYGCMPJDR31'; 
+  const ftmAPI_KEY = '967A93QACPTC6QM1DN66TS5799TT9U861R'; 
 
   const [userInfo, setUserInfo] = useState([]);
   const navigation = useNavigation()
@@ -42,7 +41,7 @@ export default function Home() {
         if (response.ok) {
           const gasData = await response.json();
           setBnbGasData(gasData.result);
-          console.log("bnb data: ", gasData);
+          //console.log("bnb data: ", gasData);
         } else {
           console.log('Error fetching BNB gas data:', response.status);
         }
@@ -62,7 +61,7 @@ export default function Home() {
         if (response.ok) {
           const gasData = await response.json();
           setEthGasData(gasData.result);
-          console.log("ETH data: ", gasData);
+          //console.log("ETH data: ", gasData);
         } else {
           console.log('Error fetching Ethereum gas data:', response.status);
         }
@@ -80,7 +79,7 @@ export default function Home() {
         if (response.ok) {
           const gasData = await response.json();
           setPolygonGasData(gasData.result);
-          console.log("polygon data: ",gasData);
+          //console.log("polygon data: ",gasData);
         } else {
           console.log('Error fetching Polygon gas data:', response.status);
         }
@@ -98,7 +97,7 @@ export default function Home() {
         if (response.ok) {
           const gasData = await response.json();
           setFtmGasData(gasData.result);
-          console.log("fantom data: " ,gasData);
+          //console.log("fantom data: " ,gasData);
         } else {
           console.log('Error fetching Fantom gas data:', response.status);
         }
@@ -226,7 +225,9 @@ export default function Home() {
       <View style={styles.upperContainer}>
         <View><Text style={styles.welcomeText}>Welcome</Text></View>
           <View style={styles.welcomeContainer}>
+            <TouchableOpacity  onPress={editProfileButton}>
             <Ionicons name='person-circle' size={45} color='#fff'/>
+            </TouchableOpacity>
             <Text style={styles.nameText}>{userInfo.fullname}</Text>
             <Ionicons name='notifications' size={35} color='#fff'/>
           </View>
@@ -242,7 +243,6 @@ export default function Home() {
       <View style={styles.purpleContainer}>
         <Text style={styles.totalBalanceText}>Total balance</Text>
         <Text style={styles.purpleContainerText}>₱ {userInfo.wallet ? userInfo.wallet.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>
-
       </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-around', alignItems:'center', padding: 10}}>
           <TouchableOpacity onPress={sendButton}>
@@ -250,7 +250,7 @@ export default function Home() {
           style={styles.sendImage}
           source={require('../assets/send.png')}/>
           </TouchableOpacity>
-          <TouchableOpacity onPress={editProfileButton}>
+          <TouchableOpacity>
           <Image 
           style={styles.sendImage}
           source={require('../assets/receive.png')}/>
@@ -300,18 +300,18 @@ export default function Home() {
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              <Text style={styles.gasText}>{ethGasData.SafeGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}>{ethGasData.SafeGasPrice}
+              </Text> */}
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              <Text style={styles.gasText}>{ethGasData.ProposeGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}>{ethGasData.ProposeGasPrice}
+              </Text> */}
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              <Text style={styles.gasText}>{ethGasData.FastGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}>{ethGasData.FastGasPrice}
+              </Text> */}
             </View>
             </View>
 
@@ -340,18 +340,18 @@ export default function Home() {
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              <Text style={styles.gasText}>{bnbGasData.SafeGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}>{bnbGasData.SafeGasPrice}
+              </Text> */}
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              <Text style={styles.gasText}>{bnbGasData.ProposeGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}>{bnbGasData.ProposeGasPrice}
+              </Text> */}
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              <Text style={styles.gasText}>{bnbGasData.FastGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}>{bnbGasData.FastGasPrice}
+              </Text> */}
             </View>
             </View>
 
@@ -374,25 +374,25 @@ export default function Home() {
             <Text style={styles.gasFeeText}>   GAS FEE</Text>
             <Text style={styles.time}>{currentTime} UTC</Text>
             </View>
-            <Text style={{marginTop: -25}}>         POLYGON</Text>
+            <Text style={{marginTop: -25}}>    POLYGON</Text>
             </View>
             <View style={{justifyContent:'center', alignItems: 'center'}}>
               <Text style={styles.gasFeeText}>GWEI</Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              <Text style={styles.gasText}> {polygonGasData.SafeGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}> {polygonGasData.SafeGasPrice}
+              </Text> */}
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              <Text style={styles.gasText}>{polygonGasData.ProposeGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}>{polygonGasData.ProposeGasPrice}
+              </Text> */}
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              <Text style={styles.gasText}>{polygonGasData.FastGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}>{polygonGasData.FastGasPrice}
+              </Text> */}
             </View>
             </View>
 
@@ -415,25 +415,25 @@ export default function Home() {
             <Text style={styles.gasFeeText}>   GAS FEE</Text>
             <Text style={styles.time}>{currentTime} UTC</Text>
             </View>
-            <Text style={{marginTop: -25}}>         FTM</Text>
+            <Text style={{marginTop: -25}}>        FTM</Text>
             </View>
             <View style={{justifyContent:'center', alignItems: 'center'}}>
               <Text style={styles.gasFeeText}>GWEI</Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              <Text style={styles.gasText}> {ftmGasData.SafeGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}> {ftmGasData.SafeGasPrice}
+              </Text> */}
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              <Text style={styles.gasText}>{ftmGasData.ProposeGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}>{ftmGasData.ProposeGasPrice}
+              </Text> */}
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              <Text style={styles.gasText}>{ftmGasData.FastGasPrice}
-              </Text>
+              {/* <Text style={styles.gasText}>{ftmGasData.FastGasPrice}
+              </Text> */}
             </View>
             </View>
 
