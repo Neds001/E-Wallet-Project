@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Switch} from 'react-native'
 import { Color, FontFamily, FontSize } from '../GlobalStyles';
 import { Image } from "expo-image";
 import { useNavigation } from '@react-navigation/core'
@@ -7,12 +7,19 @@ import { auth } from '../firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
+import { AppContext } from '../AppContext';
+
 
 const Profile = () => {
     const [email, setEmail] = useState('');
     const [fullname, setFullname] = useState('');
     const [contact, setContact] = useState('');
+    const { showFingerprint, setShowFingerprint } = useContext(AppContext);
+
+    const handleToggleFingerprint = () => {
+      setShowFingerprint(!showFingerprint);
+      };
 
     const navigation = useNavigation()
     const backButton = () =>{
@@ -71,9 +78,20 @@ const Profile = () => {
         <View style={{alignItems:'center', justifyContent:'center'}}>
             <View style={styles.purpleContainer}>
                 <View style={styles.circleContainer}>
-                    <Fontisto name='person' size={90}/>
+                    <Fontisto name='user-secret' size={90}/>
                 </View>
             </View>
+        </View>
+
+
+        <View style={styles.fingerprintToggleContainer}>
+            <Switch
+            value={showFingerprint}
+            onValueChange={handleToggleFingerprint}
+            />
+            <Text style={styles.fingerprintToggleLabel}>Show Fingerprint</Text>
+            {showFingerprint && (
+            <View style={styles.fingerprintToggleContainer}></View>)}
         </View>
 
         <View style={styles.infoContainer}>
@@ -142,7 +160,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'flex-start',
         padding: 10,
-        marginTop: 20
       },
       contentContainer:{
         backgroundColor: "rgba(255, 255, 255, 0.15)",
@@ -169,4 +186,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10
       },
+      fingerprintToggleContainer:{
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        marginRight: 20
+      },
+      fingerprintToggleLabel:{
+        fontFamily: FontFamily.mButton,
+        color: Color.gray_400,
+        fontSize: 12
+      }
 });

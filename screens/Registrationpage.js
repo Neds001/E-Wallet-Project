@@ -123,7 +123,7 @@ const Registrationpage = ({ navigation }) => {
       .catch((error) => {
         //error message pop-up for email in use
         setAlertMessage("Registration Failed!");
-        setAlertMessageTitle("Email is already in use");
+        setAlertMessageTitle("Email is already in use or badly formatted");
         setShowAlert(true);
         const errorMessage = error.message;
         console.log(errorMessage);

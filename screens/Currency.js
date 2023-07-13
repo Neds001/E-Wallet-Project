@@ -1,12 +1,7 @@
-import React, { useEffect, 
-                useState } from 'react';
-import { View, 
-         Text, 
-         FlatList, 
-         StyleSheet, 
-         StatusBar, 
-         TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, StyleSheet, StatusBar, TextInput } from 'react-native';
 import CoinItem from '../components/CoinItem';
+import { Color } from '../GlobalStyles';
 
 const Currency = () => {
 
@@ -64,7 +59,7 @@ const Currency = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#141414',
+    backgroundColor: Color.blackModePrimaryDark,
     alignItems: 'center',
   },
   header: {

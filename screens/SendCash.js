@@ -146,10 +146,10 @@ const Dashboard = ({ route }) => {
                   throw new Error('Document does not exist!');
                 }
                 const deductedWallet = sf.data().wallet - Number(amount);
+                setShowSuccessAlert(true); // Show the success alert
                 transaction.update(userRef, {
                   wallet: deductedWallet,
                 });
-                setShowSuccessAlert(true); // Show the success alert
                 console.log('Successfully sent ₱' + Number(amount) + ' to ' + recipientEmail);
               });
             } catch (error) {
@@ -484,19 +484,19 @@ const Dashboard = ({ route }) => {
         showProgress={true}
         title="Sending"
         message="Please wait..."
-        closeOnTouchOutside={false}
+        closeOnTouchOutside={true}
         closeOnHardwareBackPress={false}
         showCancelButton={false}
         showConfirmButton={false}
         contentContainerStyle={styles.progressAlertContent}
         progressSize={40}
         progressColor="#7B61FF"
-    />
+      />
 
     <AwesomeAlert
         show={showSuccessAlert}
         title="Transfer Success!"
-        message={`sent ₱${Number(amount)} to ${recipientEmail}\nNotes: ${note}`}
+        message={`You just sent ₱${Number(amount)} to ${recipientEmail}\n\nNotes: ${note}`}
         closeOnTouchOutside={false}
         closeOnHardwareBackPress={false}
         showCancelButton={false}
@@ -505,7 +505,11 @@ const Dashboard = ({ route }) => {
         confirmButtonColor="#7B61FF"
         confirmButtonStyle={{backgroundColor: Color.sUNRISECoral}}
         confirmButtonTextStyle={styles.buttonText}
-        onConfirmPressed={() => setShowSuccessAlert(false)}
+        onConfirmPressed={() => {
+           setShowSuccessAlert(false);
+           navigation.navigate("Main");
+          }
+        }
         contentContainerStyle={styles.successAlertContent}
       />
     </KeyboardAwareScrollView>

@@ -27,7 +27,6 @@ import { AppContext } from "../AppContext";
   const { showFingerprint } = useContext(AppContext);
   const [isEmailEditable, setIsEmailEditable] = useState(false);
 
-
   const onPress = () => {
     navigation.navigate("Registrationpage")
   }
@@ -39,6 +38,7 @@ import { AppContext } from "../AppContext";
   const handleChangeEmail = () => {
     // Logic to handle email change
     // For example, you can make an API call to update the email in the backend
+    ToastAndroid.show("Email changed: " + email, ToastAndroid.SHORT)
     console.log("Email changed:", email);
     setIsEmailEditable(false);
   };
@@ -114,6 +114,7 @@ import { AppContext } from "../AppContext";
         }
         console.log("Biometric authentication successful");
       } else {
+        ToastAndroid.show('Biometric authentication failed',ToastAndroid.LONG);
         console.log("Biometric authentication failed");
       }
     } catch (error) {
@@ -130,7 +131,7 @@ import { AppContext } from "../AppContext";
       return;
     }
     if (password.trim() === "") {
-      setAlertMessage("Password is empty");
+      setAlertMessage("PIN is empty");
       setShowAlert(true);
       return;
     }
@@ -155,7 +156,7 @@ import { AppContext } from "../AppContext";
       .catch((error) => {
         const errorMessage = error.message;
         //wrong password pop up message
-        setAlertMessage("Wrong Password");
+        setAlertMessage("Wrong PIN");
         setShowAlert(true);
         console.log("wrong password");
       });
@@ -182,12 +183,8 @@ import { AppContext } from "../AppContext";
         console.log("Error retrieving saved email:", error);
       }
     };
-  
     retrieveSavedEmail();
   }, []);
-
-
-
 
   return (
       <View style={styles.container}>
@@ -212,14 +209,15 @@ import { AppContext } from "../AppContext";
         onChangeText={setEmail}
       />
 
-<TouchableOpacity onPress={isEmailEditable ? handleChangeEmail : handleEnableEmailEdit}>
-  <Text style={styles.changeEmailButton}>{isEmailEditable ? 'Save' : 'Change Email'}</Text>
-</TouchableOpacity>
+    <View style={styles.changeEmailContainer}>
+      <TouchableOpacity onPress={isEmailEditable ? handleChangeEmail : handleEnableEmailEdit} style={styles.changeEmailButton}>
+         <Text style={styles.changeEmailText}>{isEmailEditable ? 'Save' : 'Change Email'}</Text>
+      </TouchableOpacity>
+    </View>
+
 
       <Text style={styles.title1}>Login Using:</Text>
       <View style={styles.iconContainer}>
-
-
       <TouchableOpacity 
           onPress={handleBiometricAuth}
           >
@@ -529,6 +527,21 @@ const styles = StyleSheet.create({
     top: -15,
     height: 56,
     width: 45,
+  },
+  changeEmailContainer:{
+    justifyContent:'center',
+    alignItems: 'flex-end',
+    paddingEnd: 15
+  },
+  changeEmailButton:{
+    backgroundColor: "rgba(123, 97, 255, 0.19)",
+    borderRadius: 10,
+    padding: 6
+  },
+  changeEmailText:{
+    color: Color.gray_700,
+    fontFamily: FontFamily.poppinsRegular,
+    fontSize: 10
   },
 });
 

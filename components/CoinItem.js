@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
+import { Color } from '../GlobalStyles'
 
 const CoinItem = ({ coin }) => {
   return (
@@ -29,13 +30,13 @@ export default CoinItem;
 
 const styles = StyleSheet.create({
   containerItem: {
-    backgroundColor: '#121212',
+    backgroundColor: Color.blackModePrimaryDark,
     paddingTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
   textSymbol:{
-    color: '#434343',
+    color: Color.gray_400,
     textTransform: 'uppercase',
 
 

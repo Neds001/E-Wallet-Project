@@ -16,10 +16,10 @@ import { color } from 'react-native-reanimated';
 export default function Home() {
 
   //Gas API's
-  const [bnbGasData, setBnbGasData] = useState(null);
-  const [ethGasData, setEthGasData] = useState(null);
-  const [polygonGasData, setPolygonGasData] = useState(null);
-  const [ftmGasData, setFtmGasData] = useState(null);
+  const [bnbGasData, setBnbGasData] = useState('');
+  const [ethGasData, setEthGasData] = useState('');
+  const [polygonGasData, setPolygonGasData] = useState('');
+  const [ftmGasData, setFtmGasData] = useState('');
   const [loading, setLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(null);
   const bnbAPI_KEY = 'TCNY4UT93EH2719XS7KD3HVBP85KKKE273'; 
@@ -294,18 +294,31 @@ export default function Home() {
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              {/* <Text style={styles.gasText}>{ethGasData.SafeGasPrice}
-              </Text> */}
+              { ethGasData.SafeGasPrice !== null ?
+                <Text style={styles.gasText}>{ethGasData.SafeGasPrice}
+              </Text>
+              :
+              console.log('Error')
+              }
+
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              {/* <Text style={styles.gasText}>{ethGasData.ProposeGasPrice}
-              </Text> */}
+            { ethGasData.SafeGasPrice !== null ?
+              <Text style={styles.gasText}>{ethGasData.ProposeGasPrice}
+              </Text>
+               :
+               console.log('Error')
+               }
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              {/* <Text style={styles.gasText}>{ethGasData.FastGasPrice}
-              </Text> */}
+              { ethGasData.SafeGasPrice !== null ?
+              <Text style={styles.gasText}>{ethGasData.FastGasPrice}
+              </Text>
+               :
+               console.log('Error')
+               }
             </View>
             </View>
 
@@ -334,18 +347,18 @@ export default function Home() {
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              {/* <Text style={styles.gasText}>{bnbGasData.SafeGasPrice}
-              </Text> */}
+              <Text style={styles.gasText}>{bnbGasData.SafeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              {/* <Text style={styles.gasText}>{bnbGasData.ProposeGasPrice}
-              </Text> */}
+              <Text style={styles.gasText}>{bnbGasData.ProposeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              {/* <Text style={styles.gasText}>{bnbGasData.FastGasPrice}
-              </Text> */}
+              <Text style={styles.gasText}>{bnbGasData.FastGasPrice}
+              </Text>
             </View>
             </View>
 
@@ -375,18 +388,18 @@ export default function Home() {
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              {/* <Text style={styles.gasText}> {polygonGasData.SafeGasPrice}
-              </Text> */}
+              <Text style={styles.gasText}> {polygonGasData.SafeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              {/* <Text style={styles.gasText}>{polygonGasData.ProposeGasPrice}
-              </Text> */}
+              <Text style={styles.gasText}>{polygonGasData.ProposeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              {/* <Text style={styles.gasText}>{polygonGasData.FastGasPrice}
-              </Text> */}
+              <Text style={styles.gasText}>{polygonGasData.FastGasPrice}
+              </Text>
             </View>
             </View>
 
@@ -416,18 +429,18 @@ export default function Home() {
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>LOW</Text>
-              {/* <Text style={styles.gasText}> {ftmGasData.SafeGasPrice}
-              </Text> */}
+              <Text style={styles.gasText}> {ftmGasData.SafeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>AVERAGE</Text>
-              {/* <Text style={styles.gasText}>{ftmGasData.ProposeGasPrice}
-              </Text> */}
+              <Text style={styles.gasText}>{ftmGasData.ProposeGasPrice}
+              </Text>
             </View>
             <View style={styles.gasFeee}>
               <Text style={styles.gasText}>PRIORITY</Text>
-              {/* <Text style={styles.gasText}>{ftmGasData.FastGasPrice}
-              </Text> */}
+              <Text style={styles.gasText}>{ftmGasData.FastGasPrice}
+              </Text>
             </View>
             </View>
 
