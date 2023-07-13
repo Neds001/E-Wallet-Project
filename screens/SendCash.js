@@ -454,6 +454,7 @@ const Dashboard = ({ route }) => {
       <View style={{flexDirection:'row', padding: 10, marginTop: 10}}>
         <Text style={{color: '#fff', fontFamily: FontFamily.poppinsMedium}}>Notes</Text>
         <Text style={{color: 'rgba(255, 255, 255, 0.15)'}}> *optional</Text>
+
       </View>
 
       <View>

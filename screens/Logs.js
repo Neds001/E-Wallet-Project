@@ -68,16 +68,15 @@ const Logs = () => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#141414" />
-      <Text style={styles.title}>Transaction History</Text>
-      <View style={styles.receivedButton}>
+      <Text style={styles.title}>Sent History</Text>
+      {/* <View style={styles.receivedButton}>
           <TouchableOpacity style={styles.ButtonContainer} onPress={onPress}>
             <Text style={styles.buttonText}>Received</Text>
           </TouchableOpacity>
-          
           <TouchableOpacity style={styles.ButtonContainer} onPress={onPress2}>
             <Text style={styles.buttonText}>Sent</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
         <FlatList
           showsVerticalScrollIndicator={false}
           style={styles.flatlistContainer}
@@ -106,9 +105,9 @@ const Logs = () => {
             {selectedTransaction && (
               <View style={styles.transactionModal}>
                 <Text style={styles.modalText}>Transaction Details</Text>
-                <Text style= {styles.modTrans}>Transaction: ₱{selectedTransaction.transactions}</Text>
+                <Text style= {styles.modTrans}>You sent: ₱{selectedTransaction.transactions}</Text>
                 <Text style= {styles.modTrans}>Receiver: {selectedTransaction.ReceiverEmail}</Text>
-                <Text style= {styles.modTrans}>Timestamp: {selectedTransaction.Timestamp}</Text>
+                <Text style= {styles.modTrans}>Time: {selectedTransaction.Timestamp}</Text>
                                 <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
                   <Text style={styles.closeButtonText}>Close</Text>
                 </TouchableOpacity>
@@ -168,7 +167,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   logItem: {
-    backgroundColor: '#483D8B',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
     padding: 16,
     marginBottom: 8,
     borderRadius: 8,
@@ -176,7 +175,7 @@ const styles = StyleSheet.create({
     
   },
   highlightedLog: {
-    backgroundColor: '#FFD700',
+    backgroundColor: '#7B61FF',
     borderWidth: 2,
     borderColor: '#FFA500',
   },
@@ -233,7 +232,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppinsMedium,
   },
   ReceiverEmail:{
-    color: 'red',
+    color: '#d65047',
     alignSelf: 'flex-end',
     fontSize: 20,
   },

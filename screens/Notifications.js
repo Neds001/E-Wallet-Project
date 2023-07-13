@@ -73,7 +73,7 @@ const Notifications = () => {
               style={[styles.logItem, index === 0 && styles.highlightedLog]}
               onPress={() => openModal(item)}
             >
-              <Text key={index}>You just received ₱{item.transactions} from {item.SenderEmail} {item.Note ? `with a note of: ${item.Note}` : ''}</Text>
+              <Text key={index}>You just received ₱{item.transactions} from {item.SenderEmail} {item.Note ? `with a note of: \n${item.Note}` : ''}</Text>
               <Text style={styles.timestampText}>{item.Timestamp}</Text>
             </TouchableOpacity>
           )}
@@ -96,8 +96,8 @@ const Notifications = () => {
               <View style={styles.transactionModal}>
                 <Text style={styles.modalText}>Transaction Details</Text>
                 <Text>Transaction: ₱{selectedTransaction.transactions}</Text>
-                <Text>Sender: {selectedTransaction.Sender}</Text>
-                <Text>Timestamp: {selectedTransaction.Timestamp}</Text>
+                <Text>Sender: {selectedTransaction.SenderEmail}</Text>
+                <Text>Time: {selectedTransaction.Timestamp}</Text>
                 <Text>Note: {selectedTransaction.Note}</Text>
                 <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
                   <Text style={styles.closeButtonText}>Close</Text>
