@@ -17,7 +17,9 @@ const Currency = () => {
           `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${selectedCurrency.toLowerCase()}&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`
         );
         const data = await res.json();
+        ToastAndroid.show('Updating Currency', ToastAndroid.SHORT)
         console.log('loaded to updated currency');
+        ToastAndroid.show('Updated Currency', ToastAndroid.SHORT)
         setCoins(data);
       
         // Set currency symbol based on selected currency
@@ -131,7 +133,7 @@ const styles = StyleSheet.create({
   },
   currencySymbol: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 25,
     padding: 10
 
   },

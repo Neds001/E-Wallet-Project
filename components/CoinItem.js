@@ -16,7 +16,7 @@ const CoinItem = ({ coin }) => {
       </View>
       </View>
       <View>
-      <Text style={styles.textPrice}> { coin.current_price } </Text>
+      <Text style={styles.textPrice}> { coin.current_price ? coin.current_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'} </Text>
       <Text style={[styles.pricePercentage, coin.price_change_percentage_24h > 0 ? 
             styles.priceUp : styles.priceDown]}>
       {coin.price_change_percentage_24h}
