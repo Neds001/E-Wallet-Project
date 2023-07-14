@@ -10,26 +10,38 @@ const Currency = () => {
   const [search, setSearch] = useState('');
   const [refreshing, setRefreshing] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('PHP');
+  const [currencySymbol, setCurrencySymbol] = useState('₱');
 
-
-  // const loadData = async () => {
-  //   const res = await fetch(
-  //     'https://api.coingecko.com/api/v3/coins/markets?vs_currency=php&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en'
-  //   );
-  //   const data = await res.json();
-  //   console.log('loaded to updated currency');
-  //   setCoins(data);
-  // };
       const loadData = async () => {
         const res = await fetch(
           `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${selectedCurrency.toLowerCase()}&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`
         );
         const data = await res.json();
-        ToastAndroid.show('Currency Updating', ToastAndroid.LONG)
         console.log('loaded to updated currency');
         setCoins(data);
-        ToastAndroid.show('Currency Updated', ToastAndroid.SHORT)
+      
+        // Set currency symbol based on selected currency
+        switch (selectedCurrency) {
+          case 'PHP':
+            setCurrencySymbol('₱');
+            break;
+          case 'USD':
+            setCurrencySymbol('$');
+            break;
+          case 'CNY':
+            setCurrencySymbol('¥');
+            break;
+          case 'EUR':
+            setCurrencySymbol('€');
+            break;
+          case 'GPY':
+            setCurrencySymbol('¥');
+            break;
+          default:
+            setCurrencySymbol('₱');
+        }
       };
+      
   
 
   useEffect(() => {
@@ -48,22 +60,19 @@ const Currency = () => {
           placeholderTextColor="#858585"
           onChangeText={text => setSearch(text)}
         />
-
-
-        <Picker
+       <Picker
           style={styles.picker}
           selectedValue={selectedCurrency}
           onValueChange={(itemValue) => setSelectedCurrency(itemValue)}
-        >
+       >
           <Picker.Item label="PHP - Philippine Peso" value="PHP" />
           <Picker.Item label="USD - US Dollar" value="USD" />
-          <Picker.Item label="CNY - Chinese Yen" value="CNY" />
+          <Picker.Item label="CNY - Chinese Yuan" value="CNY" />
           <Picker.Item label="EUR - Euro" value="EUR" />
           <Picker.Item label="JPY - Japanese Yen" value="JPY" />
-        </Picker>
+       </Picker>
+        <Text style={styles.currencySymbol}>{currencySymbol}</Text>
 
-        
-      
       </View>
       <FlatList
         style={styles.list}
@@ -119,6 +128,12 @@ const styles = StyleSheet.create({
   picker: {
     color: 'white',
     width: '40%',
+  },
+  currencySymbol: {
+    color: 'white',
+    fontSize: 20,
+    padding: 10
+
   },
 });
 
