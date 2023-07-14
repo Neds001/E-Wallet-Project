@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { auth, firebase } from '../firebase';
 import { onSnapshot, orderBy } from 'firebase/firestore';
+import {Color, FontFamily} from '../GlobalStyles'
 
 const Notifications = () => {
   const [logInfo, setLogs] = useState([]);
@@ -62,8 +63,7 @@ const Notifications = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
-      <ImageBackground source={require('../assets/background1.jpg')} resizeMode="cover" style={styles.image}>
+    <View style={styles.container}>
         <FlatList
           showsVerticalScrollIndicator={false}
           style={styles.flatlistContainer}
@@ -73,7 +73,9 @@ const Notifications = () => {
               style={[styles.logItem, index === 0 && styles.highlightedLog]}
               onPress={() => openModal(item)}
             >
-              <Text key={index}>You just received ₱{item.transactions} from {item.SenderEmail} {item.Note ? `with a note of: \n${item.Note}` : ''}</Text>
+              <Text key={index}></Text><Text style={styles.pesoText}>Received from {item.SenderEmail} 
+              {item.Note ? `\n Note:\n ${item.Note}` : ''}</Text>
+              <Text style={styles.pesoMoney} >+₱{item.transactions}</Text>
               <Text style={styles.timestampText}>{item.Timestamp}</Text>
             </TouchableOpacity>
           )}
@@ -95,10 +97,10 @@ const Notifications = () => {
             {selectedTransaction && (
               <View style={styles.transactionModal}>
                 <Text style={styles.modalText}>Transaction Details</Text>
-                <Text>Transaction: ₱{selectedTransaction.transactions}</Text>
-                <Text>Sender: {selectedTransaction.SenderEmail}</Text>
-                <Text>Time: {selectedTransaction.Timestamp}</Text>
-                <Text>Note: {selectedTransaction.Note}</Text>
+                <Text style= {styles.modTrans}>Transaction: ₱{selectedTransaction.transactions}</Text>
+                <Text style= {styles.modTrans}>Sender: {selectedTransaction.SenderEmail}</Text>
+                <Text style= {styles.modTrans}>Time: {selectedTransaction.Timestamp}</Text>
+                <Text style= {styles.modTrans}>Note: {selectedTransaction.Note}</Text>
                 <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
                   <Text style={styles.closeButtonText}>Close</Text>
                 </TouchableOpacity>
@@ -106,7 +108,7 @@ const Notifications = () => {
             )}
           </View>
         </Modal>
-      </ImageBackground>
+    
     </View>
   );
 };
@@ -115,7 +117,9 @@ export default Notifications;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    backgroundColor: Color.blackModePrimaryDark,
     justifyContent: "center",
     position: 'absolute',
     top: 0,
@@ -125,15 +129,15 @@ const styles = StyleSheet.create({
   },
   ButtonContainer: {
     marginHorizontal: 80,
-    backgroundColor: "#111827",
+    backgroundColor: "#7B61FF",
     paddingVertical: 10,
-    borderRadius: 5,
+    borderRadius: 15,
     marginTop: 15,
   },
   buttonText: {
     color: "white",
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily:FontFamily.poppinsMedium,
     textAlign: "center",
   },
   receivedButton: {
@@ -152,14 +156,14 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   logItem: {
-    backgroundColor: '#FFFFFF',
+     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     padding: 16,
     marginBottom: 8,
     borderRadius: 8,
     elevation: 2,
   },
   highlightedLog: {
-    backgroundColor: '#FFD700',
+    backgroundColor: '#7B61FF',
     borderWidth: 2,
     borderColor: '#FFA500',
   },
@@ -174,7 +178,8 @@ const styles = StyleSheet.create({
   },
   timestampText: {
     fontSize: 12,
-    color: '#888888',
+    color: 'white',
+    alignSelf:'flex-end',
   },
   modalContainer: {
     flex: 1,
@@ -190,18 +195,32 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontSize: 18,
-    fontWeight: 'bold',
     marginBottom: 10,
+    fontFamily: FontFamily.poppinsBold,
   },
   closeButton: {
     marginTop: 20,
-    backgroundColor: '#111827',
+    backgroundColor: '#7B61FF',
     padding: 10,
     borderRadius: 8,
     alignSelf: 'flex-end',
   },
   closeButtonText: {
     color: 'white',
-    fontWeight: 'bold',
+    fontFamily: FontFamily.poppinsMedium,
+
   },
+  pesoText:{
+    color: "white",
+    fontFamily:FontFamily.poppinsMedium,
+  },
+  pesoMoney:{
+    color: '#7CFC00',
+    alignSelf: 'flex-end',
+    fontSize: 20,
+    },
+    modTrans:{
+      fontFamily: FontFamily.poppinsMedium,
+      fontSize: 13,
+    },
 });
