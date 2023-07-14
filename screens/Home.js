@@ -289,7 +289,12 @@ export default function Home() {
             </View>
             <Text style={{marginTop: -25}}>         ETH</Text>
             </View>
-            <View style={{justifyContent:'center', alignItems: 'center'}}>
+            <View style={{justifyContent:'center', 
+                          alignItems: 'center', 
+                          borderBottomColor: '#4657CE',
+                          borderBottomWidth: 1,
+                          marginHorizontal: 20
+                          }}>
               <Text style={styles.gasFeeText}>GWEI</Text>
             </View>
             <View style={styles.gasFeee}>
@@ -342,7 +347,13 @@ export default function Home() {
             </View>
             <Text style={{marginTop: -25}}>         BNB</Text>
             </View>
-            <View style={{justifyContent:'center', alignItems: 'center'}}>
+            <View style={{justifyContent:'center', 
+                          alignItems: 'center',
+                          alignItems: 'center', 
+                          borderBottomColor: '#4657CE',
+                          borderBottomWidth: 1,
+                          marginHorizontal: 20
+                          }}>
               <Text style={styles.gasFeeText}>GWEI</Text>
             </View>
             <View style={styles.gasFeee}>
@@ -383,7 +394,13 @@ export default function Home() {
             </View>
             <Text style={{marginTop: -25}}>    POLYGON</Text>
             </View>
-            <View style={{justifyContent:'center', alignItems: 'center'}}>
+            <View style={{justifyContent:'center', 
+                          alignItems: 'center',
+                          alignItems: 'center', 
+                          borderBottomColor: '#4657CE',
+                          borderBottomWidth: 1,
+                          marginHorizontal: 20
+                          }}>
               <Text style={styles.gasFeeText}>GWEI</Text>
             </View>
             <View style={styles.gasFeee}>
@@ -424,7 +441,13 @@ export default function Home() {
             </View>
             <Text style={{marginTop: -25}}>        FTM</Text>
             </View>
-            <View style={{justifyContent:'center', alignItems: 'center'}}>
+            <View style={{justifyContent:'center', 
+                          alignItems: 'center',
+                          alignItems: 'center', 
+                          borderBottomColor: '#4657CE',
+                          borderBottomWidth: 1,
+                          marginHorizontal: 20
+                          }}>
               <Text style={styles.gasFeeText}>GWEI</Text>
             </View>
             <View style={styles.gasFeee}>
