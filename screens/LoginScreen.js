@@ -269,7 +269,7 @@ import { AppContext } from "../AppContext";
         </TouchableOpacity>
         <View style={styles.modalInnerContainer}>
           <Text style={styles.titleText}>6 Digit PIN Code</Text>
-          <Text style={styles.regularText}>{'😊'.repeat(password.length)}</Text>
+          <Text style={styles.regularText}>{'●'.repeat(password.length)}</Text>
           <TextInput
             style={styles.pinInput}
             ref={pinCodeInputRef}
