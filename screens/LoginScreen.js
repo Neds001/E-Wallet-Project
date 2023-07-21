@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   button:{
         borderRadius: Border.br_xs,
