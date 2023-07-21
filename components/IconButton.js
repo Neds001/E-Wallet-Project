@@ -17,7 +17,7 @@ const IconButton = ({
   iconFamily = "Feather",
   variant = "contained",
   size = "medium",
-  iconColor = "white",
+  iconColor = "#cf9502",
   roundness = "medium",
   style = {},
   onPress,
@@ -45,7 +45,7 @@ const IconButton = ({
         pressed && styles.shadow
       ]}
     >
-      <Icon name={icon} size={iconSize} color={iconColor} />
+      <Icon name={icon} size={iconSize} color={iconColor}/>
     </Pressable>
   )
 }

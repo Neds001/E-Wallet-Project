@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         fontSize: 30
     },
     purpleContainer:{
-        backgroundColor: '#7B61FF',
+        backgroundColor: '#cf9502',
         borderRadius: 30,
         paddingVertical: '5%',
         paddingHorizontal: '30%'
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         fontSize: 40
       },
       buttonContainer:{
-        backgroundColor: '#7B61FF',
+        backgroundColor: '#cf9502',
         borderRadius: 20,
         paddingHorizontal: 20,
         paddingVertical: 10
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
       },
       fingerprintToggleLabel:{
         fontFamily: FontFamily.mButton,
-        color: Color.gray_400,
+        color: Color.gray_600,
         fontSize: 12
       }
 });

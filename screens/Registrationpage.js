@@ -146,7 +146,7 @@ const Registrationpage = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Email"
-          placeholderTextColor="rgba(255, 255, 255, 0.32)"
+          placeholderTextColor="rgba(0, 0, 0, 0.4)"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -157,7 +157,7 @@ const Registrationpage = ({ navigation }) => {
           placeholder="Enter your 6 digit PIN"
           keyboardType="numeric"
           maxLength={6}
-          placeholderTextColor="rgba(255, 255, 255, 0.32)"
+          placeholderTextColor="rgba(0, 0, 0, 0.4)"
           onChangeText={(text) => {
             const numericValue = text.replace(/[^0-9]/g, '');
             setPassword(numericValue);
@@ -167,7 +167,7 @@ const Registrationpage = ({ navigation }) => {
         />
         <TextInput
           style={styles.input}
-          placeholderTextColor="rgba(255, 255, 255, 0.32)"
+          placeholderTextColor="rgba(0, 0, 0, 0.4)"
           placeholder="Confirm your 6 digit PIN"
           keyboardType="numeric"
           maxLength={6}
@@ -180,7 +180,7 @@ const Registrationpage = ({ navigation }) => {
         />
         <TextInput
           style={styles.input}
-          placeholderTextColor="rgba(255, 255, 255, 0.32)"
+          placeholderTextColor="rgba(0, 0, 0, 0.4)"
           placeholder="Fullname"
           value={fullname}
           onChangeText={setFullname}
@@ -188,7 +188,7 @@ const Registrationpage = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Phone Number"
-          placeholderTextColor="rgba(255, 255, 255, 0.32)"
+          placeholderTextColor="rgba(0, 0, 0, 0.4)"
           keyboardType="numeric"
           maxLength={11}
           onChangeText={(text) => setContact(text.replace(/[^0-9]/g, ""))}
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   },
   buttonTextSignUp:{
       marginTop: 10,
-      color: 'royalblue',
+      color: '#cf9502',
       fontSize: 13,
       fontWeight: 'bold',
       textAlign: 'center',
@@ -245,9 +245,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    paddingTop: 0,
     color: 'gray',
     padding: 20,
+    paddingBottom: 0,
     textAlign: 'center',
     fontFamily: FontFamily.poppinsBold,
     letterSpacing: 1,
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     paddingBottom:0,
   },  
   logo: {
-    width: 220, 
+    width: 230, 
     height: 220, 
     //flexDirection: 'column',
   },
@@ -282,21 +282,21 @@ const styles = StyleSheet.create({
    
   },
   input: {
-    borderColor: '#7b61ff',
+    borderColor: '#cf9502',
     borderWidth: 2,
     marginBottom: 5,
     padding: 10,
     margin: 10,
-    color: Color.gray_700,
+    color: 'rgba(0,0,0,.7)',
     fontFamily: FontFamily.poppinsBold,
     borderRadius: Border.br_xs,
-    backgroundColor: Color.blackModeSecondaryDark,
+    backgroundColor: '#fff',
     width: "95%",
     height: 56,
   },
   button: {
     marginHorizontal: 80,
-    backgroundColor: "#111827",
+    backgroundColor: "#cf9502",
     paddingVertical: 10,
     borderRadius: 5,
     marginTop: 15,

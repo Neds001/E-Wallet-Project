@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
 contentContainerBox:{
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: "rgba(255, 255, 255, 0.10)",
+  backgroundColor: "rgba(255, 255, 255, 0.20)",
   borderRadius: 10,
   height: '35%',
   marginBottom: 15
@@ -262,7 +262,7 @@ buttonContainer:{
   justifyContent:'center',
   alignItems: 'center',
   padding: 10,
-  backgroundColor: '#7B61FF',
+  backgroundColor: '#cf9502',
   borderRadius: 10,
   marginHorizontal: 100,
   marginTop: 20

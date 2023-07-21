@@ -11,6 +11,7 @@ import { Ionicons} from "@expo/vector-icons"
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { Feather } from '@expo/vector-icons';
 import { color } from 'react-native-reanimated';
+import { Col } from 'react-native-table-component';
 
 
 export default function Home() {
@@ -257,9 +258,9 @@ export default function Home() {
         </View>
       
         <View style={{flexDirection: 'row', justifyContent:'space-around', alignItems:'center', paddingBottom: 10}}>
-        <Text style={{color:'#fff', fontFamily: FontFamily.poppinsMedium, marginLeft: 10}}>Send to</Text>
-        <Text style={{color:'#fff', fontFamily: FontFamily.poppinsMedium}}>Receive</Text>
-        <Text style={{color:'#fff', fontFamily: FontFamily.poppinsMedium, marginRight:10}}>Others</Text>
+        <Text style={{color:'black', fontFamily: FontFamily.poppinsMedium, marginLeft: 10}}>Send to</Text>
+        <Text style={{color:'black', fontFamily: FontFamily.poppinsMedium}}>Receive</Text>
+        <Text style={{color:'black', fontFamily: FontFamily.poppinsMedium, marginRight:10}}>Others</Text>
         </View>
       </View>
 
@@ -291,16 +292,16 @@ export default function Home() {
             </View>
             <View style={{justifyContent:'center', 
                           alignItems: 'center', 
-                          borderBottomColor: '#4657CE',
+                          borderBottomColor: '#cf9502',
                           borderBottomWidth: 1,
                           marginHorizontal: 20
                           }}>
               <Text style={styles.gasFeeText}>GWEI</Text>
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>LOW</Text>
+              <Text style={styles.gasTextLow}>LOW</Text>
               { ethGasData.SafeGasPrice !== null ?
-                <Text style={styles.gasText}>{ethGasData.SafeGasPrice}
+                <Text style={styles.gasTextLow}>{ethGasData.SafeGasPrice}
               </Text>
               :
               console.log('Error')
@@ -308,18 +309,18 @@ export default function Home() {
 
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>AVERAGE</Text>
+              <Text style={styles.gasTextAverage}>AVERAGE</Text>
             { ethGasData.SafeGasPrice !== null ?
-              <Text style={styles.gasText}>{ethGasData.ProposeGasPrice}
+              <Text style={styles.gasTextAverage}>{ethGasData.ProposeGasPrice}
               </Text>
                :
                console.log('Error')
                }
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>PRIORITY</Text>
+              <Text style={styles.gasTextPriority}>PRIORITY</Text>
               { ethGasData.SafeGasPrice !== null ?
-              <Text style={styles.gasText}>{ethGasData.FastGasPrice}
+              <Text style={styles.gasTextPriority}>{ethGasData.FastGasPrice}
               </Text>
                :
                console.log('Error')
@@ -350,25 +351,25 @@ export default function Home() {
             <View style={{justifyContent:'center', 
                           alignItems: 'center',
                           alignItems: 'center', 
-                          borderBottomColor: '#4657CE',
+                          borderBottomColor: '#cf9502',
                           borderBottomWidth: 1,
                           marginHorizontal: 20
                           }}>
               <Text style={styles.gasFeeText}>GWEI</Text>
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>LOW</Text>
-              <Text style={styles.gasText}>{bnbGasData.SafeGasPrice}
+              <Text style={styles.gasTextLow}>LOW</Text>
+              <Text style={styles.gasTextLow}>{bnbGasData.SafeGasPrice}
               </Text>
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>AVERAGE</Text>
-              <Text style={styles.gasText}>{bnbGasData.ProposeGasPrice}
+              <Text style={styles.gasTextAverage}>AVERAGE</Text>
+              <Text style={styles.gasTextAverage}>{bnbGasData.ProposeGasPrice}
               </Text>
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>PRIORITY</Text>
-              <Text style={styles.gasText}>{bnbGasData.FastGasPrice}
+              <Text style={styles.gasTextPriority}>PRIORITY</Text>
+              <Text style={styles.gasTextPriority}>{bnbGasData.FastGasPrice}
               </Text>
             </View>
             </View>
@@ -397,25 +398,25 @@ export default function Home() {
             <View style={{justifyContent:'center', 
                           alignItems: 'center',
                           alignItems: 'center', 
-                          borderBottomColor: '#4657CE',
+                          borderBottomColor: '#cf9502',
                           borderBottomWidth: 1,
                           marginHorizontal: 20
                           }}>
               <Text style={styles.gasFeeText}>GWEI</Text>
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>LOW</Text>
-              <Text style={styles.gasText}> {polygonGasData.SafeGasPrice}
+              <Text style={styles.gasTextLow}>LOW</Text>
+              <Text style={styles.gasTextLow}> {polygonGasData.SafeGasPrice}
               </Text>
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>AVERAGE</Text>
-              <Text style={styles.gasText}>{polygonGasData.ProposeGasPrice}
+              <Text style={styles.gasTextAverage}>AVERAGE</Text>
+              <Text style={styles.gasTextAverage}>{polygonGasData.ProposeGasPrice}
               </Text>
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>PRIORITY</Text>
-              <Text style={styles.gasText}>{polygonGasData.FastGasPrice}
+              <Text style={styles.gasTextPriority}>PRIORITY</Text>
+              <Text style={styles.gasTextPriority}>{polygonGasData.FastGasPrice}
               </Text>
             </View>
             </View>
@@ -444,25 +445,25 @@ export default function Home() {
             <View style={{justifyContent:'center', 
                           alignItems: 'center',
                           alignItems: 'center', 
-                          borderBottomColor: '#4657CE',
+                          borderBottomColor: '#cf9502',
                           borderBottomWidth: 1,
                           marginHorizontal: 20
                           }}>
               <Text style={styles.gasFeeText}>GWEI</Text>
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>LOW</Text>
-              <Text style={styles.gasText}> {ftmGasData.SafeGasPrice}
+              <Text style={styles.gasTextLow}>LOW</Text>
+              <Text style={styles.gasTextLow}> {ftmGasData.SafeGasPrice}
               </Text>
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>AVERAGE</Text>
-              <Text style={styles.gasText}>{ftmGasData.ProposeGasPrice}
+              <Text style={styles.gasTextAverage}>AVERAGE</Text>
+              <Text style={styles.gasTextAverage}>{ftmGasData.ProposeGasPrice}
               </Text>
             </View>
             <View style={styles.gasFeee}>
-              <Text style={styles.gasText}>PRIORITY</Text>
-              <Text style={styles.gasText}>{ftmGasData.FastGasPrice}
+              <Text style={styles.gasTextPriority}>PRIORITY</Text>
+              <Text style={styles.gasTextPriority}>{ftmGasData.FastGasPrice}
               </Text>
             </View>
             </View>
@@ -480,7 +481,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    backgroundColor: Color.blackModePrimaryDark,
+    backgroundColor: '#2C0283',
     paddingHorizontal: 10
   },
   nameText:{
@@ -505,26 +506,27 @@ const styles = StyleSheet.create({
   },
   balanceContainer:{
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#cf9502',
     borderRadius: 50,
-    borderColor: Color.gray_100,
+    borderColor: Color.gray_700,
     borderWidth: 3,
     margin: 10,
   },
   balanceText:{
     fontSize: 20,
-    fontFamily: FontFamily.poppinsMedium
+    fontFamily: FontFamily.poppinsMedium,
+    color: '#fff'
   },
   purpleContainer:{
     alignItems: 'center',
-    backgroundColor: '#7B61FF',
+    backgroundColor: '#cf9502',
     borderRadius: 38,
     borderColor: Color.gray_100,
-    borderWidth: 1,
+    borderWidth: 4,
   },
   blackContainer:{
     flexDirection: 'column',
-    backgroundColor: '#262329',
+    backgroundColor: Color.gray_700,
     borderRadius: 40,
     borderColor: Color.gray_100,
     
@@ -535,7 +537,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppinsMedium
   },
   totalBalanceText:{
-    color: '#C9C9C9',
+    color: Color.gray_700,
     marginTop: 10, 
     fontSize: 15, 
     fontFamily: FontFamily.poppinsMedium
@@ -554,7 +556,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   ethContainer:{
-    backgroundColor: '#D9D9D9',
+    backgroundColor: Color.gray_700,
     borderRadius: 35,
     marginLeft: 10
     // paddingHorizontal: 70,
@@ -595,9 +597,20 @@ const styles = StyleSheet.create({
     justifyContent:'space-around',
     padding: 8
   },
-  gasText:{
-    fontFamily: FontFamily.poppinsMedium,
-    fontSize: 15
+  gasTextLow:{
+    fontFamily: FontFamily.poppinsBold,
+    fontSize: 15,
+    color: '#d1453b'   
+  },
+  gasTextAverage:{
+    fontFamily: FontFamily.poppinsBold,
+    fontSize: 15,
+    color: '#cf9502'   
+  },
+  gasTextPriority:{
+    fontFamily: FontFamily.poppinsBold,
+    fontSize: 15,
+    color: 'green'   
   },
 
 });

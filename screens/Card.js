@@ -70,15 +70,15 @@ const Card = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.blackModePrimaryDark,
+    backgroundColor: '#2C0283',
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 10,
   },
   cardContainer:{
     borderRadius: 30,
-    backgroundColor: '#7b61ff',
-    marginTop: 10
+    backgroundColor: '#cf9502',
+    marginTop: 180
   
   },
   card: {
@@ -115,7 +115,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginHorizontal: 70,
-    marginTop: 10
+    marginTop: -130,
+    backgroundColor: 'rgba(229,229,229,0.5)'
   },
   cardTextContainer:{
     marginTop: 40

@@ -31,7 +31,7 @@ export const FontSize = {
 export const Color = {
   blackModeSecondaryDark: "#2f3c50",
   darkslategray_100: "#3b363f",
-  blackModePrimaryDark: "#28333f",
+  blackModePrimaryDark: "#2C0283",
   charlestonGreen: "#1f2b36",
   sUNRISEWhite: "#fff",
   darkgray_100: "#aea8b2",

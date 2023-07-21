@@ -84,7 +84,7 @@ const Notifications = () => {
         />
         <View style={styles.receivedButton}>
           <TouchableOpacity style={styles.ButtonContainer} onPress={onPress}>
-            <Text style={styles.buttonText}>Go Back Home</Text>
+            <Text style={styles.buttonText}>Dashboard</Text>
           </TouchableOpacity>
         </View>
         <Modal
@@ -129,13 +129,13 @@ const styles = StyleSheet.create({
   },
   ButtonContainer: {
     marginHorizontal: 80,
-    backgroundColor: "#7B61FF",
+    backgroundColor: "#cf9502",
     paddingVertical: 10,
     borderRadius: 15,
     marginTop: 15,
   },
   buttonText: {
-    color: "white",
+    color: Color.gray_700,
     fontSize: 16,
     fontFamily:FontFamily.poppinsMedium,
     textAlign: "center",
@@ -156,16 +156,16 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   logItem: {
-     backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
     padding: 16,
     marginBottom: 8,
     borderRadius: 8,
     elevation: 2,
   },
   highlightedLog: {
-    backgroundColor: '#7B61FF',
-    borderWidth: 2,
-    borderColor: '#FFA500',
+    backgroundColor: '#a17403',
+    borderWidth: 4,
+    borderColor: Color.gray_700,
   },
   image: {
     flex: 1,
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     marginTop: 20,
-    backgroundColor: '#7B61FF',
+    backgroundColor: '#cf9502',
     padding: 10,
     borderRadius: 8,
     alignSelf: 'flex-end',
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     fontFamily:FontFamily.poppinsMedium,
   },
   pesoMoney:{
-    color: '#7CFC00',
+    color: '#77b317',
     alignSelf: 'flex-end',
     fontSize: 20,
     },

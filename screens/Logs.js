@@ -108,7 +108,7 @@ const Logs = () => {
                 <Text style= {styles.modTrans}>You sent: ₱{selectedTransaction.transactions}</Text>
                 <Text style= {styles.modTrans}>Receiver: {selectedTransaction.ReceiverEmail}</Text>
                 <Text style= {styles.modTrans}>Time: {selectedTransaction.Timestamp}</Text>
-                                <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+                <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
                   <Text style={styles.closeButtonText}>Close</Text>
                 </TouchableOpacity>
               </View>
@@ -175,9 +175,9 @@ const styles = StyleSheet.create({
     
   },
   highlightedLog: {
-    backgroundColor: '#7B61FF',
-    borderWidth: 2,
-    borderColor: '#FFA500',
+    backgroundColor: '#cf9502',
+    borderWidth: 4,
+    borderColor: Color.gray_700,
   },
  
   logText: {
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     marginTop: 20,
-    backgroundColor: '#7B61FF',
+    backgroundColor: '#cf9502',
     padding: 10,
     borderRadius: 8,
     alignSelf: 'flex-end',
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppinsMedium,
   },
   ReceiverEmail:{
-    color: '#d65047',
+    color: '#d1453b',
     alignSelf: 'flex-end',
     fontSize: 20,
   },

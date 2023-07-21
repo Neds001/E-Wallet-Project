@@ -300,7 +300,7 @@ const Dashboard = ({ route }) => {
      
       <View style={{flexDirection:'row', padding: 10, marginTop: 10}}>
         <Text style={{color: '#fff', fontFamily: FontFamily.poppinsMedium}}>Recipient: </Text>
-        <Text style={{color: 'rgba(255, 255, 255, 0.15)'}}> *input email</Text>
+        <Text style={{color: 'rgba(255, 255, 255, 0.40)'}}> *input email</Text>
       </View>
       <View style={{justifyContent: 'center', alignItems:'center'}}>
       <View style={{flexDirection: 'row'}}>
@@ -321,7 +321,7 @@ const Dashboard = ({ route }) => {
       
       <View style={{flexDirection:'row', padding: 10}}>
         <Text style={{color: '#fff', fontFamily: FontFamily.poppinsMedium}}>Amount</Text>
-        <Text style={{color: 'rgba(255, 255, 255, 0.15)'}}> *insert amount (min ₱5.00)</Text>
+        <Text style={{color: 'rgba(255, 255, 255, 0.40)'}}> *insert amount (min ₱5.00)</Text>
       </View>
       <View style={{justifyContent: 'center', alignItems:'center'}}>
       <View style={{flexDirection: 'row'}}>
@@ -348,8 +348,8 @@ const Dashboard = ({ route }) => {
   style={[
     styles.optionsContainer,
     selectedAmount === '50' && {
-      backgroundColor: '#7B61FF',
-      borderColor: '#7B61FF',
+      backgroundColor: '#cf9502',
+      borderColor: Color.gray_700,
     },
   ]}
   onPress={() => handleAmountClick('50')}
@@ -367,8 +367,8 @@ const Dashboard = ({ route }) => {
   style={[
     styles.optionsContainer,
     selectedAmount === '100' && {
-      backgroundColor: '#7B61FF',
-      borderColor: '#7B61FF',
+      backgroundColor: '#cf9502',
+      borderColor: Color.gray_700,
     },
   ]}
   onPress={() => handleAmountClick('100')}
@@ -386,8 +386,8 @@ const Dashboard = ({ route }) => {
   style={[
     styles.optionsContainer,
     selectedAmount === '150' && {
-      backgroundColor: '#7B61FF',
-      borderColor: '#7B61FF',
+      backgroundColor: '#cf9502',
+      borderColor: Color.gray_700,
     },
   ]}
   onPress={() => handleAmountClick('150')}
@@ -405,8 +405,8 @@ const Dashboard = ({ route }) => {
   style={[
     styles.optionsContainer,
     selectedAmount === '200' && {
-      backgroundColor: '#7B61FF',
-      borderColor: '#7B61FF',
+      backgroundColor: '#cf9502',
+      borderColor: Color.gray_700,
     },
   ]}
   onPress={() => handleAmountClick('200')}
@@ -426,7 +426,7 @@ const Dashboard = ({ route }) => {
 
       <View style={{flexDirection:'row', padding: 10}}>
         <Text style={{color: '#fff', fontFamily: FontFamily.poppinsMedium}}>PIN </Text>
-        <Text style={{color: 'rgba(255, 255, 255, 0.15)'}}> *input PIN</Text>
+        <Text style={{color: 'rgba(255, 255, 255, 0.40)'}}> *input PIN</Text>
       </View>
       <View style={{justifyContent: 'center', alignItems:'center'}}>
       <View style={{flexDirection: 'row'}}>
@@ -453,7 +453,7 @@ const Dashboard = ({ route }) => {
 
       <View style={{flexDirection:'row', padding: 10, marginTop: 10}}>
         <Text style={{color: '#fff', fontFamily: FontFamily.poppinsMedium}}>Notes</Text>
-        <Text style={{color: 'rgba(255, 255, 255, 0.15)'}}> *optional</Text>
+        <Text style={{color: 'rgba(255, 255, 255, 0.40)'}}> *optional</Text>
 
       </View>
 
@@ -491,7 +491,7 @@ const Dashboard = ({ route }) => {
         showConfirmButton={false}
         contentContainerStyle={styles.progressAlertContent}
         progressSize={40}
-        progressColor="#7B61FF"
+        progressColor="#cf9502"
       />
 
     <AwesomeAlert
@@ -503,8 +503,7 @@ const Dashboard = ({ route }) => {
         showCancelButton={false}
         showConfirmButton={true}
         confirmText="OK"
-        confirmButtonColor="#7B61FF"
-        confirmButtonStyle={{backgroundColor: Color.sUNRISECoral}}
+        confirmButtonStyle={{backgroundColor: '#cf9502'}}
         confirmButtonTextStyle={styles.buttonText}
         onConfirmPressed={() => {
            setShowSuccessAlert(false);
@@ -521,7 +520,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor: Color.blackModePrimaryDark,
+    backgroundColor: '#2C0283',
     paddingHorizontal: 10
   },
   scrollContainer: {
@@ -541,7 +540,7 @@ const styles = StyleSheet.create({
   purpleContainer:{
     marginTop: 15,
     alignItems: 'center',
-    backgroundColor: '#7B61FF',
+    backgroundColor: '#cf9502',
     borderRadius: 38,
     borderColor: Color.gray_100,
     borderWidth: 1
@@ -552,7 +551,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppinsMedium
   },
   totalBalanceText:{
-    color: '#C9C9C9',
+    color: Color.gray_700,
     marginTop: 10, 
     fontSize: 15, 
     fontFamily: FontFamily.poppinsMedium
@@ -567,7 +566,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 15,
     fontFamily: FontFamily.poppinsMedium,
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: 'rgba(255, 255, 255, 0.20)',
     color: '#fff',
     fontSize: 10,
     width: 250,
@@ -620,18 +619,18 @@ const styles = StyleSheet.create({
     width: 50
   },
   personIcon:{
-    color: '#7B61FF',
+    color: '#cf9502',
     padding: 10
   },
   pesoText:{
-    color: '#7B61FF',
+    color: '#cf9502',
     marginLeft: 15,
     fontSize: 30
   },
   optionsContainer:{
     alignItems:'center',
     margin: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0)',
+    backgroundColor: 'rgba(255, 255, 255, 0.10)',
     borderRadius: 8,
     borderWidth: 1,
     borderColor: Color.gray_400,
@@ -643,9 +642,10 @@ const styles = StyleSheet.create({
     color: Color.gray_500
   },
   errorText: {
-    color: '#d65047',
+    color: '#d1453b',
     fontSize: 12,
     marginTop: 5,
+    paddingLeft: 10
   },
   notesContainer:{
     backgroundColor: 'rgba(255, 255, 255, 0)',
@@ -658,7 +658,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 80,
-    backgroundColor: "#7B61FF",
+    backgroundColor: "#cf9502",
     paddingVertical: 5,
     borderRadius: 10,
     marginTop: 15,

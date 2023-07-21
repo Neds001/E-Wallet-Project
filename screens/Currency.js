@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, StatusBar, TextInput, ToastAndroid } from 'react-native';
 import CoinItem from '../components/CoinItem';
-import { Color } from '../GlobalStyles';
+import { Color, FontFamily } from '../GlobalStyles';
 import { Picker } from '@react-native-picker/picker';
 
 const Currency = () => {
@@ -36,7 +36,7 @@ const Currency = () => {
           case 'EUR':
             setCurrencySymbol('€');
             break;
-          case 'GPY':
+          case 'JPY':
             setCurrencySymbol('¥');
             break;
           default:
@@ -67,7 +67,7 @@ const Currency = () => {
           selectedValue={selectedCurrency}
           onValueChange={(itemValue) => setSelectedCurrency(itemValue)}
        >
-          <Picker.Item label="PHP - Philippine Peso" value="PHP" />
+          <Picker.Item label="PHP - Philippine Peso" value="PHP"/>
           <Picker.Item label="USD - US Dollar" value="USD" />
           <Picker.Item label="CNY - Chinese Yuan" value="CNY" />
           <Picker.Item label="EUR - Euro" value="EUR" />

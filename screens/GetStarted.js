@@ -11,16 +11,18 @@ export default function GetStarted() {
       };
       return (
         <SafeAreaView style={styles.getStarted}>
-          <StatusBar backgroundColor="#141414" />
+    <StatusBar backgroundColor="#141414" />
     <View style={styles.logoContainer}>
       <Image
         style={styles.logo1Icon}
-        source={require("../assets/logo-1.png")}
+        source={require("../assets/logo.png")}
       />
     </View>
     
     <View style={[styles.headline, styles.headlineFlexBox]}>
-      <Text style={styles.headlineTxt}>E-Wal Lato Digital Wallet</Text>
+      
+      <Text style={styles.headlineTxt2}>E-Wallet Crypto Technology</Text>
+      
       <Text></Text>
     </View>
 
@@ -39,16 +41,17 @@ export default function GetStarted() {
         justifyContent: 'center',
         alignItems: "center",
       },
-      headlineTxt: {
+      headlineTxt2: {
         textAlign: "center",
-        fontSize: 50,
+        fontSize: 26,
         letterSpacing: 1,
         lineHeight: 60,
         fontWeight: "700",
-        fontFamily: FontFamily.h4,
+        fontFamily: FontFamily.poppinsBold,
         color: Color.gray_700,
-        marginTop: -180, // Adjust this value to bring the logo and text closer
+        marginTop: -100
       },
+      
       headline: {
         flex: 1,
       },
@@ -57,7 +60,7 @@ export default function GetStarted() {
         lineHeight: 22,
         fontWeight: "600",
         fontFamily: FontFamily.mButton,
-        color: Color.sUNRISEWhite,
+        color: Color.gray_700,
         textAlign: "center",
       },
       copyClr: {
@@ -66,7 +69,7 @@ export default function GetStarted() {
       },
       getstarted: {
         borderRadius: Border.br_xs,
-        backgroundColor: Color.sUNRISECoral,
+        backgroundColor: '#cf9502',
         shadowColor: Color.gainsboro_200l,
         shadowOffset: {
         width: 0,
@@ -85,13 +88,13 @@ export default function GetStarted() {
         marginBottom: 30,
       },
       logo1Icon: {
-        width: 371,
-        height: 257,
+        width: 270,
+        height: 255
       },
       logoContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 30,
+        marginTop: 130,
         paddingVertical: 10, // Adjust this value if needed
       },
       getStarted: {

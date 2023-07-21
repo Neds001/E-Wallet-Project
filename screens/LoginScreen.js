@@ -269,7 +269,7 @@ import { AppContext } from "../AppContext";
         </TouchableOpacity>
         <View style={styles.modalInnerContainer}>
           <Text style={styles.titleText}>6 Digit PIN Code</Text>
-          <Text style={styles.regularText}>{'😊'.repeat(password.length)}</Text>
+          <Text style={styles.regularText}>{''.repeat(password.length)}</Text>
           <TextInput
             style={styles.pinInput}
             ref={pinCodeInputRef}
@@ -369,8 +369,8 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
   logo: {
-    width: 330,
-    height: 330,
+    width: 270,
+    height: 255
   },
   title: {
     fontSize: 45,
@@ -394,15 +394,15 @@ const styles = StyleSheet.create({
     color: Color.sUNRISEWhite,
   },
   input: {
-    borderColor: '#7b61ff',
+    borderColor: '#cf9502',
     borderWidth: 2,
     marginBottom: 10,
     padding: 10,
     margin: 10,
-    color: Color.gray_700,
+    color: 'rgba(0,0,0,.7)',
     fontFamily: FontFamily.poppinsBold,
     borderRadius: Border.br_xs,
-    backgroundColor: Color.blackModeSecondaryDark,
+    backgroundColor: '#fff',
     width: "95%",
     height: 56,
   },
@@ -434,7 +434,7 @@ const styles = StyleSheet.create({
   },
   okbutton:{
         borderRadius: Border.br_xs,
-        backgroundColor: Color.sUNRISECoral,
+        backgroundColor: '#cf9502',
         marginTop: 10,
         width: 80,
         height: 45,
@@ -444,7 +444,7 @@ const styles = StyleSheet.create({
   },
   buttonTextSignUp: {
     marginTop: 10,
-    color: 'royalblue',
+    color: '#cf9502',
     fontSize: 13,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -534,13 +534,13 @@ const styles = StyleSheet.create({
     paddingEnd: 15
   },
   changeEmailButton:{
-    backgroundColor: "rgba(123, 97, 255, 0.19)",
+    backgroundColor: "rgba(81, 0, 255, 0.30)",
     borderRadius: 10,
     padding: 6
   },
   changeEmailText:{
     color: Color.gray_700,
-    fontFamily: FontFamily.poppinsRegular,
+    fontFamily: FontFamily.poppinsMedium,
     fontSize: 10
   },
 });
