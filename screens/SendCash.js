@@ -543,7 +543,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#cf9502',
     borderRadius: 38,
     borderColor: Color.gray_100,
-    borderWidth: 1
+    borderWidth: 4
   },
   purpleContainerText:{
     color: '#fff',

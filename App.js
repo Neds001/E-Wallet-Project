@@ -10,7 +10,7 @@ import EditProfile from './screens/EditProfile';
 import Currency from './screens/Currency';
 import Registrationpage from './screens/Registrationpage';
 import Logs from './screens/Logs';
-import ReceiveLogs from './screens/ReceiveLogs';
+import Receive from './screens/Receive';
 import GetStarted from './screens/GetStarted';
 import Profile from './screens/Profile';
 import Notifications from './screens/Notifications';
@@ -51,7 +51,7 @@ export default function App() {
         <Stack.Screen options = {{headerShown: false}} name="Currency" component={Currency}/>
         <Stack.Screen options = {{headerShown: false}} name="Registrationpage" component={Registrationpage}/>
         <Stack.Screen name="Logs" component={Logs}/>
-        <Stack.Screen name="ReceiveLogs" component={ReceiveLogs}/>
+        <Stack.Screen name="Receive" component={Receive}/>
         <Stack.Screen options = {{headerShown: false}} name="Profile" component={Profile}/>
         <Stack.Screen options = {{headerShown: false}} name="Notifications" component={Notifications}/>
       </Stack.Navigator>
