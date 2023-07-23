@@ -11,6 +11,7 @@ const ReceiveLogs = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
+  
   const onPress = () => {
     navigation.navigate('ReceiveLogs');
     
