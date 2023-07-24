@@ -201,7 +201,7 @@ import { AppContext } from "../AppContext";
       <TextInput
         style={[styles.input, !isEmailEditable && styles.disabledInput]}
         placeholder="Email"
-        placeholderTextColor="rgba(255, 255, 255, 0.32)"
+        placeholderTextColor="rgba(0, 0, 0, 0.32)"
         value={email}
         keyboardType="email-address"
         autoCapitalize="none"

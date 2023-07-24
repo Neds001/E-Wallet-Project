@@ -143,7 +143,7 @@ const Dashboard = ({ route }) => {
       ToastAndroid.show("Cannot send money to yourself", ToastAndroid.SHORT);
       return;
     }
-    
+
     if (user && user.emailVerified) {
       setShowProgressAlert(true);
       try {
