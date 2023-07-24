@@ -154,6 +154,9 @@ export default function Home() {
   const noitificationButton = () => {
     navigation.navigate("Notifications")
   }
+  const othersButton = () => {
+    navigation.navigate("Others")
+  }
 
   const [email, setEmail] = useState();
   const [uids, setUid] = useState();
@@ -250,7 +253,7 @@ export default function Home() {
           style={styles.sendImage}
           source={require('../assets/receive.png')}/>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={othersButton}>
           <Image 
           style={styles.sendImage}
           source={require('../assets/others.png')}/>
@@ -259,7 +262,7 @@ export default function Home() {
       
         <View style={{flexDirection: 'row', justifyContent:'space-around', alignItems:'center', paddingBottom: 10}}>
         <Text style={{color:'black', fontFamily: FontFamily.poppinsMedium, marginLeft: 10}}>Send to</Text>
-        <Text style={{color:'black', fontFamily: FontFamily.poppinsMedium}}>Receive</Text>
+        <Text style={{color:'black', fontFamily: FontFamily.poppinsMedium}}>Top-up</Text>
         <Text style={{color:'black', fontFamily: FontFamily.poppinsMedium, marginRight:10}}>Others</Text>
         </View>
       </View>

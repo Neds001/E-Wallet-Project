@@ -8,13 +8,14 @@ import { onAuthStateChanged } from "firebase/auth";
 import { Color, FontFamily} from "../GlobalStyles";
 import { useNavigation } from '@react-navigation/core'
 import { encode } from 'base-64';
+import { Image } from "expo-image";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 
 
 const Dashboard = ({ route }) => {
-  const [balance, setBalance] = useState(5000); // Initial balance
+  
   const [email, setEmail] = useState();
   const [userInfo, setUserInfo] = useState([]);
   const [fullname, setName] = useState();
@@ -28,7 +29,10 @@ const Dashboard = ({ route }) => {
   const [amountError, setAmountError] = useState(false);
   const [showProgressAlert, setShowProgressAlert] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showInsufficientAlert, setShowInsufficientAlert] = useState(false);
   const [note, setNote] = useState(''); // State for note value
+  // State to track if the current balance is greater than 0
+  const [canTransferFunds, setCanTransferFunds] = useState(false);
 
 
 
@@ -41,6 +45,15 @@ const Dashboard = ({ route }) => {
   if (!global.btoa) {
     global.btoa = encode;
   }
+
+  // Function to check if the current balance is greater than 0
+  const checkBalance = (balance) => {
+    if (balance > 0) {
+      setCanTransferFunds(true);
+    } else {
+      setCanTransferFunds(false);
+    }
+  };
 
   const getRecipientUid = async (email) => {
     const usersRef = collection(db, 'users');
@@ -118,6 +131,19 @@ const Dashboard = ({ route }) => {
         setAmountError(true);
         return;
     }
+    const currentBalance = userInfo.wallet || 0;
+    if (Number(amount) > currentBalance) {
+      // Show an error message to the user
+      setShowInsufficientAlert(true);
+      //ToastAndroid.show('Insufficient balance', ToastAndroid.SHORT);
+      return;
+    }
+
+    if (recipientEmail === email) {
+      ToastAndroid.show("Cannot send money to yourself", ToastAndroid.SHORT);
+      return;
+    }
+    
     if (user && user.emailVerified) {
       setShowProgressAlert(true);
       try {
@@ -234,6 +260,7 @@ const Dashboard = ({ route }) => {
                 console.log('Document data:', docSnap.data());
                 const data = docSnap.data();
                 setUserInfo(data);
+                checkBalance(data.wallet || 0); // Call the function to check the balance
               } else {
                 console.log('No such document!');
               }
@@ -272,7 +299,13 @@ const Dashboard = ({ route }) => {
   extraScrollHeight={Platform.OS === 'ios' ? 20 : 0}
 >
     <View style={styles.container}>
+      <TouchableOpacity style={styles.smallBackContainer} onPress={backButton}>
+          <Image source={require('../assets/smallBack.png')}
+            style={styles.smallBackImg}
+          />
+        </TouchableOpacity>
       <View style={styles.purpleContainer}>
+        
         <Text style={styles.totalBalanceText}>Total balance</Text>
         <Text style={styles.purpleContainerText}>₱ {userInfo.wallet ? userInfo.wallet.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>
       </View>
@@ -451,7 +484,7 @@ const Dashboard = ({ route }) => {
       </View>
       </View>
 
-      <View style={{flexDirection:'row', padding: 10, marginTop: 10}}>
+      <View style={{flexDirection:'row', padding: 10, marginTop: 1}}>
         <Text style={{color: '#fff', fontFamily: FontFamily.poppinsMedium}}>Notes</Text>
         <Text style={{color: 'rgba(255, 255, 255, 0.40)'}}> *optional</Text>
 
@@ -473,11 +506,17 @@ const Dashboard = ({ route }) => {
       </View>
 
       <TouchableOpacity
-          style={styles.transferButton}
-          onPress={ConfirmPin}
-        >
-          <Text style={styles.transferText}>Send</Text>
-      </TouchableOpacity>
+      style={[
+        styles.transferButton,
+        !canTransferFunds && styles.disabledButton, // Apply different style for disabled button
+      ]}
+      onPress={ConfirmPin}
+      disabled={!canTransferFunds} // Disable the button if the current balance is 0
+    >
+      <Text style={styles.transferText}>
+        {canTransferFunds ? "Send" : "Insufficient Balance"}
+      </Text>
+    </TouchableOpacity>
       
     </View>
       <AwesomeAlert
@@ -512,6 +551,23 @@ const Dashboard = ({ route }) => {
         }
         contentContainerStyle={styles.successAlertContent}
       />
+      <AwesomeAlert
+        show={showInsufficientAlert}
+        title="Transfer Failed"
+        message="Your balance is not enough"
+        closeOnTouchOutside={false}
+        closeOnHardwareBackPress={false}
+        showCancelButton={false}
+        showConfirmButton={true}
+        confirmText="OK"
+        confirmButtonStyle={{backgroundColor: '#cf9502'}}
+        confirmButtonTextStyle={styles.buttonText}
+        onConfirmPressed={() => {
+           setShowInsufficientAlert(false);
+          }
+        }
+        contentContainerStyle={styles.successAlertContent}
+      />
     </KeyboardAwareScrollView>
   );
 };
@@ -523,11 +579,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#2C0283',
     paddingHorizontal: 10
   },
+  disabledButton: {
+    backgroundColor: 'red', // Apply a different style for the disabled button
+  },
   scrollContainer: {
     flexGrow: 1,
     backgroundColor: Color.blackModePrimaryDark,
     marginBottom: 0,
    
+  },
+  smallBackContainer: {
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
+    marginLeft: 10,
+    padding: 5,
+    marginTop: 10
+  },
+  smallBackImg:{
+    height: 30,
+    width: 45
   },
   backIcon:{
     width: 70,
@@ -543,7 +613,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#cf9502',
     borderRadius: 38,
     borderColor: Color.gray_100,
-    borderWidth: 1
+    borderWidth: 1,
+    overflow: "hidden",
   },
   purpleContainerText:{
     color: '#fff',
@@ -604,7 +675,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppinsMedium,
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     color: '#fff',
-    fontSize: 20,
+    fontSize: 15,
     width: 290,
     height: 50,
     paddingHorizontal: 15
@@ -629,7 +700,8 @@ const styles = StyleSheet.create({
   },
   optionsContainer:{
     alignItems:'center',
-    margin: 10,
+    marginTop: 5,
+    marginLeft: 10,
     backgroundColor: 'rgba(255, 255, 255, 0.10)',
     borderRadius: 8,
     borderWidth: 1,
@@ -638,7 +710,7 @@ const styles = StyleSheet.create({
     width: '20%'
   },
   optionsText:{
-    fontSize: 25,
+    fontSize: 18,
     color: Color.gray_500
   },
   errorText: {

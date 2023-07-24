@@ -5,7 +5,7 @@ import { auth, firebase } from '../firebase';
 import { onSnapshot, orderBy } from 'firebase/firestore';
 import {Color, FontFamily} from '../GlobalStyles'
 
-const ReceiveLogs = () => {
+const Receive = () => {
   const [logInfo, setLogs] = useState([]);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -121,7 +121,7 @@ const ReceiveLogs = () => {
   );
 };
 
-export default ReceiveLogs;
+export default Receive;
 
 const styles = StyleSheet.create({
   container: {
