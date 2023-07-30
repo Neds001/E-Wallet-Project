@@ -1,7 +1,6 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, StatusBar, Dimensions} from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, StatusBar,} from 'react-native';
 import { Image } from "expo-image";
-import { Color, Border, FontFamily, FontSize, Padding } from "../GlobalStyles";
+import { Color, FontFamily, } from "../GlobalStyles";
 import React, { useState, useEffect } from 'react';
 import { auth } from '../firebase';
 import { doc, onSnapshot } from 'firebase/firestore'
@@ -9,9 +8,7 @@ import { db } from '../firebase'
 import { useNavigation } from '@react-navigation/core'
 import { Ionicons} from "@expo/vector-icons"
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { Feather } from '@expo/vector-icons';
-import { color } from 'react-native-reanimated';
-import { Col } from 'react-native-table-component';
+
 
 
 export default function Home() {
@@ -154,6 +151,11 @@ export default function Home() {
   const noitificationButton = () => {
     navigation.navigate("Notifications")
   }
+
+  const topUpButton = () => {
+    navigation.navigate("TopUpScreen")
+  }
+
   const othersButton = () => {
     navigation.navigate("Others")
   }
@@ -248,7 +250,7 @@ export default function Home() {
           style={styles.sendImage}
           source={require('../assets/send.png')}/>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={topUpButton}>
           <Image 
           style={styles.sendImage}
           source={require('../assets/receive.png')}/>

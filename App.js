@@ -23,6 +23,16 @@ import Profile from './screens/Profile';
 import Others from './screens/Others';
 import NotificationsScreen from './screens/Notifications';
 import TopUpScreen from './screens/TopUpScreen';
+import SevenConnect from './screens/PaymentMethods/SevenConnect';
+import GrabPayPH from './screens/PaymentMethods/GrabPayPH';
+import GCash from './screens/PaymentMethods/GCash';
+import BDO from './screens/PaymentMethods/BDO';
+import BPI from './screens/PaymentMethods/BPI';
+import LandBank from './screens/PaymentMethods/LandBank';
+import Paymaya from './screens/PaymentMethods/Paymaya';
+import Paypal from './screens/PaymentMethods/Paypal';
+import ShopeePay from './screens/PaymentMethods/ShopeePay';
+import UnionBank from './screens/PaymentMethods/UnionBank';
 import * as Permissions from 'expo-permissions';
 
 
@@ -299,6 +309,16 @@ export default function App() {
               <Stack.Screen options={{ headerShown: false }} name="Others" component={Others} />
               <Stack.Screen options={{ headerShown: false }} name="TopUpScreen" component={TopUpScreen} />
               <Stack.Screen options={{ headerShown: false }} name="Notifications" component={NotificationsScreen} />
+              <Stack.Screen options={{ headerShown: false }} name="SevenConnect" component={SevenConnect} />
+              <Stack.Screen options={{ headerShown: false }} name="GrabPayPH" component={GrabPayPH} />
+              <Stack.Screen options={{ headerShown: false }} name="GCash" component={GCash} />
+              <Stack.Screen options={{ headerShown: false }} name="BDO" component={BDO} />
+              <Stack.Screen options={{ headerShown: false }} name="BPI" component={BPI} />
+              <Stack.Screen options={{ headerShown: false }} name="ShopeePay" component={ShopeePay} />
+              <Stack.Screen options={{ headerShown: false }} name="Paypal" component={Paypal} />
+              <Stack.Screen options={{ headerShown: false }} name="UnionBank" component={UnionBank} />
+              <Stack.Screen options={{ headerShown: false }} name="Paymaya" component={Paymaya} />
+              <Stack.Screen options={{ headerShown: false }} name="LandBank" component={LandBank} />
             </Stack.Navigator>
         
         </AppProvider>
